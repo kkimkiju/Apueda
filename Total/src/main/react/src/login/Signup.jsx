@@ -25,7 +25,6 @@ import { storage } from "../api/firebase/Firebase";
 import AxiosApi from "../api/AxiosApi";
 import Privacy from "../components/Privacy";
 import Privacy2 from "../components/Privacy2";
-import styled from "styled-components";
 import basicProfile from "../image/person-icon2.png";
 
 const SignUp = ({ profile }) => {
@@ -96,27 +95,6 @@ const SignUp = ({ profile }) => {
   const handlePrivacyCheckboxChange2 = (e) => {
     setPrivacyIsChecked2(e.target.checked);
   };
-
-  // 보류
-  // const uploadImg = async () => {
-  //   try {
-  //     if (!file) {
-  //       throw new Error("파일이 선택되지 않았습니다.");
-  //     }
-  //     const fileRef = ref(storage, `images/${email}`);
-  //     const snapshot = await uploadBytes(fileRef, file, {
-  //       contentType: file.type,
-  //     });
-  //     console.log("이미지 파이어베이스 업로드 성공");
-  //     const url = await getDownloadURL(snapshot.ref);
-  //     console.log("경로 : " + url);
-  //     setProfileImgPath(url);
-  //     return url; // 업로드가 성공하면 URL 반환
-  //   } catch (e) {
-  //     console.log("파일 업로드 에러 : " + e);
-  //     throw e; // 에러 발생 시 예외 던짐
-  //   }
-  // };
 
   // 파이어베이스 수정
   // 입력받은 이미지 파일 주소
@@ -248,7 +226,7 @@ const SignUp = ({ profile }) => {
       /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}:;',.?/\\-]).{8,}$/; // 수정된 정규식
 
     if (!passwordRegex.test(newPassword)) {
-      setPasswordError("숫자, 영어 소문자, 특수문자 포함하여 8자 이상 입력");
+      setPasswordError("숫자, 영어 소문자, 특수문자 포함하여 8자 이상");
       setPwdValid(false);
     } else {
       setPasswordError("");
@@ -295,10 +273,6 @@ const SignUp = ({ profile }) => {
     setIdentifyNumberValid(value.length >= 7);
     console.log(identifyNumberValid);
   };
-  // useEffect(() => {
-  //   console.log(identifyNumberValid); // 유효성 상태가 변경될 때마다 콘솔에 출력
-  // }, [identifyNumberValid]);
-
   // 체크박스
   // 스킬 체크
   const skills = [
@@ -361,7 +335,6 @@ const SignUp = ({ profile }) => {
     pwdValid &&
     pwdConcord &&
     identifyNumberValid &&
-    // file &&
     privacyIsChecked &&
     privacyIsChecked2;
 

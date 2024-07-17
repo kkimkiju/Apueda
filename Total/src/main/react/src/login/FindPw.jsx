@@ -21,6 +21,10 @@ const Logo = styled.div`
   background-image: url(${logo});
   background-size: cover;
   background-position: center;
+  @media screen and (max-width: 1040px) {
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 const FindPw = () => {

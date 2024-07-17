@@ -1,11 +1,4 @@
-import {
-  Container,
-  Box,
-  Contents,
-  InputContainer,
-  LongInput,
-  SubmitBtn,
-} from "./style/SignFormStyle";
+import { Container, Box, Contents, SubmitBtn } from "./style/SignFormStyle";
 import logo from "../image/apueda-logo-black.png";
 import React, { useState } from "react";
 import styled from "styled-components";
@@ -18,6 +11,22 @@ const Logo = styled.div`
   background-image: url(${logo});
   background-size: cover;
   background-position: center;
+  @media screen and (max-width: 1040px) {
+    width: 100px;
+    height: 100px;
+  }
+`;
+const LongInput = styled.input`
+  width: 40%;
+  height: 40px;
+  margin-top: 26px;
+  background-color: rgba(0, 0, 0, 0.6);
+  @media screen and (max-width: 1260px) {
+    width: 280px;
+  }
+  @media screen and (max-width: 500px) {
+    width: 220px;
+  }
 `;
 
 const FindId = () => {
@@ -77,18 +86,14 @@ const FindId = () => {
         <Contents>
           <Logo />
           <h2>아이디 찾기</h2>
-          <InputContainer>
-            <LongInput
-              placeholder="이름"
-              value={name}
-              onChange={onChangeName}
-            />
-            <LongInput
-              placeholder="주민번호(앞 6자리, 뒤 1자리)"
-              value={formattedIdentityNumber}
-              onChange={onChangeIdentityNumber}
-            />
-          </InputContainer>
+
+          <LongInput placeholder="이름" value={name} onChange={onChangeName} />
+          <LongInput
+            placeholder="주민번호(앞 6자리, 뒤 1자리)"
+            value={formattedIdentityNumber}
+            onChange={onChangeIdentityNumber}
+          />
+
           <SubmitBtn onClick={findIdHandler}>찾기</SubmitBtn>
         </Contents>
       </Box>

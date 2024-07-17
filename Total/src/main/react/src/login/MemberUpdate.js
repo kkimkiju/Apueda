@@ -5,7 +5,6 @@ import {
   ProfileBox,
   InputContainer,
   LongInputContainer,
-  EmailBox,
   LongInput,
   SkillCheck,
   SkillContext,
@@ -92,16 +91,6 @@ const MemberUpdate = () => {
   const canvasRef = useRef(null);
   // 입력받은 이미지 파일 주소
   const handleFileInputChange = (e) => {
-    // const selectedFile = e.target.files?.[0];
-
-    // // 밑에꺼 크기 사이즈 변경하는 부분 오류나면 다시 복구 예정
-    // if (selectedFile) {
-    //   const objectUrl = URL.createObjectURL(selectedFile);
-    //   setImgSrc(objectUrl);
-    //   // 파이어베이스에 보내기위해 변수에 저장
-    //   setFile(selectedFile);
-    // }
-
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       const img = new Image();
@@ -169,9 +158,7 @@ const MemberUpdate = () => {
       /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}:;',.?/\\-]).{8,}$/; // 수정된 정규식
 
     if (!passwordRegex.test(newPassword)) {
-      setPasswordError(
-        "비밀번호는 숫자, 영어 소문자, 특수문자를 모두 포함하여 8자 이상이어야 합니다."
-      );
+      setPasswordError("숫자, 영어 소문자, 특수문자를 모두 포함 8자 이상");
       setPwdValid(false);
     } else {
       setPasswordError("");
@@ -299,12 +286,11 @@ const MemberUpdate = () => {
           </ProfileBox>
 
           <InputContainer>
-            <EmailBox>
-              <LongInputContainer>
-                <EmailTag>이메일</EmailTag>
-                <LongInput placeholder="이메일" value={email} disabled />
-              </LongInputContainer>
-            </EmailBox>
+            <LongInputContainer>
+              <EmailTag>이메일</EmailTag>
+              <LongInput placeholder="이메일" value={email} disabled />
+            </LongInputContainer>
+
             <LongInputContainer>
               <PasswordTag>비밀번호</PasswordTag>
               <LongInput
@@ -360,6 +346,7 @@ const MemberUpdate = () => {
                 disabled
               />
             </LongInputContainer>
+
             <SkillCheck>
               <p>사용스킬</p>
               {skills.map((skill, index) => (
@@ -379,7 +366,7 @@ const MemberUpdate = () => {
             </TextBox>
           </InputContainer>
           <SubmitBtn onClick={onSubmit} disabled={isFormValid ? false : true}>
-            가입
+            변경
           </SubmitBtn>
         </Contents>
       </Box>

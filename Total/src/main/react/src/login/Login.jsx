@@ -12,23 +12,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  & input {
-    border-radius: 8px;
-    color: #ffffff;
-  }
-  & button {
-    border-radius: 8px;
-    cursor: pointer;
-    &:hover {
-      /* background-color: #c72519; */
-      background-color: white; /* hover 시 배경색 변경 */
-      border: 2px solid black;
-      color: black;
-    }
-    &:active {
-      background-color: #87160e; /* 클릭 시 배경색 변경 */
-    }
-  }
+  min-width: 450px;
 `;
 const Box = styled.div`
   width: 60%;
@@ -38,7 +22,6 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
   border: 3px solid #ff5353;
-  /* background: rgba(255, 83, 53, 0.8); */
   background-color: #ff5353;
   border-radius: 10px;
   padding: 30px;
@@ -51,6 +34,28 @@ const Contents = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+  & input {
+    border-radius: 8px;
+    color: #ffffff;
+    @media screen and (max-width: 1040px) {
+      width: 280px;
+    }
+    @media screen and (max-width: 500px) {
+      width: 220px;
+    }
+  }
+  & button {
+    border-radius: 8px;
+    cursor: pointer;
+    &:hover {
+      background-color: white;
+      border: 2px solid black;
+      color: black;
+    }
+    &:active {
+      background-color: #87160e;
+    }
+  }
 `;
 const Logo = styled.div`
   width: 150px;
@@ -58,6 +63,10 @@ const Logo = styled.div`
   background-image: url(${logo});
   background-size: cover;
   background-position: center;
+  @media screen and (max-width: 1040px) {
+    width: 100px;
+    height: 100px;
+  }
 `;
 const InputContainer = styled.div`
   display: flex;
@@ -69,11 +78,17 @@ const InputContainer = styled.div`
 const LoginTxt = styled.div`
   width: 40%;
   height: auto;
-  text-align: left;
   margin-bottom: -20px;
   color: white;
+  & h2 {
+    @media screen and (max-width: 1040px) {
+      text-align: center;
+    }
+    @media screen and (max-width: 500px) {
+      text-align: center;
+    }
+  }
 `;
-
 const InputBox = styled.input`
   display: flex;
   flex-direction: column;
@@ -87,19 +102,38 @@ const InputBox = styled.input`
 const ButtonBox = styled.div`
   display: flex;
   width: 40%;
-  justify-content: right;
-`;
-const FindBtn = styled.button`
-  border: 0;
-  background: none;
-  display: flex;
-  color: white;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  & .findBtn {
+    border: 0;
+    background: none;
+    display: inline-flex;
+    color: white;
+    margin-right: 5px;
+    white-space: nowrap;
+    &:hover {
+      background: none;
+      border: none;
+    }
+  }
+  @media screen and (max-width: 1040px) {
+    justify-content: center;
+  }
+  @media screen and (max-width: 500px) {
+    justify-content: center;
+  }
 `;
 const SummitBtnBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 40%;
   gap: 10px;
+  @media screen and (max-width: 1040px) {
+    width: 280px;
+  }
+  @media screen and (max-width: 500px) {
+    width: 220px;
+  }
 `;
 const LoginBtn = styled.button`
   border: 0;
@@ -110,17 +144,8 @@ const LoginBtn = styled.button`
 const SignUpBtn = styled.button`
   border: 0;
   height: 40px;
-  /* background-color: #ff5353; */
   background-color: rgba(0, 0, 0, 0.6);
   color: #ffffff;
-  /* border: 2px solid black; */
-`;
-const ThirdLoginBtn = styled.button`
-  border: 0;
-  height: 40px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.6);
-  /* background-color: #ffffde; */
 `;
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -139,7 +164,6 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       const rsp = await AxiosApi.login(email, password);
-      localStorage.setItem("email", email); // 삭제 예정
       setAccToken(rsp.data.accessToken);
       localStorage.setItem("accessToken", rsp.data.accessToken);
       localStorage.setItem("refreshToken", rsp.data.refreshToken);
@@ -181,9 +205,13 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <ButtonBox>
-              <FindBtn onClick={handleFindId}>아이디찾기</FindBtn>
+              <button onClick={handleFindId} className="findBtn">
+                아이디찾기
+              </button>
               <span> / </span>
-              <FindBtn onClick={handleFindPw}>비밀번호찾기</FindBtn>
+              <button onClick={handleFindPw} className="findBtn">
+                비밀번호찾기
+              </button>
             </ButtonBox>
           </InputContainer>
           <SummitBtnBox>

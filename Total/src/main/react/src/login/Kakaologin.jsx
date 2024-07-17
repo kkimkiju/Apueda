@@ -6,18 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserStore";
 import Addinfomodal from "../login/Addinfomodal";
 
-const Kalogbox = styled.div`
-  color: black;
-  font-size: 16px;
-  text-align: center;
-`;
-
 const Button = styled.button`
   border: 0;
   height: 40px;
   color: white;
   background-color: rgba(0, 0, 0, 0.6);
-  /* background-color: #ffffde; */
 `;
 
 const Kakaologin = () => {
@@ -157,7 +150,7 @@ const Kakaologin = () => {
   };
 
   return (
-    <Kalogbox>
+    <>
       <Button onClick={kakaoLogin}>카카오 로그인</Button>
 
       <Addinfomodal
@@ -166,7 +159,7 @@ const Kakaologin = () => {
         header="추가정보 입력"
         handleAddInfoConfirm={handleAddInfoConfirm} // onConfirm prop 추가
       />
-    </Kalogbox>
+    </>
   );
 };
 
