@@ -1,7 +1,6 @@
 package com.sick.apeuda.dto;
 
 import com.sick.apeuda.entity.Member;
-import com.sick.apeuda.entity.Project;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +13,4 @@ public class ApplyReqDto {
     private ProjectReqDto projectId;
     private Boolean applyStatus;
     private LocalDateTime applyTime;
-//    private String managerEmail;
-
 }

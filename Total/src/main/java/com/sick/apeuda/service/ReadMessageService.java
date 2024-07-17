@@ -1,8 +1,6 @@
 package com.sick.apeuda.service;
 
-import com.sick.apeuda.dto.FriendDto;
 import com.sick.apeuda.dto.ReadMessageDto;
-import com.sick.apeuda.entity.Friend;
 import com.sick.apeuda.entity.Member;
 import com.sick.apeuda.entity.ReadMessage;
 import com.sick.apeuda.repository.MemberRepository;
@@ -16,7 +14,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ReadMessageService {

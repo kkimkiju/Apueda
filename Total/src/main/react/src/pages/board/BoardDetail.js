@@ -33,6 +33,9 @@ const Title = styled.div`
   padding: 16px;
   font-size: 2rem;
   font-weight: bold;
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 const BoardTime = styled.div`
   display: flex;

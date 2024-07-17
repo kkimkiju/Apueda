@@ -43,16 +43,53 @@ const ListResult = styled.div`
   width: 46%;
   border-bottom: 4.5px solid #c1c1c1;
   border-right: 3px solid #c1c1c1;
-  height: auto;
+  height: 30%;
   background-color: ${(props) =>
     props.isRecruitmentComplete ? "rgba(128, 128, 128, 0.7)" : "#fffbfc"};
   opacity: ${(props) => (props.isRecruitmentComplete ? 0.7 : 1)};
-  justify-content: space-between;
+  justify-content: space-around;
   border-radius: 36px;
   padding: 23px;
   margin: 18px;
   flex-direction: column;
   position: relative;
+  @media screen and (max-width: 1400px) {
+    width: 44%;
+    height: 510px;
+    /* height: 520px; */
+    justify-content: space-around;
+    img {
+      width: auto;
+      height: 370px;
+    }
+  }
+  @media screen and (max-width: 1400px) {
+    width: 44%;
+    height: 510px;
+    /* height: 520px; */
+    justify-content: space-around;
+    img {
+      width: auto;
+      height: 370px;
+    }
+  }
+  @media screen and (max-width: 860px) {
+    display: flex;
+    width: 90%;
+    height: auto;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 500px) {
+    display: flex;
+    width: 90%;
+    /* height: 400px; */
+    justify-content: center;
+    img {
+      width: auto;
+      height: auto;
+    }
+  }
 `;
 const Content = styled.div`
   display: flex;
@@ -74,7 +111,7 @@ const Etc = styled.div`
   width: 10%;
   position: relative;
 `;
-const Button = styled.button`
+export const Button = styled.button`
   border: 0;
   color: #ffffff;
   background-color: #ff5353;
@@ -85,6 +122,11 @@ const Button = styled.button`
   height: auto;
   width: auto;
   overflow: hidden;
+  @media screen and (max-width: 500px) {
+    width: auto;
+    margin: 0;
+    font-size: 7px;
+  }
 `;
 const SearchList = ({ inputValue, skillArray }) => {
   const navigate = useNavigate();
@@ -196,7 +238,11 @@ const SearchList = ({ inputValue, skillArray }) => {
                   ))}
               </span>
               <ProfileInList>
-                <img src={project.profileImg} alt="profile" />
+                <img
+                  src={project.profileImg}
+                  alt="profile"
+                  style={{ width: "50px", height: "50px" }}
+                />
               </ProfileInList>
             </ProfileContainer>
             <Etc></Etc>

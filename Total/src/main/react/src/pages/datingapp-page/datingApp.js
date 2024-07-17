@@ -1,13 +1,16 @@
 // card.js
-import React, { useState, useEffect, useMemo, useRef, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useRef,
+  useContext,
+  useCallback,
+} from "react";
 import styled from "styled-components";
 import AxiosApi from "../../api/AxiosApi";
 import TinderCard from "react-tinder-card";
-import {
-  FaRegCircleCheck,
-  FaRegCircleXmark,
-  FaArrowRotateLeft,
-} from "react-icons/fa6";
+import { FaArrowRotateLeft } from "react-icons/fa6";
 import { UserContext } from "../../context/UserStore";
 import { useNavigate } from "react-router-dom";
 import defaultImage from "../../image/alien2.png";
@@ -25,13 +28,12 @@ function DatingApp() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [confirmAction, setConfirmAction] = useState(null);
-  // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
 
   //429 에러 핸들링
   const handleError = (error) => {
     if (error.response && error.response.status === 429) {
-      setShowLimitModal(true); 
+      setShowLimitModal(true);
     }
   };
   // 모달 관리
@@ -43,7 +45,14 @@ function DatingApp() {
     setShowLimitModal(false);
     navigate("/");
   };
-
+  // 스와이프 하고 남은 카드 갯수 관리
+  const childRefs = useMemo(
+    () =>
+      Array(cardList.length)
+        .fill(0)
+        .map((i) => React.createRef()),
+    [cardList.length]
+  );
   const handleConfirmYes = () => {
     if (confirmAction) {
       confirmAction();
@@ -54,10 +63,10 @@ function DatingApp() {
   const handleConfirmNo = () => {
     setShowConfirmModal(false);
     if (!isSubscribed) {
-      navigate("/");
+      // navigate("/");
     }
   };
-
+  // 1. 로그인 여부 확인 로그인 안 할시에 로그인 창으로 이동
   const navigate = useNavigate();
   const context = useContext(UserContext);
   const { loginStatus } = context;
@@ -65,15 +74,7 @@ function DatingApp() {
     if (!loginStatus) {
       navigate("/apueda/login");
     }
-  }, []);
-
-  const childRefs = useMemo(
-    () =>
-      Array(cardList.length)
-        .fill(0)
-        .map((i) => React.createRef()),
-    [cardList.length]
-  );
+  }, [loginStatus, navigate]);
 
   useEffect(() => {
     // 2. 정기구독여부 확인
@@ -81,12 +82,12 @@ function DatingApp() {
       try {
         const response = await AxiosApi.checkSubscribe();
         setIsSubscribed(response.data); // 구독 여부 상태 업데이트
+        console.log("정기구독여부 :", isSubscribed);
       } catch (error) {
         console.log(error);
       }
     };
     checkSubscription();
-
 
     // 3.유저정보 가져오기
     const showUserInfo = async () => {
@@ -101,77 +102,84 @@ function DatingApp() {
         }));
         setCardList(userList); // 변환된 데이터를 카드에 넣어줌
         setCurrentIndex(userList.length - 1);
-        currentIndexRef.current = userList.length - 1; 
-      } catch (error) { // 백앤드에서도 구독여부를 확인하여 1회 이용후 다시 페이지에 접속하면 429 error 반환해줌
+        console.log(`카드리트스트 :`, userList);
+        currentIndexRef.current = userList.length - 1;
+      } catch (error) {
+        // 백앤드에서도 구독여부를 확인하여 1회 이용후 다시 페이지에 접속하면 429 error 반환해줌
         console.log(error);
-        if (error.response){
-          switch (error.response.status){
-            case 429:
-              setShowLimitModal(true); 
-              break;
-          }
-        }
+        handleError(error);
       }
     };
     showUserInfo();
   }, [myEmail]);
+
+  const sendFriendRequests = useCallback(async () => {
+    for (const user of likedList) {
+      try {
+        await AxiosApi.friendRequest(myEmail, user.email);
+      } catch (error) {
+        console.error("Error sending friend request:", error);
+      }
+    }
+    for (const user of unlikedList) {
+      try {
+        await AxiosApi.unlikeFriendRequest(myEmail, user.email);
+      } catch (error) {
+        console.error("Error sending unlike request:", error);
+      }
+    }
+  }, [likedList, unlikedList, myEmail]);
+
+  const handleEndOfCards = useCallback(() => {
+    setTimeout(() => {
+      if (isSubscribed) {
+        setModalMessage(
+          "카드가 모두 소진되었습니다. 친구신청후 새카드를 받겠습니까?"
+        );
+        setConfirmAction(() => async () => {
+          await sendFriendRequests();
+          window.location.reload();
+        });
+      } else if (!isSubscribed) {
+        setModalMessage(
+          "카드가 모두 소진되었습니다. 친구신청 후 홈페이지로 이동하시겠습니까?"
+        );
+        setConfirmAction(() => async () => {
+          await sendFriendRequests();
+          navigate("/");
+          setHasUsedFreeTrial(true);
+        });
+      }
+      setShowConfirmModal(true);
+    }, 1500);
+    // setTimeout(() => {
+    //   if (!isSubscribed && hasUsedFreeTrial) {
+    //     setModalMessage("더이상 카드가 없습니다. 24시간 후에 다시 이용해 주세요.");
+    //     setShowConfirmModal(true);
+    //     setConfirmAction(() => () => navigate("/"));
+    //   } else if (!isSubscribed) {
+    //     setModalMessage("모든 친구 신청을 보내고 메인페이지로 이동하시겠습니까? (취소 시 페이지이동 X)");
+    //     setConfirmAction(() => async () => {
+    //       await sendFriendRequests();
+    //       navigate("/");
+    //       setHasUsedFreeTrial(true);
+    //     });
+    //   } else {
+    //     setModalMessage("카드가 모두 소진되었습니다. 추가카드를 받겠습니까?");
+    //     setConfirmAction(() => async () => {
+    //       await sendFriendRequests();
+    //       window.location.reload();
+    //     });
+    //   }
+    //   setShowConfirmModal(true);
+    // }, 1500);
+  }, [isSubscribed, hasUsedFreeTrial, sendFriendRequests, navigate]);
+
   useEffect(() => {
     if (currentIndex === -1) {
-      // 카드가 더이상 없으면 마지막카드가 사라지고 알림 출력위해 지연시간 설정
-      setTimeout(() => {
-        // 비구독자가 무료 사용 이미 한 경우
-        if (!isSubscribed && hasUsedFreeTrial) {
-          setModalMessage("더이상 카드가 없습니다. 24시간 후에 다시 이용해 주세요.");
-          setShowConfirmModal(true);
-          setConfirmAction(() => () => navigate("/"));
-        } else {
-          if (!isSubscribed) {
-            setModalMessage(
-              "모든 친구 신청을 보내고 메인페이지로 이동하시겠습니까? (취소 시 페이지이동 X)"
-            );
-            setConfirmAction(() => async () => {
-              likedList.forEach(async (user) => {
-                try {
-                  await AxiosApi.friendRequest(myEmail, user.email);
-                } catch (error) {
-                  console.error("Error sending friend request:", error);
-                }
-              });
-              unlikedList.forEach(async (user) => {
-                try {
-                  await AxiosApi.unlikeFriendRequest(myEmail, user.email);
-                } catch (error) {
-                  console.error("Error sending friend request:", error);
-                }
-              });
-              navigate("/");
-              setHasUsedFreeTrial(true);
-            });
-          } else {
-            setModalMessage("추가로 유저를 확인하겠습니까?");
-            setConfirmAction(() => async () => {
-              likedList.forEach(async (user) => {
-                try {
-                  await AxiosApi.friendRequest(myEmail, user.email);
-                } catch (error) {
-                  console.error("Error sending friend request:", error);
-                }
-              });
-              unlikedList.forEach(async (user) => {
-                try {
-                  await AxiosApi.unlikeFriendRequest(myEmail, user.email);
-                } catch (error) {
-                  console.error("Error sending friend request:", error);
-                }
-              });
-              window.location.reload();
-            });
-          }
-          setShowConfirmModal(true);
-        }
-      }, 1500);
+      handleEndOfCards();
     }
-  }, [currentIndex, likedList, unlikedList, myEmail, isSubscribed, hasUsedFreeTrial]);
+  }, [currentIndex, handleEndOfCards]);
 
   const swiped = (direction, nameToDelete, index) => {
     setLastDirection(direction);
@@ -201,7 +209,7 @@ function DatingApp() {
   const canSwipe = currentIndex >= 0;
   const swipe = async (dir) => {
     if (canSwipe && currentIndex < cardList.length) {
-      await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
+      await childRefs[currentIndex].current.swipe(dir);
     }
   };
 
@@ -229,41 +237,45 @@ function DatingApp() {
     <Body>
       <PhoneFrame>
         <Title>
-          <div>매일 새롭게 만나는 5명의 아프다맨~</div>
+          <div>매일 새롭게 5명의 인연찾기</div>
         </Title>
         <Window>
           {cardList.map((character, index) => {
-          const skills = character.skill.split(",");
-          const firstSkill = skills[0];
-          const remainingSkills = skills.length - 1;
-          return (
-            
-            <TinderCard
-              ref={childRefs[index]}
-              className="swipe"
-              key={character.nickname}
-              onSwipe={(dir) => swiped(dir, character.nickname, index)}
-              onCardLeftScreen={() => outOfFrame(character.nickname, index)}
-            >
-              <CardImage imageUrl={character.url || defaultImage} className="card">
-                <SpanBox>
-                  <Span>
-                    {character.nickname}
-                    <br />
-                  </Span>
-                  <Span>
-                  # {firstSkill}
-                  {remainingSkills > 0 && ` (+${remainingSkills})`}
-                    <br />
-                  </Span>
-                  <Span>
-                    {character.info}
-                    <br />
-                  </Span>
-                </SpanBox>
-              </CardImage>
-            </TinderCard>
-            )})}
+            const skills = character.skill.split(",").join(", ");
+            // const firstSkill = skills[0];
+            // const remainingSkills = skills.length - 1;
+            return (
+              <TinderCard
+                ref={childRefs[index]}
+                className="swipe"
+                key={character.nickname}
+                onSwipe={(dir) => swiped(dir, character.nickname, index)}
+                onCardLeftScreen={() => outOfFrame(character.nickname, index)}
+              >
+                <CardImage
+                  imageUrl={character.url || defaultImage}
+                  className="card"
+                >
+                  <SpanBox>
+                    <Span>
+                      {character.nickname}
+                      <br />
+                    </Span>
+                    <Span># skill</Span>
+                    <Span>
+                      <Skill>{skills}</Skill>
+                      {/* {remainingSkills > 0 && ` (+${remainingSkills})`} */}
+                      <br />
+                    </Span>
+                    <Span>
+                      {character.info}
+                      <br />
+                    </Span>
+                  </SpanBox>
+                </CardImage>
+              </TinderCard>
+            );
+          })}
         </Window>
         <ButtonArea>
           <Buttons>
@@ -330,7 +342,7 @@ const Body = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     width: 95vw;
     height: 100svh;
   }
@@ -377,7 +389,7 @@ const PhoneFrame = styled.div`
       transform: scale(1, 1);
     }
   }
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     width: 78vw;
     height: 90vh;
     border-radius: 5dvi;
@@ -385,8 +397,9 @@ const PhoneFrame = styled.div`
 `;
 // 앱모양 창 내부 와이드값 Window, Title, BottonArea
 const widthvalue = "28.5vw";
-const mobilewidthvalue = "73vw"
+const mobilewidthvalue = "73vw";
 const Title = styled.div`
+  font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -399,10 +412,12 @@ const Title = styled.div`
   & div {
     font-size: 1.5vw;
   }
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     width: ${mobilewidthvalue};
     height: 6vh;
-    & div {font-size: 4vw};
+    & div {
+      font-size: 4vw;
+    }
   }
 `;
 
@@ -426,7 +441,7 @@ const Window = styled.div`
   & > :nth-child(3) {
     background-image: linear-gradient(to right, #6a11cb 10%, #2575fc 100%);
   }
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     width: ${mobilewidthvalue};
     height: 82vh;
   }
@@ -438,17 +453,20 @@ const CardImage = styled.div`
   overflow: hidden;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); // 절대위치의 카드를 가운데 정렬하기 위해 사용
+  transform: translate(
+    -50%,
+    -50%
+  ); // 절대위치의 카드를 가운데 정렬하기 위해 사용
   width: 20vw;
   height: 55vh;
   border-radius: 2vh;
   box-sizing: border-box;
-  box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 2vw 0px rgba(0, 0, 0, 0.3);
   background-size: cover;
   background-position: center;
   background-repeat: space;
   background-image: url(${(props) => props.imageUrl});
-  @media (max-width:500px) {
+  @media (max-width: 500px) {
     width: 70vw;
     height: 65vh;
   }
@@ -461,7 +479,7 @@ const ButtonArea = styled.div`
   white-space: nowrap;
   margin-bottom: 1vh;
   padding-bottom: 3vh;
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     width: ${mobilewidthvalue};
     height: 10vh;
     margin-bottom: 2vh;
@@ -502,11 +520,11 @@ const Buttons = styled.div`
   :hover {
     transform: scale(1.05);
   }
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     width: ${mobilewidthvalue};
     height: 5vh;
     margin-bottom: 1vh;
-    & button{
+    & button {
       width: 10vw;
       height: 6vh;
       font-size: 5vmin;
@@ -525,9 +543,8 @@ const ResultBox = styled.div`
   animation-duration: 800ms;
   flex-shrink: 1; /* 버튼이 부모 크기에 맞춰 작아지도록 설정 */
   flex-grow: 1;
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     font-size: 4vmin;
-    
   }
 `;
 //카드 내부 정보 정렬
@@ -549,30 +566,38 @@ const SpanBox = styled.div`
     rgba(0, 0, 0, 0.8) 100%
   ); // %는 처음기준 위치
 
-  & span:nth-child(1){
+  & span:nth-child(1) {
     font-size: 2vw;
     margin-bottom: 1vh;
   }
-  & span:nth-child(2){
-    font-size: 1.8vw;
+  & span:nth-child(2) {
+    font-size: 1.2vw;
+    margin-bottom:0.2vh;
+  }
+  & span:nth-child(3) {
+    font-size: 0.7vw;
     margin-bottom: 1vh;
   }
-  & span:nth-child(3){
+  & span:nth-child(4) {
     font-size: 1vw;
     margin-bottom: 5vh;
   }
-  @media (max-width:500px){
-    & span:nth-child(1){
-    font-size: 8vw;
-    margin-bottom: 1vh;
-  }
-  & span:nth-child(2){
-    font-size: 5vw;
-    margin-bottom: 1vh;
-  }
-  & span:nth-child(3){
-    font-size: 4vw;
-  }
+  @media (max-width: 500px) {
+    & span:nth-child(1) {
+      font-size: 8vw;
+      margin-bottom: 1vh;
+    }
+    & span:nth-child(2) {
+      font-size: 5vw;
+      margin-bottom: 0.5vh;
+    }
+    & span:nth-child(3) {
+      font-size: 2.5vw;
+      margin-bottom: 1vh;
+    }
+    & span:nth-child(4) {
+      font-size: 4vw;
+    }
   }
 `;
 const Span = styled.span`
@@ -581,11 +606,21 @@ const Span = styled.span`
   justify-content: left;
   text-align: left;
   margin-left: 1vw;
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     margin-left: 5vw;
   }
 `;
 
+const Skill = styled.div`
+  display: flex;
+  align-items: center;
+  text-align: center;
+  border-radius: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 10px;
+  background-color: #ff5353;
+`;
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -618,7 +653,7 @@ const ModalContent = styled.div`
     cursor: pointer;
     margin: 0 2vw;
   }
-  @media (max-width: 500px){
+  @media (max-width: 500px) {
     font-size: 2.5vw;
     width: 80vw;
   }

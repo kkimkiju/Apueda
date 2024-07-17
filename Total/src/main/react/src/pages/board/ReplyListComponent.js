@@ -26,7 +26,7 @@ const Profile = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  width: 50%;
+  /* width: 50%; */
   height: 60px;
 `;
 const Input = styled.textarea`
@@ -41,6 +41,9 @@ const Input = styled.textarea`
   font-size: 1rem;
   z-index: 2;
 
+  @media screen and (max-width: 860px) {
+    font-size: 0.8rem;
+  }
   &:focus {
     border: 0.8px solid #000;
     outline: none; /* 추가: 기본 포커스 아웃라인 제거 */
@@ -81,6 +84,9 @@ const PageButton = styled.div`
   background-color: ${(props) => (props.active ? "#FFD6D6" : "")};
   border-radius: 36px;
   width: 32px;
+  @media screen and (max-width: 860px) {
+    width: 16px;
+  }
 `;
 const NoReply = styled.div`
   display: flex;
@@ -94,26 +100,6 @@ const Setting = styled.div`
   align-items: center;
 `;
 
-const Dropdown = styled.div`
-  position: absolute;
-  top: 14px;
-  left: -85px;
-  border-radius: 7px;
-  padding: 10px;
-  background-color: #ff5353;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100px;
-  padding: 12px;
-`;
-const ModifyBtt = styled.button`
-  background-color: #ffffff;
-  border-radius: 10px;
-  border: none;
-  padding: 5px;
-  font-size: 14px;
-`;
 const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
   const [replies, setReplies] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -262,35 +248,8 @@ const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
                 <NickName>{reply.nickName}</NickName>
                 <ReplyContent>{reply.content}</ReplyContent>
                 <RegDate style={{ fontSize: "0.8rem", whiteSpace: "nowrap" }}>
-                  {" "}
                   {reply.regDate}
                 </RegDate>
-                {/* <Setting>
-                  {email === replies.memberId.email ? (
-                    <div style={{ position: "relative" }}>
-                      <div onClick={toggleDropdown}>...</div>
-
-                      {isDropdownOpen && (
-                        <Dropdown ref={modalRef}>
-                          <ModifyBtt
-                            onClick={() => handleModfiy()}
-                            value={isModify}
-                          >
-                            수정하기
-                          </ModifyBtt>
-                          <ModifyBtt
-                            onClick={() => handleDelete()}
-                            value={!isModify}
-                          >
-                            삭제하기
-                          </ModifyBtt>
-                        </Dropdown>
-                      )}
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                </Setting> */}
               </div>
             </ReplyList>
           ))
@@ -302,9 +261,7 @@ const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
           </ReplyList>
         )}
         <PageNum>
-          <Button onClick={prev} style={{ width: "40px", marginRight: "0px" }}>
-            &lt;
-          </Button>
+          <Button onClick={prev}>&lt;</Button>
           {replies.length === 0 ? (
             <PageButton> 1 </PageButton>
           ) : (
@@ -327,9 +284,7 @@ const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
               }
             )
           )}
-          <Button onClick={next} style={{ width: "40px" }}>
-            &gt;
-          </Button>
+          <Button onClick={next}>&gt;</Button>
         </PageNum>
       </ReplyListContainer>
     </ReplyContainer>

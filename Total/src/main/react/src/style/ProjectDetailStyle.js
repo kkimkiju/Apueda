@@ -13,6 +13,10 @@ export const UpHead = styled.div`
   padding: 12px;
   border: solid #b9b9b9;
   border-width: 0 0 1px;
+
+  @media screen and (max-width: 860px) {
+    padding: 0;
+  }
 `;
 
 export const UnderHead = styled.div`
@@ -22,6 +26,10 @@ export const UnderHead = styled.div`
   border: solid #b9b9b9;
   border-width: 0 0 1px;
   padding: 12px;
+
+  @media screen and (max-width: 860px) {
+    padding: 0;
+  }
 `;
 
 export const Body = styled.div`
@@ -37,7 +45,9 @@ export const Footer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 16px;
+
+  @media screen and (max-width: 500px) {
+  }
 `;
 
 export const ReplyContainer = styled.div`
@@ -81,7 +91,7 @@ export const ReplyListContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 16px;
+  padding: 16px 0;
 `;
 
 export const PageNum = styled.div`

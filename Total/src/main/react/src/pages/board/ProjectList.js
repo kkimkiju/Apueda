@@ -23,6 +23,9 @@ const ListContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 16px;
+  @media screen and (max-width: 500px) {
+    padding: 0;
+  }
 `;
 
 const ContentNameList = styled.div`
@@ -32,23 +35,43 @@ const ContentNameList = styled.div`
   width: 100%;
   height: 48px;
   color: #ff5353;
-  font-size: 0.9rem;
+  padding: 0 10px;
   list-style-type: none;
   border-bottom: 0.5px solid #c1c1c1;
 `;
 
 const Column = styled.div`
-  margin: 0 16px;
   list-style-type: none;
   padding: 9px;
+  @media screen and (max-width: 860px) {
+    padding: 0;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 9px;
+  }
 `;
 
 const List = styled.div`
   width: 100%;
   list-style-type: none;
-  padding: 18px;
+
   background-color: #ff5353;
   /* position: relative; */
+  & .none-sub {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    @media screen and (max-width: 860px) {
+      display: flex;
+      flex-direction: row;
+      height: auto;
+      width: 100%;
+      justify-content: center;
+    }
+    @media screen and (max-width: 500px) {
+    }
+  }
 `;
 
 const ListResult = styled.div`
@@ -60,18 +83,36 @@ const ListResult = styled.div`
   background-color: ${(props) =>
     props.isRecruitmentComplete ? "rgba(128, 128, 128, 0.7)" : "#fffbfc"};
   opacity: ${(props) => (props.isRecruitmentComplete ? 0.7 : 1)};
-  justify-content: space-between;
+  justify-content: space-around;
   border-radius: 36px;
   padding: 23px;
   margin: 18px;
   flex-direction: column;
   position: relative;
   @media screen and (max-width: 1400px) {
-    /* width: 45%; */
+    width: 44%;
+    height: 510px;
+    /* height: 520px; */
+    justify-content: space-around;
+  }
+  @media screen and (max-width: 860px) {
+    display: flex;
+    width: 90%;
+    height: auto;
+    justify-content: center;
   }
   img {
     width: auto;
     height: 370px;
+  }
+  @media screen and (max-width: 500px) {
+    display: flex;
+    width: 90%;
+    height: 400px;
+    justify-content: center;
+    img {
+      height: 65%;
+    }
   }
 `;
 
@@ -142,6 +183,11 @@ export const Button = styled.button`
   height: auto;
   width: auto;
   overflow: hidden;
+  @media screen and (max-width: 500px) {
+    width: auto;
+    margin: 0;
+    font-size: 7px;
+  }
 `;
 const Input = styled.input`
   width: 100%;
@@ -262,26 +308,34 @@ const ProjectList = () => {
       <ListContainer>
         {isSearchModal && <ProjectSearchBar isOpen={isSearchModal} />}
         <ContentNameList>
-          <DropdownMenu onSkillClick={handleSkillClick}>
-            <Column> 스킬필터 </Column>
-          </DropdownMenu>
-
+          {substatus === "만료" || substatus === null ? (
+            <Button> 스킬필터 </Button>
+          ) : (
+            <DropdownMenu onSkillClick={handleSkillClick}>
+              <Column> 스킬필터 </Column>
+            </DropdownMenu>
+          )}
           {/* <Column onClick={OpenSearchModal}>
             스킬필터
             {isSearchModal && <ProjectSearchBar isOpen={isSearchModal} />}
           </Column> */}
-          <Column style={{ width: "30%" }}>
-            <Input placeholder="제목 검색" onChange={handleSearch} />
-          </Column>
+          {substatus === "만료" || substatus === null ? (
+            <Column>
+              구독하면 7개 이상의 결과물과 검색 기능을 사용할 수 있습니다.
+            </Column>
+          ) : (
+            <Column style={{ width: "30%" }}>
+              <Input placeholder="제목 검색" onChange={handleSearch} />
+            </Column>
+          )}
           {/* <Column>제목</Column> */}
           <Column>
             <Button onClick={sortByCreatedAt}>등록일자</Button>
           </Column>
         </ContentNameList>
         <List>
-          {/* {substatus === "만료" || substatus === null ? ( */}
-          {substatus ? (
-            <>
+          {substatus === "만료" || substatus === null ? (
+            <div style={{}} className="none-sub">
               {projectList.map((project, index) => (
                 <ListResult
                   key={index}
@@ -328,7 +382,7 @@ const ProjectList = () => {
                   <Etc></Etc>
                 </ListResult>
               ))}
-            </>
+            </div>
           ) : (
             <>
               {!inputValue ? (
@@ -340,7 +394,7 @@ const ProjectList = () => {
                   style={{
                     display: "flex",
                     flexWrap: "wrap",
-                    justifyContent: "space-between",
+                    justifyContent: "center",
                   }}
                 >
                   {projectList.map((project, index) => (
@@ -399,7 +453,7 @@ const ProjectList = () => {
                   style={{
                     display: "flex",
                     flexWrap: "wrap",
-                    justifyContent: "space-between",
+                    justifyContent: "center",
                   }}
                 >
                   <SearchList inputValue={inputValue} skillArray={clickArray} />

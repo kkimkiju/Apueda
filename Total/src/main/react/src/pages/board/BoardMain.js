@@ -16,6 +16,15 @@ const BoardLayout = styled.div`
   @media screen and (max-width: 1400px) {
     margin: 0 10vw;
   }
+
+  @media screen and (max-width: 860px) {
+    margin: 0 5vw;
+    font-size: 10px;
+  }
+  @media screen and (max-width: 500px) {
+    margin: 0;
+    width: 500px;
+  }
 `;
 const Container = styled.div`
   display: flex;
@@ -27,6 +36,9 @@ const Container = styled.div`
   border: 5px solid #ff5353;
   border-radius: 37px;
   background-color: #ff5353;
+  @media screen and (max-width: 500px) {
+    border-radius: 30px 30px 0 0;
+  }
 `;
 const BoardMain = () => {
   const [isClick, setIsClick] = useState({ a: true, b: false });

@@ -119,7 +119,7 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
       customer_uid: buyer_email,
       amount: 10, // 결제 금액
       buyer_id: buyer_email, // 구매자 ID 설정
-      m_redirect_url: "/apueda", // 결제 완료 후 이동할 페이지 URL
+      m_redirect_url: "http://localhost:3000/apueda", // 결제 완료 후 이동할 페이지 URL
     };
 
     // 3. IAMPORT 토큰 요청

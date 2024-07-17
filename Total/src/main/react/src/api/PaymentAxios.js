@@ -2,7 +2,7 @@ import axios from "axios";
 import { SiNamecheap } from "react-icons/si";
 import AxiosInstance from "./AxiosInstance";
 
-const Apueda_Domain = "";
+const Apueda_Domain = "http://localhost:8118";
 
 const PaymentApi = {
   // 결재내역 저장

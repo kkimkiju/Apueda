@@ -18,11 +18,7 @@ public interface ChatManageRepository extends JpaRepository<ChatManage, Long> {
     Optional<ChatManage> findByChatRoomAndMemberAndHost(ChatRoom chatRoom, Member member, boolean host); // 채팅방에 입장해있는 유저이고 호스트인지 DB 확인
     List<ChatManage> findByChatRoom(ChatRoom chatRoom);
 
-    // 첫 번째 쿼리: member_id로 ChatManage ID 조회
-//    @Query("SELECT c.id FROM ChatManage c WHERE c.member.id = :memberId")
-//    List<Long> findIdsByMemberId(@Param("memberId") String memberId);
-//
-//    // 두 번째 쿼리: 조회된 ID로 ChatManage 전체 데이터 조회
+
     @Query("SELECT c.chatRoom.roomId FROM ChatManage c WHERE c.member.id = :memberId")
     List<String> findByEmail(@Param("memberId") String memberId);
 

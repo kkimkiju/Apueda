@@ -52,7 +52,7 @@ const Footer = () => {
           개인정보처리방침
         </Terms>
       </Box>
-      <Box style={{ marginBottom: "15px" }}>
+      {/* <Box style={{ marginBottom: "15px" }}>
         <a
           onClick={front}
           style={{
@@ -76,7 +76,7 @@ const Footer = () => {
           <FaSquareGithub size={32} color="black" />
           <HoverMessage1 isHovered={isHovered1}>back</HoverMessage1>
         </a>
-      </Box>
+      </Box> */}
       <Item>(주) 아프다</Item>
 
       <Box style={{ flexDirection: "column" }}>

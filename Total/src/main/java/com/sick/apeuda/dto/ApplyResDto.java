@@ -14,7 +14,6 @@ public class ApplyResDto {
     private Member applicant;
     private Long projectId;
     private Boolean applyStatus;
-    //private LocalDateTime applyTime;
     private Member managerId; // 프로젝트 생성자 이름
     private String projectName;
 

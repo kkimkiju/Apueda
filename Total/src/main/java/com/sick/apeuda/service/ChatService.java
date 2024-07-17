@@ -291,8 +291,10 @@ public class ChatService {
         return openChatRooms;
     }
     // 오픈채팅방 전체 리스트 찾기
-    public List<ChatRoom> getOpenchatList (boolean postType) {
-        return chatRoomRepository.findByPostType(postType);
+    public List<ChatRoom> getOpenchatList(boolean postType) {
+        return chatRoomRepository.findByPostType(postType).stream()
+                .filter(chatRoom -> chatRoom.getCurrentCount() > 0)
+                .collect(Collectors.toList());
     }
 
 

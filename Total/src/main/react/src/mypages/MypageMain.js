@@ -114,7 +114,7 @@ const MypageMain = () => {
             나의 프로젝트
           </Button>
           <Button as={Link} to="/apueda/chatmanage">
-            나의 오픈 채팅방
+            오픈 채팅방
           </Button>
           <Button as={Link} to="/apueda/mypage/mywrite">
             내가 쓴 글

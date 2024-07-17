@@ -10,12 +10,22 @@ export const Title = styled.input`
   &:focus {
     outline: none;
   }
+  @media screen and (max-width: 500px) {
+    padding: 6px;
+    font-size: 1rem;
+  }
 `;
 
 export const InputButtonSection = styled.div`
   display: flex;
   width: 85%;
   padding: 12px 32px;
+  @media screen and (max-width: 768px) {
+    padding: 6px 16px;
+  }
+  @media screen and (max-width: 500px) {
+    padding: 6px;
+  }
 `;
 
 export const Button = styled.button`
@@ -23,12 +33,14 @@ export const Button = styled.button`
   color: #ffffff;
   background-color: #ff5353;
   border-radius: 26px;
-  margin-right: 16px;
+  margin: 0 10px;
   height: 32px;
-  width: 72px;
+  width: 40px;
   overflow: hidden;
   &:last-child {
-    margin-right: 0;
+    /* margin-right: 0; */
+  }
+  @media screen and (max-width: 860px) {
   }
 `;
 
@@ -36,6 +48,10 @@ export const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   width: 40%;
+  padding: 16px;
+  @media screen and (max-width: 500px) {
+    padding: 8px;
+  }
 `;
 
 export const ConfirmButton = styled.button`
@@ -45,6 +61,11 @@ export const ConfirmButton = styled.button`
   border: 5px solid #ff5353;
   width: 100px;
   height: 42px;
+
+  @media screen and (max-width: 500px) {
+    width: 70px;
+    height: 35px;
+  }
 `;
 
 export const ContentContainer = styled.div`
@@ -58,6 +79,9 @@ export const ContentContainer = styled.div`
   align-items: center;
   justify-content: space-evenly;
   padding: 16px;
+  @media screen and (max-width: 500px) {
+    padding: 0px;
+  }
 `;
 
 export const Top = styled.div`
@@ -66,6 +90,10 @@ export const Top = styled.div`
   font-size: 1.5rem;
   bottom: 1rem;
   position: relative;
+  @media screen and (max-width: 500px) {
+    bottom: 0;
+    font-size: 1rem;
+  }
 `;
 
 export const Container = styled.div`
@@ -74,6 +102,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 16px;
+  @media screen and (max-width: 500px) {
+    width: 90%;
+    padding: 18px 0;
+  }
 `;
 
 export const DropdownInput = styled.div`
@@ -116,6 +148,9 @@ export const Content = styled.textarea`
   padding: 32px;
   font-size: 1.2rem;
   overflow: auto;
+  @media screen and (max-width: 500px) {
+    padding: 6px;
+  }
   &:focus {
     outline: none;
   }

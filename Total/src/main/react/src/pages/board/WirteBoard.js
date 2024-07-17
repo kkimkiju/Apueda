@@ -16,8 +16,6 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import styled from "styled-components";
 const Content = styled.div`
-  padding-bottom: 16px;
-
   button:nth-child(n + 8):nth-child(-n + 13) {
     display: none;
   }

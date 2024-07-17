@@ -7,6 +7,9 @@ export const HeadContainer = styled.div`
   height: 54px;
   background-color: #ff5353;
   border-radius: 30px 30px 0 0;
+  @media screen and (max-width: 500px) {
+    height: 32px;
+  }
 `;
 
 export const SelectBoardButton = styled.button`

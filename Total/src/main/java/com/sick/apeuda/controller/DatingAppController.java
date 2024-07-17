@@ -6,12 +6,15 @@ import com.sick.apeuda.dto.SubscriptionDto;
 import com.sick.apeuda.entity.Member;
 import com.sick.apeuda.service.DatingAppService;
 import com.sick.apeuda.service.FriendService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/datingapp")
 public class DatingAppController {
@@ -46,8 +49,11 @@ public class DatingAppController {
     }
     // 구독 여부 확인
     @PostMapping("/check-subscribe")
-    public ResponseEntity<Boolean> checkSubscriptionStatus(@RequestParam("accessToken") String accessToken) {
+    public ResponseEntity<Boolean> checkSubscriptionStatus(@RequestBody Map<String, String> request) {
+        String accessToken = request.get("accessToken");
+        log.info("Received AccessToken: " + accessToken); // 프론트로부터 토큰 받는지 확인
         boolean isSubscribed = datingAppService.checkSubscriptionStatus(accessToken);
+        log.info("Subscription status: " + isSubscribed); // 구독 여부 로그 추가
         return ResponseEntity.ok(isSubscribed);
     }
 

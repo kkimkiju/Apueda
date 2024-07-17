@@ -5,6 +5,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import AxiosApi from '../../api/AxiosApi';
 import { connectWebSocket, sendMessage } from '../../api/StompClient'; // 수정된 부분
 import { FaPaperPlane, FaAngleLeft } from 'react-icons/fa';
+import defaultImage from '../../image/person-icon2.png';
 const ChatRoom = () => {
   const { roomId } = useParams(); // roomId 정보를 가져옴
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const ChatRoom = () => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [isConnected, setIsConnected] = useState(false);
+  const [render, setRender] =useState(0); //렌더링을 위한 상태 추가
   const messagesEndRef = useRef(null);
   const stompClientRef = useRef(null);
 
@@ -54,7 +56,7 @@ const ChatRoom = () => {
         stompClientRef.current.deactivate();
       }
     };
-  }, [roomId]);
+  }, [roomId, render]);
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -63,7 +65,7 @@ const ChatRoom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = (e) => { // 메세지 전송할때 마다 렌더링 되도록 상태 관리추가
     e.preventDefault();
     if (isConnected && message.trim()) {
       const accessToken = localStorage.getItem('accessToken');
@@ -76,7 +78,8 @@ const ChatRoom = () => {
         localDateTime: new Date().toISOString(),
         profileImgPath: profileImgPath
       }, accessToken);
-      setMessage('');
+      setMessage(''); // 메세지 전송후 input창 초기화
+      setRender(render+1);
     } else {
       console.log('Cannot send message, STOMP client is not connected or message is empty');
     }
@@ -107,7 +110,7 @@ const ChatRoom = () => {
                 </MessageContent>
                   <NicknameItem isSender={msg.senderId === localStorage.getItem('email')}>{msg.senderNickname}</NicknameItem>
               </MessageBox>
-                <ProfileImage src={msg.profileImgPath || 'https://via.placeholder.com/40'} alt="Profile" />
+                <ProfileImage src={msg.profileImgPath || defaultImage} alt="Profile" />
               </Message>
               <TimeInfo>{new Date(msg.localDateTime).toLocaleString()}</TimeInfo>
             </MessageItem> 
@@ -230,8 +233,8 @@ const NicknameItem = styled.p`
  margin: ${(props) => (props.isSender ? '0.5rem 0 0 1rem' : '0.5rem 1vw 0 0')}; // 상하 간격 줄이기
 `
 const ProfileImage = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 5vw;
+  height: 5vw;
   border-radius: 50%;
   margin: 2vh 1vw 0 1vw;
   @media (max-width:500px){

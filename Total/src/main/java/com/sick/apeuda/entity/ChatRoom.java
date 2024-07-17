@@ -23,9 +23,6 @@ public class ChatRoom {
     @Column(name = "room_id")
     private String roomId = UUID.randomUUID().toString(); // UUID를 사용한 무작위 방아이디 생성
 
-
-
-
     @Column(unique = true, nullable = false)
     private String roomName; // 방 이름이 꼭 유니크 속성이어야 할까?
     private Integer currentCount;

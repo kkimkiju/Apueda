@@ -299,12 +299,7 @@ const WriteProject = () => {
           <InputButtonSection>
             <Button onClick={openSkillModal}>스킬</Button>
             <div style={{ position: "relative" }}>
-              <Button
-                onClick={toggleDropdownForPeople}
-                style={{ marginRight: "16px" }}
-              >
-                인원
-              </Button>
+              <Button onClick={toggleDropdownForPeople}>인원</Button>
               {isDropdownOpenForPeople && (
                 <DropdownInput>
                   <input
@@ -320,12 +315,7 @@ const WriteProject = () => {
               )}
             </div>
             <div style={{ position: "relative" }}>
-              <Button
-                onClick={toggleDropdownForPeriod}
-                style={{ marginRight: "16px" }}
-              >
-                기간
-              </Button>
+              <Button onClick={toggleDropdownForPeriod}>기간</Button>
               {isDropdownOpenForPeriod && (
                 <DropdownInput>
                   <input

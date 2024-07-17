@@ -1,7 +1,6 @@
 package com.sick.apeuda.repository;
 
 import com.sick.apeuda.entity.Apply;
-import com.sick.apeuda.entity.Board;
 import com.sick.apeuda.entity.Member;
 import com.sick.apeuda.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,6 +27,4 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
     int kickMember(@Param("memberId") String memberId,@Param("projectId") Long projectId);
 
 
-//    @Query("SELECT a FROM Apply a WHERE a.project.id = :projectId")
-//    List<Apply> findByProjectId(@Param("projectId") Long projectId);
 }
