@@ -24,8 +24,8 @@ const ModalStyle = styled.div`
   }
 
   section {
-    width: 50%;
-    height: 50%;
+    width: 40%;
+    height: 55%;
     margin: 0 auto;
     border-radius: 0.6rem;
     background-color: #fff;
@@ -45,6 +45,12 @@ const ModalStyle = styled.div`
     footer {
       padding: 12px 16px;
       text-align: right;
+    }
+  }
+  @media (max-width: 500px) {
+    section {
+      width: 100%;
+      height: 70%;
     }
   }
 
@@ -74,6 +80,7 @@ const Addinfobox = styled.div`
 const Box = styled.div`
   display: flex;
   position: relative;
+  text-align: center;
 `;
 const Terms = styled.div`
   font-size: 20px;
@@ -114,6 +121,9 @@ const Nickname = styled.input`
   position: absolute;
   left: 1px;
   height: 25px;
+  @media (max-width: 500px) {
+    width: 50%;
+  }
 `;
 const Boxbox = styled.div`
   margin-top: 10px;
