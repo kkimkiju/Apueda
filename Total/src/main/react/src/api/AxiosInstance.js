@@ -1,7 +1,7 @@
 // axiosInstance.js
 import axios from "axios";
 import AxiosApi from "./AxiosApi";
-const Apueda_Domain = "http://localhost:8118";
+const Apueda_Domain = "";
 
 const AxiosInstance = axios.create({
   // axios 인스턴스 생성

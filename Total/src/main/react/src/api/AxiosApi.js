@@ -1,7 +1,7 @@
 import axios from "axios";
 import AxiosInstance from "./AxiosInstance";
 
-const Apueda_Domain = "http://localhost:8118";
+const Apueda_Domain = "";
 
 const AxiosApi = {
   // 발행된 토큰을 로컬에 저장
