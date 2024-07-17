@@ -91,7 +91,7 @@ const Kakaologin = () => {
               params: {
                 grant_type: "authorization_code",
                 client_id: "3ba0bffc2b4266d667888058f56bdfbe", // 여기에 앱 REST API 키를 넣으세요
-                redirect_uri: "/apueda/kakaologin",
+                redirect_uri: "http://localhost:8118/apueda/kakaologin",
                 code: code,
               },
               headers: {
@@ -152,7 +152,7 @@ const Kakaologin = () => {
 
   const kakaoLogin = () => {
     window.Kakao.Auth.authorize({
-      redirectUri: "/apueda/kakaologin",
+      redirectUri: "http://localhost:8118/apueda/kakaologin",
     });
   };
 
