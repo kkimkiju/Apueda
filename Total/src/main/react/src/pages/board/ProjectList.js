@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import AxiosApi from "../../api/AxiosApi";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +6,6 @@ import { formatTimestamp } from "../../utils/formatDate";
 import InfiniteScroll from "react-infinite-scroll-component";
 import noImg from "../../image/noImage.jpg";
 import ProjectSearchBar from "./ProjectSearchBar";
-import SearchList from "../../utils/searchList";
 import DropdownMenu from "./DropDownMenu";
 import PaymentApi from "../../api/PaymentAxios";
 const Container = styled.div`
@@ -192,6 +191,20 @@ export const Button = styled.button`
 const Input = styled.input`
   width: 100%;
 `;
+const NoResult = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 800px;
+  color: #fff;
+  font-size: 2rem;
+  @media screen and (max-width: 500px) {
+    height: 500px;
+
+    font-size: 1rem;
+  }
+`;
 
 const ProjectList = () => {
   const [projectList, setProjectList] = useState([]);
@@ -285,24 +298,65 @@ const ProjectList = () => {
     setInputValue(event.target.value);
   };
   const [clickArray, setClickArray] = useState([]);
+  // 스킬 클릭 핸들러 - useCallback을 사용하여 부모 컴포넌트가 리렌더링되더라도
+  // 이 함수는 재생성되지 않도록 합니다.
+  const handleSkillClick = useCallback((skills) => {
+    setClickArray(skills);
+  }, []);
+
   useEffect(() => {
     console.log("clickArray 실행 : ", clickArray);
-  }, [clickArray]);
-
-  const handleSkillClick = (skill) => {
-    setClickArray((prevArray) => {
-      console.log("handleSkillClick 실행 : ", clickArray);
-      if (prevArray.includes(skill)) {
-        return prevArray.filter((item) => item !== skill);
-      } else {
-        console.log();
-        return skill;
-      }
-    });
-  };
+  }, []);
 
   const [substatus, setSubstatus] = useState("");
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [projectAllList, setProjectAllList] = useState([]);
 
+  // 초기 데이터 로드
+  useEffect(() => {
+    const fetchProjectList = async () => {
+      try {
+        const rsp = await AxiosApi.getProjectAllList();
+        console.log(rsp.data, "!@#");
+        const sortedProjects = rsp.data.sort(
+          (a, b) => new Date(b.regDate) - new Date(a.regDate)
+        );
+        setProjectAllList(sortedProjects);
+      } catch (e) {
+        console.error("Error fetching project list:", e);
+      }
+    };
+    fetchProjectList();
+  }, []);
+
+  // 검색어 및 스킬 필터링 로직
+  useEffect(() => {
+    const filteredProjectList = projectAllList.filter((project) => {
+      const trimmedInputValue = inputValue.replace(/\s+/g, "").toLowerCase();
+      const trimmedProjectTitle = project.projectTitle
+        .replace(/\s+/g, "")
+        .toLowerCase();
+
+      // 클릭한 모든 스킬이 프로젝트의 skillName에 포함되는지 확인
+      const hasSkill =
+        clickArray.length === 0 ||
+        clickArray.every((skill) =>
+          project.skillName.some((s) => s.skillName.includes(skill))
+        );
+
+      // 프로젝트 제목에 검색어가 포함되는지 확인
+      const hasSearchTerm = trimmedProjectTitle.includes(trimmedInputValue);
+
+      return hasSkill && hasSearchTerm;
+    });
+
+    setFilteredResults(filteredProjectList);
+  }, [inputValue, clickArray, projectAllList]);
+
+  // filteredResults 상태 변경될 때마다 로그 출력
+  useEffect(() => {
+    console.log("filteredResults  : ", filteredResults);
+  }, [filteredResults]);
   return (
     <Container>
       <ListContainer>
@@ -325,7 +379,11 @@ const ProjectList = () => {
             </Column>
           ) : (
             <Column style={{ width: "30%" }}>
-              <Input placeholder="제목 검색" onChange={handleSearch} />
+              <Input
+                placeholder="제목 검색"
+                value={inputValue}
+                onChange={handleSearch}
+              />
             </Column>
           )}
           {/* <Column>제목</Column> */}
@@ -385,7 +443,7 @@ const ProjectList = () => {
             </div>
           ) : (
             <>
-              {!inputValue ? (
+              {!inputValue && !clickArray ? (
                 <InfiniteScroll
                   dataLength={projectList.length}
                   next={fetchMoreData}
@@ -456,7 +514,56 @@ const ProjectList = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <SearchList inputValue={inputValue} skillArray={clickArray} />
+                  {filteredResults.length !== 0 ? (
+                    filteredResults.map((project, index) => (
+                      <ListResult
+                        key={index}
+                        onMouseOver={(e) => handleHover(e)}
+                        onMouseLeave={(e) => handleMouseDown(e)}
+                        className="card"
+                      >
+                        {project.imgPath ? (
+                          <img
+                            src={project.imgPath}
+                            alt="No Image"
+                            onClick={() => projectClick(project.projectId)}
+                          ></img>
+                        ) : (
+                          <img
+                            src={noImg}
+                            alt="profile"
+                            onClick={() => projectClick(project.projectId)}
+                          />
+                        )}
+                        <Content>
+                          <span>{project.projectTitle}</span>
+                          {formatTimestamp(project.regDate)}
+                        </Content>
+                        <ProfileContainer>
+                          <span>
+                            {project.skillName &&
+                              project.skillName.map((skills, index) => (
+                                <Button
+                                  key={index}
+                                  style={{
+                                    borderRight: "1px solid #c1c1c1",
+                                    borderBottom: "2px solid #c1c1c1",
+                                  }}
+                                >
+                                  {skills.skillName}
+                                </Button>
+                              ))}
+                          </span>
+                          <ProfileInList>
+                            <img src={project.profileImg} alt="profile" />
+                          </ProfileInList>
+                        </ProfileContainer>
+                        <Etc></Etc>
+                      </ListResult>
+                    ))
+                  ) : (
+                    <NoResult>검색 결과가 없습니다.</NoResult>
+                  )}
                 </InfiniteScroll>
               )}
             </>

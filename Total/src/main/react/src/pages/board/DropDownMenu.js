@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AxiosApi from "../../api/AxiosApi";
 import { Button } from "./ProjectList";
+import { useTime } from "framer-motion";
 
 const DropdownContainer = styled.div``;
 
@@ -54,14 +55,21 @@ const DropdownMenu = ({ onSkillClick }) => {
     };
     getSkills();
   }, []);
+
   const handleSkillClick = (skillName) => {
-    if (selectedSkills.includes(skillName)) {
-      setSelectedSkills(selectedSkills.filter((skill) => skill !== skillName));
-    } else {
-      setSelectedSkills([...selectedSkills, skillName]);
-    }
-    onSkillClick(selectedSkills);
+    setSelectedSkills((prevSelectedSkills) => {
+      const updatedSkills = prevSelectedSkills.includes(skillName)
+        ? prevSelectedSkills.filter((skill) => skill !== skillName)
+        : [...prevSelectedSkills, skillName];
+
+      return updatedSkills;
+    });
   };
+
+  useEffect(() => {
+    onSkillClick(selectedSkills);
+  }, [selectedSkills, onSkillClick]);
+
   return (
     <DropdownContainer>
       <DropdownButton onClick={toggleDropdown}>
