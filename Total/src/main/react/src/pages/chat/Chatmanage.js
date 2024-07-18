@@ -199,12 +199,18 @@ const ModalBox = styled.div`
   z-index: 100;
   top: 50%;
   left: 50%;
-  width: auto;
+  width: 40vw;
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
   border-radius: 1vw;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  @media (max-width:500px){
+    flex-direction: row;
+    justify-content: center;
+    width: 60vw;
+    border-radius: 3vw;
+  }
   
 `;
 const Box = styled.div`
@@ -322,7 +328,7 @@ const OpenChatButton = styled.button`
 const CloseButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 2vh;
+  margin-top: 0vh;
 `;
 const CloseButton = styled.button`
   background-color: #ff5353;
@@ -336,6 +342,10 @@ const CloseButton = styled.button`
 
   &:hover {
     background-color: #ff7878;
+  }
+  @media (max-width: 500px) {
+    font-size: 3vw;
+    border-radius: 3vw;
   }
 `;
 

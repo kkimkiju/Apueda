@@ -67,7 +67,7 @@ export default function SimpleSlider() {
                 </div>
                 <div>
                   두근두근 데이트 시작하기
-                  <DatingAppButton onClick={() => navigate("/apueda/login")}>
+                  <DatingAppButton onClick={() => navigate("/apueda/datingapp")}>
                     <span>개발자 매칭</span>
                   </DatingAppButton>
                 </div>
@@ -92,7 +92,7 @@ export default function SimpleSlider() {
                 </div>
                 <div>
                   두근두근 데이트 시작하기
-                  <DatingAppButton onClick={() => navigate("/apueda/login")}>
+                  <DatingAppButton onClick={() => navigate("/apueda/datingapp")}>
                     <span>개발자 매칭</span>
                   </DatingAppButton>
                 </div>
@@ -214,7 +214,7 @@ const Item2 = styled.div`
     margin: 10px; // Box의 직계 자식 div에 스타일 적용
   }
   & span {
-    font-size: 1.5vw;
+    font-size: 1.2vw;
     color: rgb(50,50,50);
     text-align: left;
     padding: 1vw;
@@ -232,7 +232,7 @@ const PlaystoreButton = styled.div`
   border-radius: 20px;
   background-color: white;
   background-image: url(${googlelogo});
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   padding: 10%;
@@ -251,7 +251,7 @@ const DatingAppButton = styled.div`
   background-color: white;
   background-image: url(${lovechaticon});
   background-size: contain;
-  background-position: right;
+  background-position: 96%; // 이미지아이콘 왼쪽기준 위치조정
   background-repeat: no-repeat;
   padding: 10% 0;
   @media (max-width:768px ) {

@@ -48,18 +48,23 @@ const CreateRoom = () => {
 export default CreateRoom;
 
 const Container = styled.div`
-  width: 30vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   white-space: nowrap;
   margin-bottom: 1vh;
+  @media (max-width:500px){
+    width: 100%;
+  }
 `;
 
 const Title = styled.div`
-  font-size: 2vw;
+  font-size: 1.5vw;
   font-weight: bold;
-  margin-bottom: 2vh;
+  @media (max-width:500px){
+    font-size:4vw;
+  }
 `;
 
 const Box = styled.div`
@@ -69,15 +74,19 @@ const Box = styled.div`
 
 const StyledInput = styled.input`
   width: 100%;
-  padding: 1vh 1vw;
+  padding: 0 1vw;
   border: 0.2vw solid #ccc;
-  border-radius: 1vw;
-  font-size: 0.8vw;
+  border-radius: 2vw;
+  font-size: 1.5vw;
   margin-right: 1vw;
   box-sizing: border-box;
   &:focus {
     outline: none;
     border-color: #ff5353;
+  }
+  @media (max-width:500px){
+    width: 40vw;
+    font-size: 3vw;
   }
 `;
 
@@ -96,5 +105,9 @@ const Button = styled.button`
   justify-content: center;
   &:hover {
     background-color: #ff7878;
+  }
+  @media (max-width:500px){
+    font-size: 3vw;
+    border-radius: 2vw;
   }
 `;

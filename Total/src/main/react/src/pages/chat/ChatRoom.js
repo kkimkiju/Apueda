@@ -7,15 +7,32 @@ import { connectWebSocket, sendMessage } from '../../api/StompClient'; // 수정
 import { FaPaperPlane, FaAngleLeft } from 'react-icons/fa';
 import defaultImage from '../../image/person-icon2.png';
 const ChatRoom = () => {
-  const { roomId } = useParams(); // roomId 정보를 가져옴
   const navigate = useNavigate();
   const location = useLocation();
+  const [myEmail, setMyEmail] = useState(""); 
+  const [myprofileImg, setMyprofileImg] = useState(""); //profileImgPath
+  const { roomId } = useParams(); // roomId 정보를 가져옴
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [isConnected, setIsConnected] = useState(false);
   const [render, setRender] =useState(0); //렌더링을 위한 상태 추가
   const messagesEndRef = useRef(null);
   const stompClientRef = useRef(null);
+
+  // jwt보내고 유저정보 받기
+  useEffect(() => {
+    const getMyEmail = async () => {
+      try {
+        const response = await AxiosApi.getUserInfo2();
+        setMyEmail(response.data.email);
+        setMyprofileImg(response.data.profileImgPath); // 이미지 저장
+        console.log("myinfo :", response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getMyEmail();
+  }, []); // 초기 한 번만 실행되도록 빈 배열 사용
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -69,9 +86,9 @@ const ChatRoom = () => {
     e.preventDefault();
     if (isConnected && message.trim()) {
       const accessToken = localStorage.getItem('accessToken');
-      const profileImgPath = localStorage.getItem('imgUrl');
+      const profileImgPath = myprofileImg;
       sendMessage({
-        senderId: localStorage.getItem('email'),
+        senderId: myEmail,
         content: message,
         roomId: roomId,
         type: 'TALK',
@@ -79,7 +96,6 @@ const ChatRoom = () => {
         profileImgPath: profileImgPath
       }, accessToken);
       setMessage(''); // 메세지 전송후 input창 초기화
-      setRender(render+1);
     } else {
       console.log('Cannot send message, STOMP client is not connected or message is empty');
     }
@@ -102,13 +118,13 @@ const ChatRoom = () => {
         </Title>
         <ChatBox>
           {messages.map((msg, index) => (
-            <MessageItem key={index} isSender={msg.senderId === localStorage.getItem('email')}>
-              <Message isSender={msg.senderId === localStorage.getItem('email')}>
-              <MessageBox isSender={msg.senderId === localStorage.getItem('email')}>
-                <MessageContent isSender={msg.senderId === localStorage.getItem('email')}>
+            <MessageItem key={index} isSender={msg.senderId === myEmail}>
+              <Message isSender={msg.senderId === myEmail}>
+              <MessageBox isSender={msg.senderId === myEmail}>
+                <MessageContent isSender={msg.senderId === myEmail}>
                   <p>{msg.content}</p>
                 </MessageContent>
-                  <NicknameItem isSender={msg.senderId === localStorage.getItem('email')}>{msg.senderNickname}</NicknameItem>
+                  <NicknameItem isSender={msg.senderId === myEmail}>{msg.senderNickname}</NicknameItem>
               </MessageBox>
                 <ProfileImage src={msg.profileImgPath || defaultImage} alt="Profile" />
               </Message>
