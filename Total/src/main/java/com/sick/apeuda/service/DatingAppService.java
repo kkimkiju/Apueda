@@ -79,7 +79,7 @@ public class DatingAppService {
             LocalDateTime lastUsageTime = lastUsage.toLocalDateTime();
             LocalDateTime currentTime = LocalDateTime.now();
             long hoursDifference = ChronoUnit.HOURS.between(lastUsageTime, currentTime);
-            if (hoursDifference < 0.01) { // 테스트용 시간 변경
+            if (hoursDifference < 24) { // 테스트용 시간 변경
                 throw new TooManyRequestsException("허용된 횟수를 초과했습니다. 24시간 뒤 다시 시도해주세요.");
             }
         }
