@@ -5,6 +5,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserStore";
 import Kakaologin from "./Kakaologin";
+import PaymentApi from "../api/PaymentAxios";
 
 const Container = styled.div`
   width: 100%;
@@ -153,7 +154,8 @@ const LoginPage = () => {
   const [accToken, setAccToken] = useState("");
   const navigate = useNavigate();
   const context = useContext(UserContext);
-  const { setLoginStatus, loginStatus } = context;
+  const { setLoginStatus, loginStatus, subscribeStatus, setSubscribeStatus } =
+    context;
 
   useEffect(() => {
     if (loginStatus) {
@@ -164,6 +166,9 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       const rsp = await AxiosApi.login(email, password);
+      if (rsp.data) {
+        subScribeCheck();
+      }
       setAccToken(rsp.data.accessToken);
       localStorage.setItem("accessToken", rsp.data.accessToken);
       localStorage.setItem("refreshToken", rsp.data.refreshToken);
@@ -174,6 +179,20 @@ const LoginPage = () => {
       console.log(e);
     }
   };
+  const subScribeCheck = async () => {
+    try {
+      const rsp = await PaymentApi.deadline(email);
+      if (rsp.data[0].status) {
+        console.log(rsp.data[0].status);
+        setSubscribeStatus(true);
+      } else {
+        setSubscribeStatus(false);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleSignup = () => {
     navigate("/apueda/signup");
   };

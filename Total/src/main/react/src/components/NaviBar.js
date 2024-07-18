@@ -23,9 +23,8 @@ export default function NaviBar() {
   const isLoginUser = localStorage.getItem("accessToken") !== null;
   const [isOpen, setIsOpen] = useState(false);
 
-
   const context = useContext(UserContext);
-  const { setLoginStatus } = context;
+  const { setLoginStatus, subscribeStatus, setSubscribeStatus } = context;
   // 유저정보 갱신
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -90,27 +89,38 @@ export default function NaviBar() {
     localStorage.clear();
     navigate("/apueda");
     setLoginStatus("");
+    setSubscribeStatus("");
     alert("로그아웃 되었습니다. (localStorage 모두 삭제)");
+  };
+
+  const subscribeHandler = () => {
+    localStorage.getItem("subscribeStatus");
+    if (subscribeStatus === true) {
+      navigate("/apueda/mysub");
+    } else if (subscribeStatus === false) {
+      navigate("/apueda/subinfo");
+    } else if (!subscribeStatus) {
+      navigate("/apueda/login");
+    }
   };
 
   return (
     <Body>
       <Container className="menu" ref={scope}>
         <Box>
-          
-            <motion.button
-              style={{
-                width: "0vw", // 프로필사진 버튼 영역
-                height: "0vw",
-                border: 0,
-                backgroundColor: "transparent",
-                fontSize: "40px",
-              }}
-              whileHover={{ scale: 1.1 }} // 마우스 호버 시 이미지 커짐
-              whileTap={{ scale: 0.95 }} // 클릭 시 이미지 작아짐
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              <ProfileButton>
+          <motion.button
+            style={{
+              width: "0vw", // 프로필사진 버튼 영역
+              height: "0vw",
+              border: 0,
+              backgroundColor: "transparent",
+              fontSize: "40px",
+            }}
+            whileHover={{ scale: 1.1 }} // 마우스 호버 시 이미지 커짐
+            whileTap={{ scale: 0.95 }} // 클릭 시 이미지 작아짐
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <ProfileButton>
               <ProfileImage>
                 <img src={imageUrl} alt="User Profile" />
               </ProfileImage>
@@ -119,8 +129,8 @@ export default function NaviBar() {
                   <path d="M0 7 L 20 7 L 10 16" />
                 </svg> */}
               </div>
-              </ProfileButton>
-            </motion.button>
+            </ProfileButton>
+          </motion.button>
           <List>
             <ul
               style={{
@@ -148,7 +158,7 @@ export default function NaviBar() {
                   <br /> 매칭
                 </Overlay>
               </MenuItem>
-              <MenuItem onClick={() => navigate("/apueda/mysub")}>
+              <MenuItem onClick={subscribeHandler}>
                 <Img src={card} />
                 <Overlay>구독관리</Overlay>
               </MenuItem>
@@ -190,9 +200,9 @@ const Container = styled.div`
   flex-direction: column;
   align-self: flex-end; /* 자신을 교차축 방향으로 오른쪽 정렬 */
   align-items: center; // 하위 아이템 정렬
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     margin: 10vh -60px 0 0; // 네비바 위치
-    }
+  }
 `;
 
 const Box = styled.div`
@@ -214,10 +224,9 @@ const List = styled.div`
   ul {
     margin-top: 6vw; /* 위아래 간격을 없애고 싶다면 0으로 설정합니다 */
     padding: 0; /* 패딩도 필요에 따라 조정합니다 */
-    @media (max-width:500px){
+    @media (max-width: 500px) {
       margin-top: 12vw;
     }
-
   }
   li {
     margin: 0; /* 위아래 간격을 없애고 싶다면 0으로 설정합니다 */
@@ -229,14 +238,15 @@ const Arrow = styled.div`
   margin: 0;
 `;
 
-const Img = styled.img` // 메뉴아이콘 크기
+const Img = styled.img`
+  // 메뉴아이콘 크기
   width: 4vw;
   height: 4vw;
   background-size: contain;
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     width: 10vw;
     height: 10vw;
-    }
+  }
 `;
 const ProfileImage = styled.div`
   img {
@@ -244,22 +254,23 @@ const ProfileImage = styled.div`
     height: 4vw;
     object-fit: cover;
     border-radius: 100%;
-    border: .5vw solid rgba(150, 150, 150, 0.5);
-    @media (max-width:500px){
+    border: 0.5vw solid rgba(150, 150, 150, 0.5);
+    @media (max-width: 500px) {
       width: 10vw;
-    height: 10vw;
+      height: 10vw;
     }
   }
 `;
-const Overlay = styled.div` // 메뉴 아이콘 디자인 영역 
+const Overlay = styled.div`
+  // 메뉴 아이콘 디자인 영역
   position: absolute;
   color: rgb(255, 255, 255);
   font-size: 1vw;
   opacity: 0;
   transition: opacity 0.3s ease;
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     font-size: 2.5vw;
-    }
+  }
 `;
 
 const MenuItem = styled(motion.li).withConfig({
