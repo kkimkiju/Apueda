@@ -69,11 +69,11 @@ const MemberUpdate = () => {
 
   useEffect(() => {
     const memberInfo = async () => {
-      const profile = localStorage.getItem("imgUrl");
       try {
         const rsp = await AxiosApi.getUserInfo2();
         setUserInfo(rsp.data);
-        setImgSrc(profile);
+        setImgSrc(rsp.data.profileImgPath);
+
         setNickname(rsp.data.nickname);
         setEmail(rsp.data.email);
         setName(rsp.data.name);
@@ -249,23 +249,6 @@ const MemberUpdate = () => {
       alert("회원 정보 수정 중 오류가 발생했습니다.");
     }
   };
-
-  // 일단 회원탈퇴 제외
-  // const memberDel = async () => {
-  //   const accToken = localStorage.getItem("accessToken");
-  //   try {
-  //     const response = await AxiosApi.signout(accToken);
-  //     if (response.data) {
-  //       alert("회원 삭제에 성공했습니다.");
-  //       navigate("/apueda");
-  //     } else {
-  //       alert("회원 삭제에 실패했습니다.");
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //     alert("회원 삭제 중 오류가 발생했습니다.");
-  //   }
-  // };
 
   const isFormValid = pwdValid && pwdConcord && checkedValid;
 

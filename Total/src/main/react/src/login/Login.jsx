@@ -154,8 +154,7 @@ const LoginPage = () => {
   const [accToken, setAccToken] = useState("");
   const navigate = useNavigate();
   const context = useContext(UserContext);
-  const { setLoginStatus, loginStatus, subscribeStatus, setSubscribeStatus } =
-    context;
+  const { setLoginStatus, loginStatus, setSubscribeStatus } = context;
 
   useEffect(() => {
     if (loginStatus) {
