@@ -285,6 +285,7 @@ public class ChatService {
         List<ChatRoom> openChatRooms = chatManages.stream()
                 .map(ChatManage::getChatRoom)
                 .filter(chatRoom -> chatRoom.getPostType() != null && !chatRoom.getPostType()) // postType이 false인 경우
+                .sorted((c1, c2) -> c2.getLocalDateTime().compareTo(c1.getLocalDateTime())) // local_date_time으로 내림차순 정렬
                 .collect(Collectors.toList());
 
         log.info("Filtered Open ChatRooms (postType=false) for member {}: {}", memberId, openChatRooms);
@@ -294,6 +295,7 @@ public class ChatService {
     public List<ChatRoom> getOpenchatList(boolean postType) {
         return chatRoomRepository.findByPostType(postType).stream()
                 .filter(chatRoom -> chatRoom.getCurrentCount() > 0)
+                .sorted((c1, c2) -> c2.getLocalDateTime().compareTo(c1.getLocalDateTime())) // local_date_time으로 내림차순 정렬
                 .collect(Collectors.toList());
     }
 
