@@ -110,11 +110,6 @@ const SignUp = ({ profile }) => {
     }
   };
 
-  // 이미지 변경 확인 용
-  useEffect(() => {
-    console.log("imgSrc : " + imgSrc);
-    console.log("file : " + file.name);
-  }, [file]);
   const onSubmit = () => {
     if (imgSrc !== basicProfile && imgSrc !== profile) {
       const storageRef = storage.ref();
@@ -122,12 +117,9 @@ const SignUp = ({ profile }) => {
       fileRef.put(file).then(() => {
         console.log("저장성공!");
         fileRef.getDownloadURL().then((url) => {
-          console.log("저장경로 확인 : " + url);
           setUrl(url);
           setProfileImgPath(url);
           regist(url);
-          console.log(url);
-          console.log(profileImgPath);
         });
       });
     } else {
@@ -153,12 +145,11 @@ const SignUp = ({ profile }) => {
   const authorizeMail = async () => {
     try {
       const rsp = await AxiosApi.mail(email);
-      console.log("전송 인증번호:", rsp.data);
+      console.log(rsp.data);
       setEmailValid("");
       setEmailError("");
       if (rsp.data !== null) {
         setSentCode(rsp.data);
-        console.log("인증 코드 설정 후:", sentCode); // sentCode 값이 올바르게 설정되었는지 확인
       }
     } catch (error) {
       console.error("이메일 요청 오류:", error);
@@ -174,10 +165,10 @@ const SignUp = ({ profile }) => {
     }
     if (inputCode === sentCode) {
       setCodeValid(true);
-      console.log("인증되었습니다");
+      alert("인증되었습니다");
     } else {
       setCodeValid(false);
-      console.log("다시 입력해 주세요");
+      alert("다시 인증 해주세요");
     }
   };
 
@@ -185,7 +176,6 @@ const SignUp = ({ profile }) => {
   const memberRegCheck = async (email) => {
     try {
       const response = await AxiosApi.userCheck(email);
-      console.log("회원 존재 여부 : ", response.data);
       if (response.data === false) {
         setEmailError("가입 가능한 아이디입니다.");
         setEmailExist(true);
@@ -224,7 +214,7 @@ const SignUp = ({ profile }) => {
       /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}:;',.?/\\-]).{8,}$/; // 수정된 정규식
 
     if (!passwordRegex.test(newPassword)) {
-      setPasswordError("숫자, 영어 소문자, 특수문자 포함하여 8자 이상");
+      setPasswordError("숫자,영어 소문자,특수문자 포함 8자 이상");
       setPwdValid(false);
     } else {
       setPasswordError("");
@@ -269,7 +259,6 @@ const SignUp = ({ profile }) => {
 
     // 유효성 검사
     setIdentifyNumberValid(value.length >= 7);
-    console.log(identifyNumberValid);
   };
   // 체크박스
   // 스킬 체크
@@ -315,7 +304,6 @@ const SignUp = ({ profile }) => {
       const response = await AxiosApi.signup(user);
       if (response.data) {
         alert("회원가입에 성공했습니다.");
-        console.log(user);
         navigate("/apueda");
       } else {
         alert("회원가입에 실패했습니다.");
