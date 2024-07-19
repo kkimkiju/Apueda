@@ -13,7 +13,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 450px;
+  min-width: 375px;
 `;
 const Box = styled.div`
   width: 60%;
@@ -27,6 +27,9 @@ const Box = styled.div`
   border-radius: 10px;
   padding: 30px;
   box-sizing: border-box;
+  @media screen and (max-width: 500px) {
+    width: 75vw;
+  }
 `;
 const Contents = styled.div`
   width: 100%;
@@ -171,7 +174,6 @@ const LoginPage = () => {
       setAccToken(rsp.data.accessToken);
       localStorage.setItem("accessToken", rsp.data.accessToken);
       localStorage.setItem("refreshToken", rsp.data.refreshToken);
-      console.log(accToken);
       navigate("/apueda");
       setLoginStatus(true);
     } catch (e) {
@@ -182,7 +184,6 @@ const LoginPage = () => {
     try {
       const rsp = await PaymentApi.deadline(email);
       if (rsp.data[0].status) {
-        console.log(rsp.data[0].status);
         setSubscribeStatus(true);
       } else {
         setSubscribeStatus(false);

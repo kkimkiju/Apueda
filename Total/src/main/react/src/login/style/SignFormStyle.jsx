@@ -6,7 +6,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 450px;
+  min-width: 375px;
   & input {
     border-radius: 8px;
     border: none;
@@ -36,6 +36,10 @@ export const Box = styled.div`
   padding: 30px;
   box-sizing: border-box;
   color: white;
+
+  @media screen and (max-width: 500px) {
+    width: 75vw;
+  }
 `;
 
 export const Contents = styled.div`
