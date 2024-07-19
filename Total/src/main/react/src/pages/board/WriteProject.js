@@ -194,6 +194,7 @@ const WriteProject = () => {
           regDate: currentDate,
           imgPath: imgPath,
         };
+        console.log(postData, "postData");
         // 등록 로직
         const response = await AxiosApi.postProject(postData);
         if (response.data) {

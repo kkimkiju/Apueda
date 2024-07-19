@@ -31,6 +31,11 @@ const Content = styled.div`
   & .ck-content :focus {
     border: 1px solid black;
   }
+  & .ck-toolbar {
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
+  }
 `;
 const WriteBoard = () => {
   const fileInputRef = useRef(null);
@@ -121,20 +126,14 @@ const WriteBoard = () => {
               editor={ClassicEditor}
               data={content}
               config={{ extraPlugins: [] }}
-              onReady={(editor) => {
-                // You can store the "editor" and use when it is needed.
-                console.log("Editor is ready to use!", editor);
-              }}
+              onReady={(editor) => {}}
               onChange={(event, editor) => {
                 setContent(editor.getData());
-                console.log({ event, editor, content });
               }}
               onBlur={(event, editor) => {
                 console.log("Blur.", editor);
               }}
-              onFocus={(event, editor) => {
-                console.log("Focus.", editor);
-              }}
+              onFocus={(event, editor) => {}}
             />
           </Content>
 

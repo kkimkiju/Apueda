@@ -38,6 +38,13 @@ const Column = styled.div`
   margin: 0 16px;
   list-style-type: none;
   padding: 9px;
+  @media screen and (max-width: 320px) {
+    padding: 0;
+    font-size: 8px;
+    & button {
+      font-size: 8px;
+    }
+  }
 `;
 
 const List = styled.div`
@@ -56,19 +63,29 @@ const ListResult = styled.div`
 
 const Profile = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   /* width: 20%; */
-
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+  }
   & img {
     width: 60px;
     height: 60px;
     border-radius: 30px;
     object-fit: cover;
+    @media screen and (max-width: 500px) {
+      width: 32px;
+      height: 32px;
+    }
   }
   & span {
     display: flex;
     align-items: center;
     padding: 12px;
+    @media screen and (max-width: 500px) {
+      padding: 4px;
+      font-size: 8px;
+    }
   }
 `;
 
@@ -77,6 +94,7 @@ const Content = styled.div`
   flex-direction: column;
   width: 70%;
   justify-content: center;
+  padding-left: 5px;
 `;
 
 const Etc = styled.div`
@@ -87,6 +105,10 @@ const Etc = styled.div`
   width: 10%;
   position: relative;
   justify-content: center;
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+    width: auto;
+  }
 `;
 
 export const Button = styled.button`
@@ -177,7 +199,7 @@ const BoardList = () => {
             {boardList &&
               boardList.map((board, index) => (
                 <ListResult key={index}>
-                  <Profile style={{ flexDirection: "row" }}>
+                  <Profile>
                     <img src={board.profileImg} alt="board" />
                     <span> {board.nickName}</span>
                   </Profile>

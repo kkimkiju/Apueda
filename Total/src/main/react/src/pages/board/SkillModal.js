@@ -13,6 +13,17 @@ const Layout = styled.div`
   flex-direction: row;
   width: 100%;
   height: 90%;
+
+  @media screen and (max-width: 500px) {
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+  }
+  @media screen and (max-width: 500px) {
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const SearchContainer = styled.div`
@@ -27,22 +38,44 @@ const SearchContainer = styled.div`
   & input {
     height: 50px;
   }
+  @media screen and (max-width: 768px) {
+    padding: 8px;
+    margin: 18px;
+    & input {
+      height: 30px;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    padding: 0;
+    margin: 0;
+    height: auto;
+  }
 `;
 
 const ResultContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
   width: 100%;
   height: 90%;
   padding: 16px;
   margin: 32px;
   border: 1px solid black;
   flex-direction: row;
+  display: block;
+  @media screen and (max-width: 768px) {
+    padding: 8px;
+    margin: 18px;
+
+    overflow: scroll;
+  }
+  @media screen and (max-width: 500px) {
+    padding: 0;
+    margin: 10px 0;
+  }
 `;
 
 const Ul = styled.ul`
   display: ${(props) => (props.showList ? "inline-block" : "none")};
   list-style: none;
+  overflow: scroll;
 `;
 
 const SkillList = styled.div`

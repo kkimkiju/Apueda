@@ -23,7 +23,7 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import defaultImage from "../../image/person-icon2.png";
 import ReplyListComponent from "./ReplyListComponent";
-import { formatDate, formatTimestamp } from "../../utils/formatDate";
+import { formatTimestamp } from "../../utils/formatDate";
 
 const Title = styled.div`
   display: flex;
@@ -34,7 +34,12 @@ const Title = styled.div`
   font-size: 2rem;
   font-weight: bold;
   @media screen and (max-width: 768px) {
-    font-size: 1.5rem;
+    font-size: 1rem;
+    padding: 12px;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 0.8rem;
+    padding: 8px;
   }
 `;
 const BoardTime = styled.div`
@@ -53,6 +58,10 @@ const Profile = styled.div`
   align-items: center;
   width: 50%;
   height: 60px;
+  @media screen and (max-width: 500px) {
+    font-size: 0.8rem;
+    height: auto;
+  }
 `;
 const Recruit = styled.div`
   display: flex;
@@ -70,24 +79,22 @@ const RecruitMemNum = styled.div`
 `;
 
 const Content = styled.div`
-  padding: 16px;
-`;
-
-const Skills = styled.div`
-  display: flex;
-  border: solid #b9b9b9;
-  border-width: 0 0 1px;
-  padding: 12px;
+  //padding: 16px;
 `;
 
 const ListBtt = styled.div`
   display: flex;
   justify-content: center;
-  padding: 16px;
+  padding: 8px;
+  border: solid #b9b9b9;
+  border-width: 1px 0 0;
 `;
 
 const NickName = styled.div`
   padding: 8px;
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+  }
 `;
 
 const Notice = styled.div``;
@@ -258,7 +265,7 @@ const BoardDetail = () => {
         <HeadContainer style={{ justifyContent: "center" }}>
           <Top>자유 게시판</Top>
         </HeadContainer>
-        <ContentContainer style={{ padding: "32px", height: "auto" }}>
+        <ContentContainer style={{ height: "auto" }}>
           {boardContent && (
             <Head>
               <UpHead>
@@ -316,17 +323,6 @@ const BoardDetail = () => {
           )}
           {boardContent && (
             <Footer>
-              <Skills>
-                {boardContent.skillName &&
-                  boardContent.skillName.map((skills, index) => (
-                    <Button
-                      key={index}
-                      style={{ width: "auto", padding: "0 10px" }}
-                    >
-                      {skills.skillName}
-                    </Button>
-                  ))}
-              </Skills>
               <ListBtt>
                 <Button onClick={() => navigate("/apueda/board")}>목록</Button>
               </ListBtt>

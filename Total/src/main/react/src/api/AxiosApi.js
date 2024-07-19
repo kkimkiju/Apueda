@@ -1,7 +1,7 @@
 import axios from "axios";
 import AxiosInstance from "./AxiosInstance";
 
-const Apueda_Domain = "";
+const Apueda_Domain = "http://localhost:8118";
 
 const AxiosApi = {
   // 발행된 토큰을 로컬에 저장
@@ -226,13 +226,13 @@ const AxiosApi = {
   },
   // 플젝 글쓰기
   postProject: async (postData) => {
-    console.log("postProject chatRoom", postData.imgPath);
+    console.log("postProject endDate", postData.endDate);
     const project = {
       projectTitle: postData.title,
       projectContent: postData.content,
       // projectPassword: postData.pw,
       skillName: postData.skills,
-      projectTime: postData.projectTime,
+      projectTime: postData.endDate,
       recruitNum: postData.recruitNum,
       projectName: postData.roomName,
       regDate: postData.currentDate,

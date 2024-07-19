@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import SelectBoard from "./SelectBoard";
 import BoardList from "./BoardList";
 import HeadBar from "./HeadBar";
 import ProjectList from "./ProjectList";
@@ -8,22 +7,33 @@ import { UserContext } from "../../context/UserStore";
 import { useNavigate } from "react-router-dom";
 
 const BoardLayout = styled.div`
+  width: 1300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   height: auto;
-  margin: 0 15vw;
-  @media screen and (max-width: 1400px) {
+  margin: 0 10vw;
+  @media screen and (min-width: 2040px) {
     margin: 0 10vw;
+    width: 1440px;
+  }
+  @media screen and (max-width: 1440px) {
+    margin: 0 10vw;
+    width: auto;
   }
 
   @media screen and (max-width: 860px) {
     margin: 0 5vw;
     font-size: 10px;
+    width: auto;
   }
   @media screen and (max-width: 500px) {
-    margin: 0;
-    width: 500px;
+    margin-left: 10px;
+    width: 330px;
+  }
+  @media screen and (max-width: 320px) {
+    margin-left: 7px;
+    width: 280px;
   }
 `;
 const Container = styled.div`

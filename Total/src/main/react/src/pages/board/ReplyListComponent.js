@@ -16,18 +16,33 @@ import { useNavigate } from "react-router-dom";
 
 const NickName = styled.div`
   padding: 8px;
+  @media screen and (max-width: 768px) {
+    padding: 1px;
+  }
 `;
 
 const RegDate = styled.div`
   padding: 4px;
+  font-size: 12px;
+  @media screen and (max-width: 500px) {
+    font-size: 6px;
+  }
 `;
 const Profile = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  /* width: 50%; */
+  width: 15%;
   height: 60px;
+  @media screen and (max-width: 768px) {
+    height: 30px;
+    font-size: 12px;
+  }
+  @media screen and (max-width: 500px) {
+    height: 30px;
+    font-size: 5px;
+  }
 `;
 const Input = styled.textarea`
   width: 70%;
@@ -41,8 +56,15 @@ const Input = styled.textarea`
   font-size: 1rem;
   z-index: 2;
 
-  @media screen and (max-width: 860px) {
+  @media screen and (max-width: 768px) {
     font-size: 0.8rem;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 0.55rem;
+    width: 40%;
+  }
+  @media screen and (max-width: 320px) {
+    font-size: 6px;
   }
   &:focus {
     border: 0.8px solid #000;
@@ -52,7 +74,6 @@ const Input = styled.textarea`
 
 const ConfirmReply = styled.div`
   display: flex;
-  width: 20%;
   justify-content: center;
   align-items: center;
 `;
@@ -70,6 +91,10 @@ const ReplyList = styled.div`
     border: 0.5px solid #b9b9b9;
     border-width: 0 0 0.5px;
     padding: 12px;
+    @media screen and (max-width: 500px) {
+      font-size: 7px;
+      padding: 6px;
+    }
   }
 `;
 const ReplyContent = styled.div`
@@ -92,12 +117,12 @@ const NoReply = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-const Setting = styled.div`
-  width: 50%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  @media screen and (max-width: 500px) {
+    font-size: 7px;
+  }
+  @media screen and (max-width: 325px) {
+    font-size: 7px;
+  }
 `;
 
 const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
@@ -247,7 +272,7 @@ const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
                 </ProfileImg>
                 <NickName>{reply.nickName}</NickName>
                 <ReplyContent>{reply.content}</ReplyContent>
-                <RegDate style={{ fontSize: "0.8rem", whiteSpace: "nowrap" }}>
+                <RegDate style={{ whiteSpace: "nowrap" }}>
                   {reply.regDate}
                 </RegDate>
               </div>

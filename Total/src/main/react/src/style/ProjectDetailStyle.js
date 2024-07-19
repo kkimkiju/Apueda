@@ -17,6 +17,9 @@ export const UpHead = styled.div`
   @media screen and (max-width: 860px) {
     padding: 0;
   }
+  @media screen and (max-width: 500px) {
+    font-size: 8px;
+  }
 `;
 
 export const UnderHead = styled.div`
@@ -38,7 +41,6 @@ export const Body = styled.div`
   width: 100%;
   //height: 1000px;
   height: auto;
-  padding: 16px;
 `;
 
 export const Footer = styled.div`
@@ -62,8 +64,6 @@ export const InputContainer = styled.div`
   flex-direction: column;
   width: 100%;
   height: auto;
-  /* border: solid #b9b9b9;
-  border-width: 0 0 1px; */
   border: 1px solid #bbbbbb;
   border-radius: 12px;
 `;
@@ -74,6 +74,10 @@ export const UpInert = styled.div`
   width: 100%;
   height: 100%;
   padding: 16px;
+  justify-content: space-between;
+  @media screen and (max-width: 768px) {
+    padding: 8px;
+  }
 `;
 
 export const UnderInert = styled.div`
@@ -92,21 +96,31 @@ export const ReplyListContainer = styled.div`
   align-items: center;
   width: 100%;
   padding: 16px 0;
+  @media screen and (max-width: 500px) {
+    padding: 0;
+  }
 `;
 
 export const PageNum = styled.div`
   display: flex;
-  justify-content: center;
   align-content: center;
   margin-top: 1rem;
+  width: 80%;
+  justify-content: space-evenly;
 `;
 export const ProfileImg = styled.div`
   padding: 8px;
-
+  @media screen and (max-width: 768px) {
+    padding: 1px;
+  }
   & img {
     width: 35px;
     height: 35px;
     border-radius: 40px;
     object-fit: cover;
+    @media screen and (max-width: 768px) {
+      width: 18px;
+      height: 18px;
+    }
   }
 `;

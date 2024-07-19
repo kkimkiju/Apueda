@@ -28,10 +28,15 @@ const Title = styled.div`
   display: flex;
   justify-content: flex-start;
   width: 80%;
-  height: 60px;
   padding: 16px;
   font-size: 2rem;
+  height: 60px;
   font-weight: bold;
+  @media screen and (max-width: 500px) {
+    padding: 6px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
 `;
 const ProjectTime = styled.div`
   display: flex;
@@ -41,6 +46,9 @@ const ProjectTime = styled.div`
    height: 60px;
   padding: 12px;*/
   font-size: 12px;
+  @media screen and (max-width: 500px) {
+    font-size: 6px;
+  }
 `;
 const Profile = styled.div`
   display: flex;
@@ -49,6 +57,10 @@ const Profile = styled.div`
   align-items: center;
   width: 50%;
   height: 60px;
+  @media screen and (max-width: 500px) {
+    font-size: 0.8rem;
+    height: auto;
+  }
 `;
 const Recruit = styled.div`
   display: flex;
@@ -59,10 +71,16 @@ const Recruit = styled.div`
   width: 50%;
   height: 60px;
   padding: 12px;
+  @media screen and (max-width: 500px) {
+    height: 30px;
+  }
 `;
 
 const RecruitMemNum = styled.div`
   font-size: 12px;
+  @media screen and (max-width: 500px) {
+    font-size: 6px;
+  }
 `;
 
 const Content = styled.div`
@@ -74,12 +92,26 @@ const Skills = styled.div`
   border: solid #b9b9b9;
   border-width: 0 0 1px;
   padding: 12px;
+  & button {
+    margin-left: 4px;
+
+    @media screen and (max-width: 500px) {
+      font-size: 6px;
+    }
+  }
 `;
 
 const ListBtt = styled.div`
   display: flex;
   justify-content: center;
   padding: 16px;
+  & button {
+    margin-left: 8px;
+
+    @media screen and (max-width: 500px) {
+      font-size: 6px;
+    }
+  }
 `;
 
 const Input = styled.textarea`
@@ -108,6 +140,9 @@ const ConfirmReply = styled.div`
 `;
 const NickName = styled.div`
   padding: 8px;
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+  }
 `;
 
 const Notice = styled.div``;
@@ -147,6 +182,7 @@ const ProjectDetail = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModify, setIsModify] = useState(true);
   const [currentCount, setCurrenCount] = useState();
+  const [isRecruit, setIsRecruit] = useState(false);
   const navigate = useNavigate();
   const modalRef = useRef(null);
   const email = localStorage.getItem("email");
@@ -285,12 +321,19 @@ const ProjectDetail = () => {
     try {
       const rsp = await AxiosApi.findRoomByRoomName(roomName);
       setCurrenCount(rsp.data.currentCount);
-      console.log("currentCount", rsp.data);
+
+      console.log("currentCount", rsp.data.currentCount);
     } catch (e) {
       console.log(e);
     }
   };
-
+  useEffect(() => {
+    if (currentCount === 0) {
+      setIsRecruit(false);
+    } else {
+      setIsRecruit(true);
+    }
+  }, [currentCount]);
   return (
     <BoardLayout>
       <Container>
@@ -304,10 +347,18 @@ const ProjectDetail = () => {
                 <Title>{projectContent.projectTitle}</Title>
                 <Recruit>
                   <Notice>모집 정보</Notice>
-                  <ProjectTime>{projectContent.projectTime}까지</ProjectTime>
-                  <RecruitMemNum>
-                    {currentCount}/{projectContent.recruitNum}명
-                  </RecruitMemNum>
+                  {!isRecruit ? (
+                    <span>모집이 종료된 프로젝트 입니다.</span>
+                  ) : (
+                    <>
+                      <ProjectTime>
+                        {projectContent.projectTime}까지
+                      </ProjectTime>
+                      <RecruitMemNum>
+                        {currentCount}/{projectContent.recruitNum}명
+                      </RecruitMemNum>
+                    </>
+                  )}
                 </Recruit>
               </UpHead>
               <UnderHead>
@@ -318,7 +369,6 @@ const ProjectDetail = () => {
                   <NickName>{projectContent.nickName}</NickName>
                 </Profile>
                 <Setting>
-                  {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
                   {email !== projectContent.memberId ? (
                     <div style={{ position: "relative" }}>
                       {projectContent.memberId.email === email ? (
@@ -347,8 +397,6 @@ const ProjectDetail = () => {
                   ) : (
                     <></>
                   )}
-
-                  {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
                 </Setting>
               </UnderHead>
             </Head>

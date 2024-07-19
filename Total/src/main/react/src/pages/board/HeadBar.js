@@ -39,17 +39,7 @@ const SearchFilter = styled.div`
   margin-left: 16px;
   color: #ffffff;
 `;
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 800px;
-  width: 100%;
-  margin-top: 5vh;
-  border: 5px solid #ff5353;
-  border-radius: 37px;
-  background-color: #ff5353;
-`;
+
 const HeadBar = ({ setIsClick }) => {
   const navigate = useNavigate();
   const [selectedButton, setSelectedButton] = useState({

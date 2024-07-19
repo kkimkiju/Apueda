@@ -26,6 +26,9 @@ export const InputButtonSection = styled.div`
   @media screen and (max-width: 500px) {
     padding: 6px;
   }
+  & button {
+    margin-left: 8px;
+  }
 `;
 
 export const Button = styled.button`
@@ -33,14 +36,21 @@ export const Button = styled.button`
   color: #ffffff;
   background-color: #ff5353;
   border-radius: 26px;
-  margin: 0 10px;
+
   height: 32px;
   width: 40px;
   overflow: hidden;
   &:last-child {
     /* margin-right: 0; */
   }
-  @media screen and (max-width: 860px) {
+  @media screen and (max-width: 768px) {
+    height: 22px;
+    font-size: 8px;
+  }
+  @media screen and (max-width: 500px) {
+    height: auto;
+    width: auto;
+    font-size: 8px;
   }
 `;
 
@@ -49,6 +59,9 @@ export const Bottom = styled.div`
   justify-content: space-between;
   width: 40%;
   padding: 16px;
+  @media screen and (max-width: 768px) {
+    width: 60%;
+  }
   @media screen and (max-width: 500px) {
     padding: 8px;
   }
@@ -63,8 +76,9 @@ export const ConfirmButton = styled.button`
   height: 42px;
 
   @media screen and (max-width: 500px) {
-    width: 70px;
-    height: 35px;
+    width: 50px;
+    height: 28px;
+    font-size: 11px;
   }
 `;
 
@@ -80,7 +94,7 @@ export const ContentContainer = styled.div`
   justify-content: space-evenly;
   padding: 16px;
   @media screen and (max-width: 500px) {
-    padding: 0px;
+    padding: 8px;
   }
 `;
 
@@ -123,9 +137,24 @@ export const DropdownInput = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 100px;
+  @media screen and (max-width: 500px) {
+    left: 0;
+    width: 130px;
+    height: 80px;
+    & button {
+      width: 48px;
+      height: 24px;
+      font-size: 8px;
+    }
+  }
   input {
     width: 200px;
     padding: 5px;
+    @media screen and (max-width: 500px) {
+      width: 100%;
+      height: 40%;
+      font-size: 8px;
+    }
   }
 `;
 export const InsertConfirm = styled.button`
@@ -150,6 +179,8 @@ export const Content = styled.textarea`
   overflow: auto;
   @media screen and (max-width: 500px) {
     padding: 6px;
+    height: 300px;
+    font-size: 12px;
   }
   &:focus {
     outline: none;
