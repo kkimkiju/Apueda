@@ -42,7 +42,8 @@ src/main/node_modules
 src/main/react/.pnp
 src/main/react/pnp.js
 src/main/react/.env
-src/main/resources/application*.properties
+src/main/resources/application-aws.properties
+src/main/resources/application-test.properties
 # testing
 src/main/react/coverage
 
