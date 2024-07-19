@@ -70,6 +70,10 @@ const Button = styled.button`
     width: 70vw;
     height: 13vw;
   }
+  @media (max-width: 500px) {
+   font-size: 17px;
+   }
+  }
 `;
 
 const MypageMain = () => {

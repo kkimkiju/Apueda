@@ -169,6 +169,7 @@ const Gobutton = styled.button`
   height: 50px;
   background-color: white;
   font-size: 20px;
+  color : black;
   cursor: pointer;
   border: 3px solid #ff5353;
   border-radius: 30px;
@@ -182,6 +183,7 @@ const Gobutton = styled.button`
 const Endbutton = styled.button`
   width: 150px;
   height: 50px;
+  color : black;
   background-color: white;
   font-size: 20px;
   margin-left: 30px;
@@ -535,7 +537,7 @@ const Mypj = () => {
                         )
                       }
                     >
-                      프로젝트 삭제
+                     삭제
                     </Endbutton>
                   )}
                 </GoEndBtn>
