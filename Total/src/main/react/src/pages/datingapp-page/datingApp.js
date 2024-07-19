@@ -318,14 +318,14 @@ export default DatingApp;
 
 const Body = styled.div`
   width: auto;
-  height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   @media (max-width: 500px) {
+    display: block;
     width: 100%;
-    height: 100svh;
+    height: 93vh;
   }
 `;
 const PhoneFrame = styled.div`
@@ -336,11 +336,7 @@ const PhoneFrame = styled.div`
   box-sizing: border-box;
   width: 30vw;
   height: 85vh;
-  background-image: linear-gradient(
-    to right,
-    #ff5253 0%,
-    rgb(255, 60, 100) 90%
-  );
+  background-image: linear-gradient(to right,#ff5253 0%,rgb(255, 60, 100) 90%);
   border-radius: 4dvi;
 
   & * {
@@ -372,8 +368,9 @@ const PhoneFrame = styled.div`
   }
   @media (max-width: 500px) {
     width: 100vw;
-    height: 90vh;
+    height: 92svh;
     border-radius: 5dvi;
+    margin-top: 1vh;
   }
 `;
 // 앱모양 창 내부 와이드값 Window, Title, BottonArea
@@ -396,6 +393,7 @@ const Title = styled.div`
   @media (max-width: 500px) {
     width: ${mobilewidthvalue};
     height: 6vh;
+    margin-top: 2vh;
     & div {
       font-size: 4vw;
     }
@@ -424,7 +422,7 @@ const Window = styled.div`
   }
   @media (max-width: 500px) {
     width: ${mobilewidthvalue};
-    height: 82vh;
+    height: 72vh;
   }
 `;
 
@@ -447,8 +445,8 @@ const CardImage = styled.div`
   background-position: center;
   background-image: url(${(props) => props.imageUrl}), linear-gradient(to bottom, #bbb 50%, #304352 100%);
   @media (max-width: 500px) {
-    width: 78vw;
-    height: 65vh;
+    width: 75vw;
+    height: 63vh;
   }
 `;
 const ButtonArea = styled.div`

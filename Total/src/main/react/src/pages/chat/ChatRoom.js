@@ -162,14 +162,14 @@ const Container = styled.div`
   overflow: auto;
   width: 45vw;
   height: auto;
-  min-height: 700px;
   border: 0.5vi solid rgb(255, 83, 83);
   border-radius: 3vi;
   margin-top: 2vh;
   @media (max-width:500px){
     width: 100svw;
-    height: 85svh;
-    border: 1vi solid rgb(255, 83, 83);
+    height: 92svh;
+    border-radius: 5vi;
+    border: 2vi solid rgb(255, 83, 83);
   }
 `;
 
@@ -214,10 +214,13 @@ const ChatBox = styled.div`
   display: flex;
   flex-direction: column;
   width: auto;
-  height: 600px;
+  height: 65svh;
   padding: 1rem;
   box-sizing: border-box;
   overflow-y: scroll;
+  @media (max-width:500px){
+    height: 68svh;
+  }
 `;
 
 const MessageItem = styled.div`
@@ -290,7 +293,7 @@ const Form = styled.form`
 const TypingBox = styled.div`
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   padding: 0.5rem;
   border: 0.3vi solid rgb(255, 83, 83);
   border-radius: 4vi;
