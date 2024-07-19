@@ -38,7 +38,11 @@ const FindPw = () => {
 
   const onChangeEmailCode = (e) => {
     const currCode = Number(e.target.value);
-    setInputCode(currCode);
+    if (isNaN(currCode)) {
+      setInputCode("");
+    } else {
+      setInputCode(currCode);
+    }
   };
 
   const authorizeMail = async () => {

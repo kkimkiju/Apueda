@@ -10,13 +10,23 @@ const UserStore = (props) => {
   const [subscribeStatus, setSubscribeStatus] = useState(
     localStorage.getItem("subscribeStatus") || ""
   );
+  // 프로필 사진 변경
+  const [profileChange, setProfileChange] = useState(
+    localStorage.getItem("profileChange") || ""
+  );
 
   useEffect(() => {
     localStorage.setItem("loginStatus", loginStatus);
+    console.log(localStorage.getItem("loginStatus"));
   }, [loginStatus]);
   useEffect(() => {
     localStorage.setItem("subscribeStatus", subscribeStatus);
+    console.log(localStorage.getItem("subscribeStatus"));
   }, [subscribeStatus]);
+  useEffect(() => {
+    localStorage.setItem("profileChange", subscribeStatus);
+    console.log(localStorage.getItem("profileChange"));
+  }, [profileChange]);
 
   return (
     <UserContext.Provider
@@ -25,6 +35,8 @@ const UserStore = (props) => {
         setLoginStatus,
         subscribeStatus,
         setSubscribeStatus,
+        profileChange,
+        setProfileChange,
       }}
     >
       {props.children}

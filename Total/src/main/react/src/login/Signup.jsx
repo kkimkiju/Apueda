@@ -41,7 +41,7 @@ const SignUp = ({ profile }) => {
   const [formattedIdentityNumber, setFormattedIdentityNumber] = useState("");
 
   // 이메일 코드 작성
-  const [inputCode, setInputCode] = useState(null);
+  const [inputCode, setInputCode] = useState("");
   const [sentCode, setSentCode] = useState(null);
   // 유효성 검사
   const [emailValid, setEmailValid] = useState(false); // 이메일 형식 검사
@@ -142,7 +142,11 @@ const SignUp = ({ profile }) => {
   // 입력 인증 번호 확인
   const onChangeEmailCode = (e) => {
     const currCode = Number(e.target.value);
-    setInputCode(currCode);
+    if (isNaN(currCode)) {
+      setInputCode("");
+    } else {
+      setInputCode(currCode);
+    }
   };
 
   // 이메일 인증
@@ -209,12 +213,6 @@ const SignUp = ({ profile }) => {
       memberRegCheck(currEmail);
       // memberRegCheck(e.target.value); //DB에 중복 이메일 확인
     }
-  };
-
-  // 이메일 인증 핸들러
-  const onChangeCode = (e) => {
-    const currCode = e.target.value;
-    setInputCode(currCode);
   };
 
   // 비밀번호 인풋
@@ -376,6 +374,7 @@ const SignUp = ({ profile }) => {
             <EmailBox>
               <ShortInputContainer>
                 <ShortInput
+                  type="text"
                   placeholder="인증번호"
                   value={inputCode}
                   onChange={onChangeEmailCode}

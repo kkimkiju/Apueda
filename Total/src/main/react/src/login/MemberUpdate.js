@@ -13,12 +13,14 @@ import {
   Text,
   SubmitBtn,
 } from "./style/SignFormStyle";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { storage } from "../api/firebase/Firebase";
 import AxiosApi from "../api/AxiosApi";
 import basicProfile from "../image/person-icon2.png";
 import styled from "styled-components";
+import { UserContext } from "../context/UserStore";
+
 const EmailTag = styled.p`
   margin-bottom: -20px;
 `;
@@ -50,6 +52,9 @@ const MemberUpdate = () => {
   const [nickname, setNickname] = useState("");
   const [identityNumber, setIdentityNumber] = useState("");
 
+  const context = useContext(UserContext);
+  const { profileChange, setProfileChange } = context;
+
   const [skill, setSkill] = useState("");
   const [myInfo, setMyInfo] = useState("");
 
@@ -73,7 +78,6 @@ const MemberUpdate = () => {
         const rsp = await AxiosApi.getUserInfo2();
         setUserInfo(rsp.data);
         setImgSrc(rsp.data.profileImgPath);
-
         setNickname(rsp.data.nickname);
         setEmail(rsp.data.email);
         setName(rsp.data.name);
@@ -240,6 +244,7 @@ const MemberUpdate = () => {
       if (rsp.data) {
         alert("회원 정보 수정에 성공했습니다.");
         console.log(user);
+        setProfileChange(true);
         navigate("/apueda/mypage");
       } else {
         alert("회원 정보 수정에 실패했습니다.");
