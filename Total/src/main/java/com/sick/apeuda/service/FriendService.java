@@ -1,23 +1,26 @@
 package com.sick.apeuda.service;
 
 import com.sick.apeuda.dto.FriendDto;
-import com.sick.apeuda.entity.Friend;
-import com.sick.apeuda.entity.Member;
-import com.sick.apeuda.entity.PostMsg;
-import com.sick.apeuda.entity.ReadMessage;
+import com.sick.apeuda.entity.*;
+import com.sick.apeuda.errorhandler.TooManyRequestsException;
 import com.sick.apeuda.repository.FriendRepository;
 import com.sick.apeuda.repository.PostMsgRepository;
 import com.sick.apeuda.repository.ReadMessageRepository;
+import com.sick.apeuda.repository.SubscriptionRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class FriendService {
 
     @Autowired
@@ -26,7 +29,29 @@ public class FriendService {
     private PostMsgRepository postMsgRepository;
     @Autowired
     private ReadMessageRepository readMessageRepository;
+    @Autowired
+    private SubscriptionRepository subscriptionRepository;
+    private final Map<String, Timestamp> nonSubscriberUsageMap = new HashMap<>();
 
+    // 구독 상태 확인
+    private boolean isSubscribed(Member member) {
+        Optional<Subscription> subscription = subscriptionRepository.findByMemberAndStatus(member, "구독");
+        return subscription.isPresent();
+    }
+
+    // 비구독자 사용 제한 하기
+    private void checkNonSubscriberUsage(String currentUserEmail) {
+        Timestamp lastUsage = nonSubscriberUsageMap.get(currentUserEmail);
+        if (lastUsage != null) {
+            LocalDateTime lastUsageTime = lastUsage.toLocalDateTime();
+            LocalDateTime currentTime = LocalDateTime.now();
+            long hoursDifference = ChronoUnit.HOURS.between(lastUsageTime, currentTime);
+            if (hoursDifference < 24) { // 테스트용 시간 변경
+                throw new TooManyRequestsException("허용된 횟수를 초과했습니다. 24시간 뒤 다시 시도해주세요.");
+            }
+        }
+        nonSubscriberUsageMap.put(currentUserEmail, Timestamp.valueOf(LocalDateTime.now()));
+    }
     /**
      * 친구 요청을 보냅니다.
      *
@@ -36,6 +61,11 @@ public class FriendService {
      */
     @Transactional
     public void sendFriendRequest(Member member, Member toMember) {
+        log.info("친구신청 수행");
+        if(!isSubscribed(member)){
+            log.info("미구독자 시간제한 수행");
+            checkNonSubscriberUsage(member.getEmail());
+        }
         //자기 자신에게 신청 불가
         if (member.getEmail().equals(toMember.getEmail())) {
             throw new IllegalStateException("자기 자신에게 친구 요청을 보낼 수 없습니다.");

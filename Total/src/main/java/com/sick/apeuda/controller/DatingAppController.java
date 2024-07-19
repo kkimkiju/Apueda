@@ -24,18 +24,18 @@ public class DatingAppController {
     @Autowired
     private DatingAppService datingAppService;
 
-    // 친구 신청
-    @PostMapping("/request")
-    public void sendFriendRequest(@RequestParam String memberEmail, @RequestParam String toMemberEmail) {
-        // 이메일을 사용하여 사용자 객체를 가져온다고 가정
-        Member member = new Member();
-        member.setEmail(memberEmail);
-
-        Member toMember = new Member();
-        toMember.setEmail(toMemberEmail);
-
-        friendService.sendFriendRequest(member, toMember);
-    }
+//    // 친구 신청
+//    @PostMapping("/request")
+//    public void sendFriendRequest(@RequestParam String memberEmail, @RequestParam String toMemberEmail) {
+//        // 이메일을 사용하여 사용자 객체를 가져온다고 가정
+//        Member member = new Member();
+//        member.setEmail(memberEmail);
+//
+//        Member toMember = new Member();
+//        toMember.setEmail(toMemberEmail);
+//
+//        friendService.sendFriendRequest(member, toMember);
+//    }
     // 싫어하는 유저 저장
     @PostMapping("/unlike")
     public void saveUnlikeMember(@RequestParam String memberEmail, @RequestParam String unlikeMemberEmail) {

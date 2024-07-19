@@ -15,7 +15,7 @@ function DatingApp() {
   const [myEmail, setMyEmail] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0); // 겹친 카드중 선택 순서
   const [lastDirection, setLastDirection] = useState();
-  const [isSubscribed, setIsSubscribed] = useState(false); // 구독 여부 상태
+  const [isSubscribed, setIsSubscribed] = useState(); // 구독 여부 상태
   const [hasUsedFreeTrial, setHasUsedFreeTrial] = useState(false); // 비구독자의 무료 사용 여부
   const [showLimitModal, setShowLimitModal] = useState(false); // 모달 상태 추가
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -25,7 +25,7 @@ function DatingApp() {
   const [render, setRender] = useState(0); // 현재 페이지로 렌더링하기 위한 상태관리
 
   //429 에러 핸들링
-  const handleError = (error) => {
+  const handle429Error = (error) => {
     if (error.response && error.response.status === 429) {
       setShowLimitModal(true);
     }
@@ -39,14 +39,6 @@ function DatingApp() {
     setShowLimitModal(false);
     navigate("/");
   };
-  // 스와이프 하고 남은 카드 갯수 관리
-  const childRefs = useMemo(
-    () =>
-      Array(cardList.length)
-        .fill(0)
-        .map((i) => React.createRef()),
-    [cardList.length]
-  );
   const handleConfirmYes = () => {
     if (confirmAction) {
       confirmAction();
@@ -60,6 +52,14 @@ function DatingApp() {
       // navigate("/");
     }
   };
+  // 스와이프 하고 남은 카드 갯수 관리
+  const childRefs = useMemo(
+    () =>
+      Array(cardList.length)
+        .fill(0)
+        .map((i) => React.createRef()),
+    [cardList.length]
+  );
   // 1. 로그인 여부 확인 로그인 안 할시에 로그인 창으로 이동
   const navigate = useNavigate();
   const context = useContext(UserContext);
@@ -84,21 +84,25 @@ function DatingApp() {
     };
     getMyEmail();
   }, []); // 초기 한 번만 실행되도록 빈 배열 사용
-  useEffect(() => {
-    // 3. 정기구독여부 확인
+  // 구독 여부 확인하기 초기에 실행안함
     const checkSubscription = async () => {
       try {
-        const response = await AxiosApi.checkSubscribe();
+        const response = await AxiosApi.checkSubscribe(); 
         setIsSubscribed(response.data); // 구독 여부 상태 업데이트
         console.log("정기구독여부 :", response.data);
       } catch (error) {
         console.log(error);
       }
     };
-    checkSubscription();
+
 
     // 4.유저정보 가져오기
+    useEffect(() => {
     const showUserInfo = async () => {
+      const freeTrialUsed = localStorage.getItem("freeTrialUsed"); //******************************** 비구독자일때 세션에 무료사용 여부 세션 확인
+          if (freeTrialUsed) { // 사용내역 있으면
+            setShowLimitModal(true); // 제한모달
+          }
       try {
         const response = await AxiosApi.getCardList(myEmail); // AxiosApi에서 사용자 정보를 가져옴
         const userList = response.data.map((user) => ({
@@ -113,19 +117,23 @@ function DatingApp() {
         console.log(`카드리트스트 :`, userList);
         currentIndexRef.current = userList.length - 1;
       } catch (error) {
-        // 백앤드에서도 구독여부를 확인하여 1회 이용후 다시 페이지에 접속하면 429 error 반환해줌
+        
         console.log(error);
-        handleError(error);
+        handle429Error(error);
       }
     };
-    showUserInfo();
-  }, [myEmail]);
+    if (myEmail) {
+      checkSubscription().then(showUserInfo);
+    }
+  }, [myEmail, isSubscribed]);
 
   const sendFriendRequests = useCallback(async () => {
     for (const user of likedList) {
       try {
         await AxiosApi.friendRequest(myEmail, user.email);
       } catch (error) {
+        // 백앤드에서도 구독여부를 확인하여 1회 이용후 친구신청을 시도하면 429 error 반환해줌
+        handle429Error(error);
         console.error("Error sending friend request:", error);
       }
     }
@@ -141,21 +149,23 @@ function DatingApp() {
   const handleEndOfCards = useCallback(() => {
     setTimeout(() => {
       if (isSubscribed) {
-        setModalMessage(
-          "카드가 모두 소진되었습니다. 친구신청후 새카드를 받겠습니까?"
-        );
+        setModalMessage("카드가 모두 소진되었습니다. 친구신청후 새카드를 받겠습니까?");
         setConfirmAction(() => async () => {
           await sendFriendRequests();
-          setRender(prevKey => prevKey + 1); // 렌더링 강제 상태 변경
+          setRender(render => render + 1); // 렌더링 강제 상태 변경
         });
       } else if (!isSubscribed) {
-        setModalMessage(
-          "카드가 모두 소진되었습니다. 친구신청 후 홈페이지로 이동하시겠습니까?"
-        );
+        setModalMessage("카드가 모두 소진되었습니다. 친구신청 후 홈페이지로 이동하시겠습니까?");
         setConfirmAction(() => async () => {
           await sendFriendRequests();
           navigate("/");
           setHasUsedFreeTrial(true);
+          const freeTrialUsed = localStorage.getItem("freeTrialUsed"); //******************************** 비구독자일때 세션에 무료사용 여부 세션 확인
+          if (freeTrialUsed) { // 사용내역 있으면
+            setShowLimitModal(true); // 제한모달
+          } else {
+            localStorage.setItem("freeTrialUsed", "true"); //없으면 무료사용내역 저장
+          }
         });
       }
       setShowConfirmModal(true);
@@ -178,6 +188,8 @@ function DatingApp() {
       // 왼쪽으로 넘겼을 때 실행 함수 (싫어요)
       setUnlikedList((prev) => [...prev, cardList[index]]);
     }
+
+    sessionStorage.setItem("hasInteracted", "true"); // 동작 이력 저장
   };
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val);
@@ -185,6 +197,7 @@ function DatingApp() {
   };
   // set last direction and decrease current index
   const outOfFrame = (nickname, idx) => {
+    checkSubscription();
     console.log(`${nickname} (${idx}) 카드 제거!`, currentIndexRef.current);
     // handle the case in which go back is pressed before card goes outOfFrame
     currentIndexRef.current >= idx && childRefs[idx].current.restoreCard();
@@ -207,13 +220,9 @@ function DatingApp() {
     const lastCard = cardList[newIndex];
 
     if (lastDirection === "right") {
-      setLikedList((prev) =>
-        prev.filter((user) => user.nickname !== lastCard.nickname)
-      );
+      setLikedList((prev) => prev.filter((user) => user.nickname !== lastCard.nickname));
     } else if (lastDirection === "left") {
-      setUnlikedList((prev) =>
-        prev.filter((user) => user.nickname !== lastCard.nickname)
-      );
+      setUnlikedList((prev) => prev.filter((user) => user.nickname !== lastCard.nickname));
     }
 
     updateCurrentIndex(newIndex);
@@ -266,33 +275,18 @@ function DatingApp() {
         </Window>
         <ButtonArea>
           <Buttons>
-            <button
-              style={{ backgroundColor: !canSwipe && "#a1a1a1" }}
-              onClick={() => swipe("left")}
-            >
+            <button style={{ backgroundColor: !canSwipe && "#a1a1a1" }} onClick={() => swipe("left")}>
               PASS
             </button>
-            <button
-              style={{
-                backgroundColor: !canGoBack && "#a1a1a1",
-              }}
-              onClick={() => goBack()}
-            >
+            <button style={{ backgroundColor: !canGoBack && "#a1a1a1" }} onClick={() => goBack()}>
               <FaArrowRotateLeft color="#000000" />
             </button>
-            <button
-              style={{
-                backgroundColor: !canSwipe && "#a1a1a1",
-              }}
-              onClick={() => swipe("right")}
-            >
+            <button style={{ backgroundColor: !canSwipe && "#a1a1a1" }} onClick={() => swipe("right")}>
               LIKE
             </button>
           </Buttons>
           {lastDirection ? (
-            <ResultBox key={lastDirection}>
-              You swiped {lastDirection}
-            </ResultBox>
+            <ResultBox key={lastDirection}>You swiped {lastDirection}</ResultBox>
           ) : (
             <ResultBox>모든 카드를 넘겨주세요!</ResultBox>
           )}
@@ -451,7 +445,7 @@ const CardImage = styled.div`
   box-shadow: 0px 0px 2vw 0px rgba(0, 0, 0, 0.3);
   background-size: cover;
   background-position: center;
-  background-image: url(${(props) => props.imageUrl});
+  background-image: url(${(props) => props.imageUrl}), linear-gradient(to bottom, #bbb 50%, #304352 100%);
   @media (max-width: 500px) {
     width: 78vw;
     height: 65vh;
@@ -577,7 +571,15 @@ const Span = styled.span`
 
   &:nth-child(4) { // 자기소개 부분
     font-size: 1vw;
-    margin-bottom: 5vh;
+    display: inline-block;
+    overflow: hidden;
+
+    white-space: normal;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    height: 3.6em; // line-height 3배 = 3줄까지만 보여줌 
+    margin-bottom: 3vh;
+    
   }
 
   @media (max-width: 500px) {
