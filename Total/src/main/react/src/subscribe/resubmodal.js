@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 const Textbox = styled.div`
   font-size: 15px;
   text-align: center;
+  @media (max-width: 429px) {
+    font-size: 11px;
+  }
 `;
 const Uninfo = styled.div`
   width: 80%;

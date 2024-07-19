@@ -32,6 +32,13 @@ const Paybu = styled.button`
       margin: 0;
     }
   }
+  @media (max-width: 429px) {
+    width: 50%;
+    font-size: 13px;
+    img {
+      margin: 0;
+    }
+  }
 `;
 const Payment = ({ isChecked1, isChecked2, close }) => {
   const buyer_email = localStorage.getItem("email");

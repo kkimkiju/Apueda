@@ -48,6 +48,14 @@ const Deadline = styled.div`
   align-content: center;
   font-size: 25px;
   margin-left: 12%;
+  @media (max-width: 500px) {
+    width: 33%;
+    font-size: 15px;
+  }
+  @media (max-width: 429px) {
+    width: 55%;
+    font-size: 13px;
+  }
 `;
 
 const Subbutt = styled.button`
@@ -63,6 +71,9 @@ const Subbutt = styled.button`
   border: 0;
   &:hover {
     cursor: pointer;
+  }
+  @media (max-width: 429px) {
+    font-size: 15px;
   }
 `;
 
@@ -113,6 +124,9 @@ const Textbox = styled.div`
   text-align: center;
   @media (max-width: 500px) {
     font-size: 17px;
+  }
+  @media (max-width: 429px) {
+    font-size: 13px;
   }
 `;
 const Detailbox = styled.div`
@@ -204,7 +218,7 @@ const Mysub = () => {
     if (substatus === "구독" && new Date(deadLine) > new Date()) {
       return "해지";
     } else if (substatus === "해지" && new Date(deadLine) > new Date()) {
-      return "다시 구독";
+      return "재구독";
     } else {
       return "구독";
     }
