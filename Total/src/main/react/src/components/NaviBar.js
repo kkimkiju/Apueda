@@ -144,11 +144,11 @@ export default function NaviBar() {
               </MenuItem>
               <MenuItem onClick={() => navigate("/apueda/chatmanage")}>
                 <Img src={chat} />
-                <Overlay>채팅</Overlay>
+                <Overlay>오픈채팅</Overlay>
               </MenuItem>
-              <MenuItem>
+              <MenuItem onClick={() => navigate("/apueda/mypage/mypj")}>
                 <Img src={friend} />
-                <Overlay>친구관리</Overlay>
+                <Overlay>프로젝트</Overlay>
               </MenuItem>
               <MenuItem onClick={() => navigate("/apueda/datingapp")}>
                 <Img src={phone} />
