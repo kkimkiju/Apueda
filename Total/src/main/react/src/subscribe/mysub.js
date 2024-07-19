@@ -192,6 +192,7 @@ const Mysub = () => {
         setMerchantuid(response.data[0].merchantuid);
         console.log(response.data[0]);
       } else {
+        setSubstatus(null);
         console.error("No deadline data in response");
       }
     } catch (error) {
