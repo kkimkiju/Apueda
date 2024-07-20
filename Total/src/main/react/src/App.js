@@ -26,7 +26,6 @@ import TeamChatPage from "./pages/chat/teamchatpage";
 import ChatManage from "./pages/chat/Chatmanage";
 import ChatMain from "./pages/chat/ChatMain";
 import DatingApp from "./pages/datingapp-page/datingApp";
-import EditInfo from "./mypages/EditInfo";
 import Friend from "./mypages/Friend";
 import BoardMain from "./pages/board/BoardMain";
 import WriteProject from "./pages/board/WriteProject";
@@ -86,7 +85,6 @@ function App() {
               path="/apueda/mypage/memberupdate"
               element={<MemberUpdate />}
             />
-            <Route path="/apueda/mypage/editinfo" element={<EditInfo />} />
             <Route path="/apueda/mypage/friend" element={<Friend />} />
             <Route path="/apueda/mysub" element={<Mysub />} />
             <Route path="/apueda/kakaologin" element={<Kakaologin />} />
