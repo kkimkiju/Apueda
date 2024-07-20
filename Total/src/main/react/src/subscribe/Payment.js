@@ -131,14 +131,14 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
 
     // 3. IAMPORT 토큰 요청
     const tokenResponse = await axios.post(
-      "http://apueda.shop/api/iamport/getToken",
+      "http://www.apueda.shop/api/iamport/getToken",
       {}, // 데이터는 비어 있어도 됩니다.
       { withCredentials: true } // credentials 포함
     );
     const iamportToken = tokenResponse.data.response.access_token;
 
     const regitem = await axios.post(
-      "http://apueda.shop/api/iamport/preparePayment",
+      "http://www.apueda.shop/api/iamport/preparePayment",
       { merchant_uid: merchant, amount: 10 },
       {
         headers: {

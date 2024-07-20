@@ -167,7 +167,7 @@ const Privacy = (props) => {
     try {
       // IAMPORT 토큰 요청
       const tokenResponse = await axios.post(
-        "http://apueda.shop/api/iamport/getToken",
+        "http://www.apueda.shop/api/iamport/getToken",
         {}, // 데이터는 비어 있어도 됩니다.
         { withCredentials: true } // credentials 포함
       );
@@ -176,7 +176,7 @@ const Privacy = (props) => {
       console.log(merchantuid);
       // 재구독
       const resub = await axios.post(
-        "http://apueda.shop/api/iamport/reschedulePayment",
+        "http://www.apueda.shop/api/iamport/reschedulePayment",
         { merchant_uid: merchantuid, schedule_at: rebook },
         {
           headers: {
