@@ -9,7 +9,7 @@ import PaymentApi from "../api/PaymentAxios";
 
 const Container = styled.div`
   width: 100%;
-  padding-top: 20px;
+  padding: 20px 0 20px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -178,6 +178,7 @@ const LoginPage = () => {
       setLoginStatus(true);
     } catch (e) {
       console.log(e);
+      alert("아이디 또는 비밀번호가 일치하지 않습니다.")
     }
   };
   const subScribeCheck = async () => {

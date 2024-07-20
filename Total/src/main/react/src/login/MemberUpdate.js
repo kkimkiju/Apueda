@@ -242,11 +242,11 @@ const MemberUpdate = () => {
         setProfileChange(true);
         navigate("/apueda/mypage");
       } else {
-        alert("회원 정보 수정에 실패했습니다.");
+        alert("비밀번호, 주민번호, 이름, 스킬 필수 입력");
       }
     } catch (e) {
       console.log(e);
-      alert("회원 정보 수정 중 오류가 발생했습니다.");
+      alert("비밀번호, 주민번호, 이름, 스킬 필수 입력");
     }
   };
 

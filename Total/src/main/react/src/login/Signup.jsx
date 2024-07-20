@@ -145,15 +145,13 @@ const SignUp = ({ profile }) => {
   const authorizeMail = async () => {
     try {
       const rsp = await AxiosApi.mail(email);
-      console.log(rsp.data);
       setEmailValid("");
       setEmailError("");
       if (rsp.data !== null) {
         setSentCode(rsp.data);
       }
-    } catch (error) {
-      console.error("이메일 요청 오류:", error);
-      // 오류 처리 로직 추가
+    } catch (e) {
+      console.e("이메일 요청 오류:", e);
     }
   };
 
@@ -304,13 +302,13 @@ const SignUp = ({ profile }) => {
       const response = await AxiosApi.signup(user);
       if (response.data) {
         alert("회원가입에 성공했습니다.");
-        navigate("/apueda");
+        navigate("/apueda/login");
       } else {
-        alert("회원가입에 실패했습니다.");
+        alert("비밀번호, 주민번호, 이름, 스킬 필수 입력");
       }
     } catch (e) {
       console.log(e);
-      alert("회원가입 중 오류가 발생했습니다.");
+      alert("비밀번호, 주민번호, 이름, 스킬 필수 입력");
     }
   };
 

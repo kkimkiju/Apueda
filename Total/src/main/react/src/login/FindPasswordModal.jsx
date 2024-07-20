@@ -70,7 +70,7 @@ const PasswordModal = ({ onClose, onSubmit }) => {
       /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}:;',.?/\\-]).{8,}$/;
     if (!passwordRegex.test(newPassword)) {
       setPasswordError(
-        "비밀번호는 숫자, 영어 소문자, 특수문자를 모두 포함하여 8자 이상이어야 합니다."
+        "숫자,영어 소문자,특수문자 포함 8자 이상"
       );
       setPwdValid(false);
     } else {
