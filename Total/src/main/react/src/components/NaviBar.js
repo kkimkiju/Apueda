@@ -96,7 +96,7 @@ export default function NaviBar() {
     navigate("/apueda");
     setLoginStatus("");
     setSubscribeStatus("");
-    alert("로그아웃 되었습니다. (localStorage 모두 삭제)");
+    alert("로그아웃 되었습니다.);
   };
 
   const subscribeHandler = () => {

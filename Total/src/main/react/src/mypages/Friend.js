@@ -265,7 +265,7 @@ const Friend = () => {
     setSelectedFriendEmail(email); // 클릭한 친구의 이메일을 상태에 설정
     setIsModalOpen(true); // 모달 창 열기
     document.body.style.overflow = "hidden"; //모달창 열렸을 때 스크롤 금지
-    console.log(email);
+//    console.log(email);
   };
 
   const closeModal = () => {
@@ -278,8 +278,8 @@ const Friend = () => {
     const fechFriend = async () => {
       try {
         const rsp = await AxiosApi.friendlist();
-        console.log(rsp.data);
-        console.log(localStorage.getItem("email"));
+//        console.log(rsp.data);
+//        console.log(localStorage.getItem("email"));
         setFriends(rsp.data); // 백엔드에서 받아온 친구 목록을 상태에 저장
 
         // 각 친구의 이미지 URL을 설정
@@ -317,7 +317,7 @@ const Friend = () => {
       // 상태 업데이트
       setFriends(updatedFriends);
 
-      console.log("읽음으로 변경");
+//      console.log("읽음으로 변경");
     } catch (error) {
       console.error("상태 업데이트 오류:", error);
     }
@@ -336,7 +336,7 @@ const Friend = () => {
         });
 
         setReqImageUrls(urls); // 상태 업데이트
-        console.log(urls);
+//        console.log(urls);
       } catch (error) {
         console.error("친구 요청 목록 가져오기 오류:", error);
       }
@@ -360,7 +360,7 @@ const Friend = () => {
         );
         // 상태 업데이트
         setFriends(updatedFriends);
-        console.log("삭제 성공");
+//        console.log("삭제 성공");
         window.alert("삭제 완료");
       } catch (error) {
         console.error("삭제 오류", error);
@@ -372,12 +372,11 @@ const Friend = () => {
   const requsetAccept = async (memberEmail) => {
     try {
       await AxiosApi.friendRequestAccept(memberEmail);
-      console.log("친추 성공");
+//      console.log("친추 성공");
       window.alert("추가 완료");
       window.location.reload();
     } catch (error) {
       console.error("오류 : ", error);
-      console.log(memberEmail);
     }
   };
 
@@ -385,12 +384,12 @@ const Friend = () => {
   const requestReject = async (memberEmail) => {
     try {
       await AxiosApi.friendRequestReject(memberEmail);
-      console.log("거절 완료");
+//      console.log("거절 완료");
       window.alert("거절 완료");
       window.location.reload();
     } catch (error) {
       console.error("오류 : ", error);
-      console.log(memberEmail);
+//      console.log(memberEmail);
     }
   };
 

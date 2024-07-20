@@ -305,7 +305,7 @@ const Mypj = () => {
     const fetchMyProject = async () => {
       try {
         const rsp = await AxiosApi.myProjectList();
-        console.log(rsp.data);
+//        console.log(rsp.data);
         setProjectList(rsp.data);
         // 초기 호스트 상태 설정
         const initialHostStatus = rsp.data.map((project) =>
@@ -325,7 +325,7 @@ const Mypj = () => {
     const fetchProjectApply = async () => {
       try {
         const rsp = await AxiosApi.myProjectApplyList();
-        console.log(rsp.data);
+//        console.log(rsp.data);
         setProjectReq(rsp.data);
       } catch (error) {
         console.error("에러", error);
@@ -410,7 +410,7 @@ const Mypj = () => {
         window.location.reload();
       } catch (error) {
         console.error("오류 : ", error);
-        console.log(applyid);
+//        console.log(applyid);
       }
     }
   };
@@ -424,7 +424,7 @@ const Mypj = () => {
         window.location.reload();
       } catch (error) {
         console.error("오류 : ", error);
-        console.log(applyid);
+//        console.log(applyid);
       }
     }
   };

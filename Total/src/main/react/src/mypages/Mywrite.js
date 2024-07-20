@@ -117,12 +117,8 @@ const Mywrite = () => {
     const fetchProjectList = async () => {
       try {
         const rsp = await AxiosApi.getMyProjectList();
-        console.log(rsp.data);
-        console.log(localStorage.getItem("email"));
-        // setBoardList(rsp.data);
-        // const filteredData = rsp.data.filter(
-        //   (project) => project.email === localStorage.getItem("email")
-        // );
+//        console.log(rsp.data);
+//        console.log(localStorage.getItem("email"));
         setProjectList(rsp.data); // 필터링된 데이터를 상태에 저장
       } catch (e) {
         console.log(e);
@@ -136,8 +132,8 @@ const Mywrite = () => {
     const fetchBoardList = async () => {
       try {
         const rsp = await AxiosApi.getMyBoardList();
-        console.log(rsp.data);
-        console.log(localStorage.getItem("email"));
+//        console.log(rsp.data);
+//        console.log(localStorage.getItem("email"));
         setBoardList(rsp.data); // 필터링된 데이터를 상태에 저장
       } catch (e) {
         console.log(e);
@@ -146,41 +142,6 @@ const Mywrite = () => {
 
     fetchBoardList();
   }, []);
-
-  // const boardDelete = async (boardId) => {
-  //   const confirm = window.confirm("글을 삭제하시겠습니까?");
-  //   if (confirm) {
-  //     try {
-  //       // API를 호출하여 게시글 삭제
-  //       await AxiosApi.boardDelete(boardId);
-  //       // 삭제 성공 시, 상태 업데이트 등 추가 로직 처리
-  //       console.log(boardId);
-  //       console.log("삭제 성공");
-  //       window.alert("삭제완료");
-  //       window.location.reload();
-  //     } catch (error) {
-  //       console.error("삭제 오류", error);
-  //       console.log(boardId);
-  //     }
-  //   }
-  // };
-  // const projectDelete = async (projectId) => {
-  //   const confirm = window.confirm("글을 삭제하시겠습니까?");
-  //   if (confirm) {
-  //     try {
-  //       // API를 호출하여 게시글 삭제
-  //       await AxiosApi.projectDelete(projectId);
-  //       // 삭제 성공 시, 상태 업데이트 등 추가 로직 처리
-  //       console.log(projectId);
-  //       console.log("삭제 성공");
-  //       window.alert("삭제완료");
-  //       window.location.reload();
-  //     } catch (error) {
-  //       console.error("삭제 오류", error);
-  //       console.log(projectId);
-  //     }
-  //   }
-  // };
 
   return (
     <>

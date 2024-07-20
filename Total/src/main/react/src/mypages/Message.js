@@ -165,7 +165,7 @@ const Message = ({ closeModal, friendEmail, friendProfile }) => {
     setSelectedFriendEmail(friendemail); // 클릭한 친구의 이메일을 상태에 설정
     setIsModalOpen(true); // 모달 창 열기
     document.body.style.overflow = "hidden"; //모달창 열렸을 때 스크롤 금지
-    console.log(friendemail);
+//    console.log(friendemail);
   };
 
   const closeWriteModal = () => {
@@ -178,12 +178,8 @@ const Message = ({ closeModal, friendEmail, friendProfile }) => {
       try {
         const rsp = await AxiosApi.messageList(friendEmail);
         //읽음 표시 하려고 아이디 추출
-        console.log(rsp.data);
+//        console.log(rsp.data);
         setMessageList(rsp.data);
-        // rsp.data.forEach((postMsg) => {
-        //   markMessageAsRead(postMsg.postMsgId);
-        //   console.log(postMsg.postMsgId);
-        // });
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
@@ -214,7 +210,7 @@ const Message = ({ closeModal, friendEmail, friendProfile }) => {
         // API를 호출하여 게시글 삭제
         await AxiosApi.delMsg(postMsgId);
         // 삭제 성공 시, 상태 업데이트 등 추가 로직 처리
-        console.log("삭제 성공");
+//        console.log("삭제 성공");
         window.alert("삭제 완료");
         setMessageList(
           messageList.filter((msg) => msg.postMsgId !== postMsgId)
