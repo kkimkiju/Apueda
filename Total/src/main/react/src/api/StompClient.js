@@ -6,23 +6,18 @@ let client;
 // WebSocket 연결 설정
 const connectWebSocket = (roomId, onMessageReceived, onConnect, onError) => {
   const accessToken = localStorage.getItem("accessToken"); // JWT 토큰을 가져옵니다
-  console.log(accessToken);
   client = new Client({
     webSocketFactory: () => new SockJS("/ws"), // WebSocket 서버 URL
     connectHeaders: {
       Authorization: `Bearer ${accessToken}`,
     },
     onConnect: () => {
-      console.log("Connected to WebSocket");
-
       // 메시지를 받을 수 있는 구독 설정
       client.subscribe("/topic/messages", (message) => {
-        console.log("Message received: ", message.body);
         onMessageReceived(JSON.parse(message.body));
       });
       // 특정 방의 메시지를 받을 수 있는 구독 설정
       client.subscribe(`/topic/room/${roomId}`, (message) => {
-        console.log("Room message received: ", message.body);
         onMessageReceived(JSON.parse(message.body));
       });
 
@@ -43,7 +38,6 @@ const connectWebSocket = (roomId, onMessageReceived, onConnect, onError) => {
     heartbeatIncoming: 4000,
     heartbeatOutgoing: 4000,
   });
-  console.log("Activating STOMP client");
   client.activate();
 };
 
@@ -60,7 +54,6 @@ const showRoomMessage = (message) => {
 // 메시지 전송 함수
 const sendMessage = (chatMsgDto, accessToken) => {
   if (client && client.connected) {
-    console.log("Sending message: ", chatMsgDto);
     client.publish({
       destination: "/app/chat/send", // ***통신이 안될경우 엔드포인트가 백앤드와 동일한지 확인할 것
       body: JSON.stringify(chatMsgDto),

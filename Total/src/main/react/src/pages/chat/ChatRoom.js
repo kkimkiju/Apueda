@@ -26,7 +26,6 @@ const ChatRoom = () => {
         const response = await AxiosApi.getUserInfo2();
         setMyEmail(response.data.email);
         setMyprofileImg(response.data.profileImgPath); // 이미지 저장
-        console.log("myinfo :", response.data);
       } catch (error) {
         console.log(error);
       }
@@ -37,32 +36,27 @@ const ChatRoom = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        console.log('Fetching chat messages for room:', roomId);
         const response = await AxiosApi.getChatMessages(roomId); // API 호출 함수 이름 확인 필요
         const fetchedMessages = response.data.map((msg) => ({
           ...msg,
           localDateTime: new Date(msg.localDateTime),
         }));
         setMessages(fetchedMessages);
-        console.log('Messages fetched:', fetchedMessages);
       } catch (error) {
         console.error('Error fetching messages', error);
       }
     };
     fetchMessages();
 
-    console.log('Connecting to WebSocket for room:', roomId);
     connectWebSocket(
       roomId,
       (newMessage) => {
-        console.log('New message received:', newMessage);
         newMessage.localDateTime = new Date(newMessage.localDateTime);
         setMessages((prevMessages) => [...prevMessages, newMessage]);
       },
       (client) => {
         stompClientRef.current = client;
         setIsConnected(true);
-        console.log('WebSocket connected : ' , client);
       },
       (error) => console.error('STOMP error', error)
     );

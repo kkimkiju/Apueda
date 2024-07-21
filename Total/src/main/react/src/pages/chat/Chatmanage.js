@@ -25,7 +25,6 @@ const ChatManage = () => {
       try {
         const memberId = localStorage.getItem("email");
         const response = await AxiosApi.getJoinedOpenChatRooms(memberId);
-        console.log(response.data);
         setMyOpenChatRooms(response.data);
       } catch (error) {
         console.error("Error fetching chat rooms", error);
@@ -61,7 +60,6 @@ const ChatManage = () => {
   const handleJoinOpenChatRoom = async (roomId, roomName) => {
     try {
       await AxiosApi.getJoinedOpenChatRooms(roomId);
-      console.log(`Joining room with ID: ${roomId}`);
       navigate(`/chat/${roomId}`, { state: { roomName, roomType: "오픈" } });
     } catch (error) {
       console.error("Error joining room", error);

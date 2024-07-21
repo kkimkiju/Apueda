@@ -77,7 +77,6 @@ function DatingApp() {
       try {
         const response = await AxiosApi.getUserInfo2();
         setMyEmail(response.data.email);
-        console.log("myemail : ",response.data.email); // 여기서 myEmail이 아닌 response.data.email로 출력해야함
       } catch (error) {
         console.log(error);
       }
@@ -89,7 +88,6 @@ function DatingApp() {
       try {
         const response = await AxiosApi.checkSubscribe(); 
         setIsSubscribed(response.data); // 구독 여부 상태 업데이트
-        console.log("정기구독여부 :", response.data);
       } catch (error) {
         console.log(error);
       }
@@ -114,7 +112,6 @@ function DatingApp() {
         }));
         setCardList(userList); // 변환된 데이터를 카드에 넣어줌
         setCurrentIndex(userList.length - 1);
-        console.log(`카드리트스트 :`, userList);
         currentIndexRef.current = userList.length - 1;
       } catch (error) {
         
@@ -607,13 +604,13 @@ const Skill = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
-  border-radius: .5vw;
-  padding: 0 .5vw;
+  border-radius: 3vw;
+  padding: 0 1vw;
   margin-right: 1vw;
   background-color: #ff5353;
   @media (max-width: 500px) {
-    border-radius: 2vw;
-    margin-right: 10vw;
+    border-radius: 5vw;
+    margin-right: 8vw;
   }
 `;
 

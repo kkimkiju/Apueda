@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.496973ef.css",
-    "main.js": "/static/js/main.ae6aa9a1.js",
+    "main.js": "/static/js/main.d5ed5e8e.js",
     "static/js/453.73332596.chunk.js": "/static/js/453.73332596.chunk.js",
     "static/media/alien2.png": "/static/media/alien2.47e93e071e112b761fc9.png",
     "static/media/advertis.png": "/static/media/advertis.a0aa312013c3f6058ca8.png",
@@ -14,7 +14,7 @@
     "static/media/couple.png": "/static/media/couple.e2e75e73fd063f8eac51.png",
     "static/media/swipe.jpg": "/static/media/swipe.beb7d7edab8ff01d5e82.jpg",
     "static/media/lovechat.png": "/static/media/lovechat.d84eb4f6e3d048aa27c2.png",
-    "static/media/dart-icon.png": "/static/media/dart-icon.3b6a15f5d5ba0a1af9f0.png",
+    "static/media/dart-icon.png": "/static/media/dart-icon.ff2802ed1080acade3a5.png",
     "static/media/profile.png": "/static/media/profile.fd9d41a896baa19f35d9.png",
     "static/media/alien.png": "/static/media/alien.a5230ec73c0c3bdf8f58.png",
     "static/media/apueda-logo-f.png": "/static/media/apueda-logo-f.815e50454856a6747af5.png",
@@ -39,11 +39,11 @@
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
     "main.496973ef.css.map": "/static/css/main.496973ef.css.map",
-    "main.ae6aa9a1.js.map": "/static/js/main.ae6aa9a1.js.map",
+    "main.d5ed5e8e.js.map": "/static/js/main.d5ed5e8e.js.map",
     "453.73332596.chunk.js.map": "/static/js/453.73332596.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.496973ef.css",
-    "static/js/main.ae6aa9a1.js"
+    "static/js/main.d5ed5e8e.js"
   ]
 }
