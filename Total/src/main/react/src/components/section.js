@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import swipe from "../image/swipe.jpg";
+import darticon from "../image/dart-icon.png";
+import phonemockup from "../image/datingappmockup.png";
+import coupleicon2 from "../image/couple-icon2.png";
 const Section = () => {
   return (
     <Body>
@@ -18,10 +21,10 @@ const Section = () => {
             </div>
           </Item2>
         </Box>
-        <ImageBox>이미지영역</ImageBox>
+        <ImageBox><Img src={darticon} /></ImageBox>
       </Container>
       <Container>
-        <ImageBox><Img src={swipe} /></ImageBox>
+        <ImageBox><Img src={phonemockup} /></ImageBox>
         <Box>
           <Item>
             <div>
@@ -51,9 +54,7 @@ const Section = () => {
             </div>
           </Item2>
         </Box>
-        <ImageBox>
-          이미지영역
-        </ImageBox>
+        <ImageBox><Img src={coupleicon2} /></ImageBox>
       </Container>
     </Body>
   );
