@@ -25,7 +25,7 @@ const ModalStyle = styled.div`
 
   section {
     width: 40%;
-    height: 55%;
+    height: 66%;
     margin: 0 auto;
     border-radius: 0.6rem;
     background-color: #fff;
