@@ -18,7 +18,7 @@ const BoardLayout = styled.div`
     width: 1440px;
   }
   @media screen and (max-width: 1440px) {
-    margin: 0 10vw;
+    margin: 0 5vw;
     width: auto;
   }
 
@@ -31,7 +31,7 @@ const BoardLayout = styled.div`
     margin-left: 10px;
     width: 330px;
   }
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 400px) {
     margin-left: 7px;
     width: 280px;
   }

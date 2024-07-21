@@ -10,6 +10,10 @@ const HeadContainer = styled.div`
   height: 54px;
   background-color: #ff5353;
   border-radius: 30px 30px 0 0;
+  @media screen and (max-width: 768px) {
+    height: 32px;
+    font-size: 10px;
+  }
 `;
 const SearchContainer = styled.div`
   display: flex;
@@ -30,7 +34,7 @@ const WriteBoard = styled.div`
   height: 24px;
   width: 50px;
   border-radius: 36px;
-  margin-right: 16px;
+  margin-right: 18px;
   color: #ff5353;
   background-color: #ffffff;
 `;

@@ -50,7 +50,7 @@ const DropdownMenu = ({ onSkillClick }) => {
         const response = await AxiosApi.getSkilList();
         setSkillsArray(response.data);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     };
     getSkills();

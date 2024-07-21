@@ -32,12 +32,18 @@ const ContentNameList = styled.div`
   font-size: 0.9rem;
   list-style-type: none;
   border-bottom: 0.5px solid #c1c1c1;
+  @media screen and (max-width: 500px) {
+    font-size: 8px;
+  }
 `;
 
 const Column = styled.div`
   margin: 0 16px;
   list-style-type: none;
   padding: 9px;
+  @media screen and (max-width: 500px) {
+    margin: 0;
+  }
   @media screen and (max-width: 320px) {
     padding: 0;
     font-size: 8px;
@@ -143,7 +149,6 @@ const BoardList = () => {
     const fetchProjectList = async () => {
       try {
         const rsp = await AxiosApi.getBoardList();
-        console.log(" getBoardList실행", rsp.data);
         const sortedBoards = rsp.data.boards.sort(
           (a, b) => new Date(b.regDate) - new Date(a.regDate)
         );
@@ -169,7 +174,6 @@ const BoardList = () => {
   };
 
   const boardClick = (boardId) => {
-    console.log(boardId, "플젝id값");
     navigate(`/apueda/board/boardDetail/${boardId}`);
   };
 

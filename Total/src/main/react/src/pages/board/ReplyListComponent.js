@@ -45,7 +45,7 @@ const Profile = styled.div`
   }
 `;
 const Input = styled.textarea`
-  width: 70%;
+  width: 60%;
   height: auto;
   margin-left: 10px;
   resize: none;
@@ -61,7 +61,6 @@ const Input = styled.textarea`
   }
   @media screen and (max-width: 500px) {
     font-size: 0.55rem;
-    width: 40%;
   }
   @media screen and (max-width: 320px) {
     font-size: 6px;
@@ -147,8 +146,6 @@ const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
     try {
       if (type === "project") {
         const response = await AxiosApi.getProjectReplyList(projectId, page);
-        console.log(" 플젝 댓글 리스트 : ", response.data.replies);
-        // console.log("프로필 url : ", response.data.ProfileImg);
 
         if (Array.isArray(response.data.replies)) {
           const formattedData = response.data.replies.map((reply) => ({
@@ -162,8 +159,6 @@ const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
         }
       } else {
         const response = await AxiosApi.getBoardReplyList(boardId, page);
-        console.log(" 게시판 댓글 리스트 : ", response.data);
-        // console.log("프로필 url : ", response.data.ProfileImg);
 
         if (Array.isArray(response.data.replies)) {
           const formattedData = response.data.replies.map((reply) => ({
@@ -197,9 +192,8 @@ const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
           projectId,
           boardId
         );
-        //console.log("response ", replyContent);
         if (response.data) {
-          alert("댓글 등록 성공!!!!!!!!!!!!");
+          alert("댓글 등록 성공");
           setRepliesChanged((prev) => !prev);
           setReplyContent(""); // 댓글 입력 필드 초기화
         } else {
@@ -207,23 +201,20 @@ const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
         }
       } catch (error) {
         console.log(error);
-        alert("댓글 등록 실패ㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+        alert("댓글 등록 실패");
       }
     };
     postReply();
   };
   // 페이지 이동
   const handlePageChange = (number) => {
-    console.log("클릭 버튼 ", number);
     setCurrentPage(number);
   };
   const prev = () => {
-    console.log("pageNum", currentPage);
     if (currentPage === 0) {
       alert("첫번째 페이지다");
     } else {
       setCurrentPage(currentPage - 1);
-      console.log(currentPage);
     }
   };
 

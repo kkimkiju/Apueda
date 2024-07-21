@@ -165,21 +165,18 @@ const BoardDetail = () => {
           setImageUrl(defaultImage);
         }
       } catch (e) {
-        console.log(e);
+        console.error(e);
         setImageUrl(defaultImage);
       }
     };
-    //console.log("userInfo", userInfo);
     fetchUserInfo(id);
   }, []);
 
   //  자유게시판 상세 정보 가져오기
   useEffect(() => {
     const boardDetail = async (id) => {
-      // console.log(boardId, "  아이디 값 넘기기 ");
       try {
         const response = await AxiosApi.getBoardDetail(id);
-        console.log("상세 보기 데이터 ", response.data.content);
 
         setBoardContent(response.data);
       } catch (e) {
@@ -211,12 +208,9 @@ const BoardDetail = () => {
       try {
         // Construct the postData with the room ID obtained from createRoomResponse
 
-        //console.log("reply ", replyContent);
-
         const response = await AxiosApi.postReply(replyContent, boardId);
-        //console.log("response ", replyContent);
         if (response.data) {
-          alert("댓글 등록 성공!!!!!!!!!!!!");
+          alert("댓글 등록 성공");
           setRepliesChanged((prev) => !prev);
           setReplyContent(""); // 댓글 입력 필드 초기화
         } else {
@@ -224,7 +218,7 @@ const BoardDetail = () => {
         }
       } catch (error) {
         console.log(error);
-        alert("댓글 등록 실패ㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+        alert("댓글 등록 실패");
       }
     };
     postReply();
@@ -239,9 +233,8 @@ const BoardDetail = () => {
   // 삭제
   const deleteBoard = async (boardId) => {
     const rspWriter = await AxiosApi.getBoardDetail(boardId);
-    console.log("dele 실행", rspWriter.data.memberId.email);
     if (email !== rspWriter.data.memberId.email) {
-      alert("너..작성자가 아니구나?...");
+      alert("작성자가 아니면 삭제하실수 없습니다.");
     } else {
       const isDel = window.confirm("정말로 삭제 하시겠습니까?");
       if (isDel) {

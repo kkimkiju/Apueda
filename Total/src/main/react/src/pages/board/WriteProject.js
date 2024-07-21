@@ -60,7 +60,6 @@ const WriteProject = () => {
   };
 
   const handleRoomNameValue = (rm) => {
-    //console.log(rm, "!");
     setRoomName(rm);
     // closePwModal();
   };
@@ -161,7 +160,6 @@ const WriteProject = () => {
           throw new Error("채팅방 생성이 실패했습니다.");
         }
         chatRoom = createRoomResponse.data.roomId;
-        console.log(chatRoom);
       }
 
       if (projectId) {
@@ -194,12 +192,10 @@ const WriteProject = () => {
           regDate: currentDate,
           imgPath: imgPath,
         };
-        console.log(postData, "postData");
         // 등록 로직
         const response = await AxiosApi.postProject(postData);
         if (response.data) {
           alert("프로젝트 게시글이 등록되었고 채팅방이 생성되었습니다.");
-          console.log(postData);
         } else {
           throw new Error("프로젝트 게  시글 등록이 실패했습니다.");
         }
@@ -217,7 +213,6 @@ const WriteProject = () => {
       const handleSubmit = async () => {
         try {
           const rsp = await AxiosApi.getProjectDetail(projectId);
-          console.log("rsp.data.projectTime", rsp.data);
           setTitle(rsp.data.projectTitle);
           setSelectedSkills(rsp.data.skillName);
           setRecruitNum(rsp.data.recruitNum);
@@ -274,7 +269,7 @@ const WriteProject = () => {
       const fileRef = storageRef.child(imgPath.name);
 
       await fileRef.put(imgPath);
-      console.log("File uploaded successfully!");
+      //console.log("File uploaded successfully!");
 
       const url = await fileRef.getDownloadURL();
 

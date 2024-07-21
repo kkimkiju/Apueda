@@ -82,12 +82,9 @@ const WriteBoard = () => {
 
   useEffect(() => {
     if (boardId) {
-      console.log("수정실행", boardId);
       const handleSubmit = async () => {
         try {
           const rsp = await AxiosApi.getBoardDetail(boardId);
-          console.log("수정 데이터 불러오기 ", rsp.data);
-          console.log("수정 데이터 reg ", rsp.data.regDate);
           setTitle(rsp.data.title);
           setContent(rsp.data.content);
         } catch (e) {
@@ -130,9 +127,7 @@ const WriteBoard = () => {
               onChange={(event, editor) => {
                 setContent(editor.getData());
               }}
-              onBlur={(event, editor) => {
-                console.log("Blur.", editor);
-              }}
+              onBlur={(event, editor) => {}}
               onFocus={(event, editor) => {}}
             />
           </Content>

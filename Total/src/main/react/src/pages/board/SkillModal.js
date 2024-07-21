@@ -114,7 +114,6 @@ const SkillModal = ({ closeSkillModal, onSave, modifySkills }) => {
    */
   const handleSearchChange = (event) => {
     setInputValue(event.target.value);
-    console.log(inputValue, "input");
   };
 
   // 스킬 리스트 가져오기
@@ -122,7 +121,6 @@ const SkillModal = ({ closeSkillModal, onSave, modifySkills }) => {
     const getSkills = async () => {
       try {
         const response = await AxiosApi.getSkilList();
-        //console.log(response.data, "skill");
         setSkillsArray(response.data);
       } catch (e) {
         console.log(e);
@@ -133,7 +131,6 @@ const SkillModal = ({ closeSkillModal, onSave, modifySkills }) => {
 
   // 수정모드시 내가 저장했던 스킬 불러오기
   useEffect(() => {
-    console.log("modifySkills", modifySkills);
     setClickList(modifySkills);
   }, [modifySkills]);
 
@@ -146,14 +143,12 @@ const SkillModal = ({ closeSkillModal, onSave, modifySkills }) => {
 
   // 스킬 클릭시 setClickList에 저장
   const onClick = (skill) => {
-    // console.log("클릭값 : ", skill.skillName);
     // 스킬 클릭한 리스트 중복 체크
     setClickList((prevList) => {
       if (prevList.some((item) => item.skillName === skill.skillName)) {
         return prevList;
       }
       const newList = [...prevList, skill];
-      console.log("newList : ", newList);
       return newList;
     });
   };
@@ -161,7 +156,6 @@ const SkillModal = ({ closeSkillModal, onSave, modifySkills }) => {
   // 저장 버튼 클릭 시 선택된 스킬 리스트를 상위 컴포넌트로 전달
   const handleSave = () => {
     onSave(clickList);
-    //console.log("check", clickList);
     closeSkillModal();
   };
 

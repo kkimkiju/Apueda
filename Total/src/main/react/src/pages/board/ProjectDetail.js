@@ -92,6 +92,10 @@ const Skills = styled.div`
   border: solid #b9b9b9;
   border-width: 0 0 1px;
   padding: 12px;
+  @media screen and (max-width: 500px) {
+    overflow: scroll;
+  }
+
   & button {
     margin-left: 4px;
 
@@ -217,17 +221,14 @@ const ProjectDetail = () => {
         setImageUrl(defaultImage);
       }
     };
-    //console.log("userInfo", userInfo);
     fetchUserInfo(id);
   }, []);
 
   // 플젝 상세 정보 가져오기
   useEffect(() => {
     const projectDetail = async (id) => {
-      // console.log(projectId, " 플젝 아이디 값 넘기기 ");
       try {
         const response = await AxiosApi.getProjectDetail(id);
-        console.log("상세 보기 데이터 ", response.data);
         const formattedData = {
           ...response.data,
           regDate: formatDate(response.data.regDate),
@@ -260,7 +261,6 @@ const ProjectDetail = () => {
   };
   const deleteProject = async (projectId) => {
     const rspWriter = await AxiosApi.getProjectDetail(projectId);
-    console.log("dele 실행", rspWriter.data.memberId.email);
     if (email !== rspWriter.data.memberId.email) {
       alert("너..작성자가 아니구나?...");
     } else {
@@ -281,7 +281,6 @@ const ProjectDetail = () => {
     }
   };
   const request = (pId) => {
-    console.log("실행", pId);
     if (currentCount == projectContent.recruitNum) {
       alert("신청인원이 다 찼습니다.");
       return;
@@ -293,18 +292,15 @@ const ProjectDetail = () => {
     const postData = {
       projectId: { projectId: pId },
     };
-    console.log("신청 중복 ", postData);
     requestProject(postData);
   };
 
   const requestProject = async (postData) => {
     const isRequest = await AxiosApi.searchAllRequest(projectId, email);
-    console.log("isRequest 객체", isRequest);
     if (!isRequest.data) {
       alert("이미 신청한 프로젝트 입니다.");
       return;
     } else {
-      console.log(isRequest.data, "isRequest.data[0]");
       try {
         const rsp = await AxiosApi.requestProject(postData);
         if (rsp.status === 200) {
@@ -321,8 +317,6 @@ const ProjectDetail = () => {
     try {
       const rsp = await AxiosApi.findRoomByRoomName(roomName);
       setCurrenCount(rsp.data.currentCount);
-
-      console.log("currentCount", rsp.data.currentCount);
     } catch (e) {
       console.log(e);
     }
@@ -411,10 +405,7 @@ const ProjectDetail = () => {
               <Skills>
                 {projectContent.skillName &&
                   projectContent.skillName.map((skills, index) => (
-                    <Button
-                      key={index}
-                      style={{ width: "auto", padding: "0 10px" }}
-                    >
+                    <Button key={index} style={{ width: "auto" }}>
                       {skills.skillName}
                     </Button>
                   ))}
