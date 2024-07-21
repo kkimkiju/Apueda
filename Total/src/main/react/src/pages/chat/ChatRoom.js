@@ -167,7 +167,7 @@ const Container = styled.div`
   margin-top: 2vh;
   @media (max-width:500px){
     width: 100svw;
-    height: 90svh;
+    height: 92svh;
     border-radius: 5vi;
     border: 2vi solid rgb(255, 83, 83);
   }
@@ -219,7 +219,7 @@ const ChatBox = styled.div`
   box-sizing: border-box;
   overflow-y: scroll;
   @media (max-width:500px){
-    height: 65svh;
+    height: 68svh;
     padding: 1rem .1rem;
   }
 `;
