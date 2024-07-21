@@ -96,11 +96,11 @@ public class ChatService {
         Member member = memberRepository.findById(memberId).orElseThrow(
                 () -> new RuntimeException("Member with ID " + memberId + " does not exist")
         );
-        // 중복된 방 이름 확인 중복 허용시 삭제
-        Optional<ChatRoom> existingRoom = chatRoomRepository.findByRoomName(roomName);
-        if (existingRoom.isPresent()) {
-            throw new RuntimeException("Room with name " + roomName + " already exists.");
-        }
+        // // 중복된 방 이름 확인 중복 허용시 삭제
+        // Optional<ChatRoom> existingRoom = chatRoomRepository.findByRoomName(roomName);
+        // if (existingRoom.isPresent()) {
+        //     throw new RuntimeException("Room with name " + roomName + " already exists.");
+        // }
         // ChatRoom 테이블 정보 등록
         ChatRoom chatRoom = new ChatRoom();
         chatRoom.setRoomName(roomName);
@@ -295,7 +295,7 @@ public class ChatService {
     // 오픈채팅방 전체 리스트 찾기
     public List<ChatRoom> getOpenchatList(boolean postType) {
         return chatRoomRepository.findByPostType(postType).stream()
-                .filter(chatRoom -> chatRoom.getCurrentCount() > 0)
+                .filter(chatRoom -> chatRoom.getCurrentCount() != null && chatRoom.getCurrentCount() > 0) // currentCount가 null이 아닌지 확인
                 .sorted((c1, c2) -> c2.getLocalDateTime().compareTo(c1.getLocalDateTime())) // local_date_time으로 내림차순 정렬
                 .collect(Collectors.toList());
     }

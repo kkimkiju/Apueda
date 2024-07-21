@@ -7,7 +7,7 @@ import styled from "styled-components";
 import defaultImage from "../image/person-icon2.png";
 import file from "../image/file.png";
 import chat from "../image/chat.png";
-import friend from "../image/friend.png";
+import laptop from "../image/laptop-icon.png";
 import phone from "../image/mobile-in-hand.png";
 import card from "../image/credit-card.png";
 import profile from "../image/profile.png";
@@ -153,7 +153,7 @@ export default function NaviBar() {
                 <Overlay>오픈채팅</Overlay>
               </MenuItem>
               <MenuItem onClick={() => navigate("/apueda/mypage/mypj")}>
-                <Img src={friend} />
+                <Img src={laptop} />
                 <Overlay>프로젝트</Overlay>
               </MenuItem>
               <MenuItem onClick={() => navigate("/apueda/datingapp")}>

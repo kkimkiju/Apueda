@@ -122,6 +122,18 @@ const StyledSliderContainer = styled.div`
       color: white; // 활성화된 dots 색상 조정
     }
   }
+  @media (max-width:500px){
+    .slick-next:before {
+      display: none;
+    }
+    .slick-arrow {
+    width: 0;
+    height: 0;
+      display: none;
+      background-color: black;
+    }
+  }
+
 `;
 
 const SlideBox = styled.div`

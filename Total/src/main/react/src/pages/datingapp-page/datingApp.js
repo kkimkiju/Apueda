@@ -432,10 +432,7 @@ const CardImage = styled.div`
   overflow: hidden;
   top: 50%;
   left: 50%;
-  transform: translate(
-    -50%,
-    -50%
-  ); // 절대위치의 카드를 가운데 정렬하기 위해 사용
+  transform: translate(-50%, -50%);// 절대위치의 카드를 가운데 정렬하기 위해 사용
   width: 20vw;
   height: 55vh;
   border-radius: 2vh;
@@ -443,7 +440,8 @@ const CardImage = styled.div`
   box-shadow: 0px 0px 2vw 0px rgba(0, 0, 0, 0.3);
   background-size: cover;
   background-position: center;
-  background-image: url(${(props) => props.imageUrl}), linear-gradient(to bottom, #bbb 50%, #304352 100%);
+  background-image: url(${(props) => props.imageUrl}),
+    linear-gradient(to bottom, #bbb 50%, #304352 100%);
   @media (max-width: 500px) {
     width: 75vw;
     height: 63vh;
@@ -609,11 +607,14 @@ const Skill = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
-  border-radius: 30px;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-right: 10px;
+  border-radius: .5vw;
+  padding: 0 .5vw;
+  margin-right: 1vw;
   background-color: #ff5353;
+  @media (max-width: 500px) {
+    border-radius: 2vw;
+    margin-right: 10vw;
+  }
 `;
 
 // 애니메이션 정의
@@ -646,6 +647,7 @@ const ModalContent = styled.div`
   padding: 20px;
   border-radius: 8px;
   text-align: center;
+  border: .2vw solid black;
   & p {
     font-size: 1.5em;
     margin-bottom: 2vh;

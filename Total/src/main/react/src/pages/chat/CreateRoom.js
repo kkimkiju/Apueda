@@ -8,14 +8,16 @@ const CreateRoom = () => {
   const [roomName, setRoomName] = useState("");
   const [roomId, setRoomId] = useState("");
   const [created, setCreated] = useState(false);
+  const [createdRoomName, setCreatedRoomName] = useState(""); // 방제목 안내상태
   const email = localStorage.getItem("accessToken");
 
   const handleCreateRoom = async () => {
     try {
       const response = await AxiosApi.createOpenRoom(roomName, email);
       setRoomId(response.data.roomId);
-      setRoomName(response.data.roomName);
+      setCreatedRoomName(response.data.roomName); // 생성된 방 이름 저장
       setCreated(true);
+      setRoomName(''); // 입력 필드 초기화
     } catch (error) {
       console.error("Error creating room", error);
     }
@@ -37,7 +39,7 @@ const CreateRoom = () => {
         {created && (
           <div>
             <p>오픈채팅방이 생성되었습니다.</p>
-            <p>방제목: {roomName}</p>
+            <p>방제목: {createdRoomName}</p> {/* 생성된 방 이름 표시 */}
           </div>
         )}
       </Box>
