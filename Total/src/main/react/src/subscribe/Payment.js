@@ -13,7 +13,7 @@ const Paybu = styled.button`
   border: 1px solid #dee2e6;
   display: flex;
   position: absolute;
-  font-size: 25px;
+  font-size: 20px;
   left: 2px;
   justify-content: center;
   align-items: center;
