@@ -64,4 +64,12 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 
         return http.build();
     }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:5000", "http://www.apueda.shop", "http://localhost:3000")  // 허용할 오리진 추가
+                .allowedMethods("*")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+    }
 }
