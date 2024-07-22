@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PaymentApi from "../api/PaymentAxios";
 import axios from "axios";
 import AxiosApi from "../api/AxiosApi";
@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Kapay from "../image/kakaopaymark-removebg-preview.png";
 import CheckModal from "./checkmodal";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserStore";
 
 const Paybu = styled.button`
   width: 40%;
@@ -44,6 +45,8 @@ const Paybu = styled.button`
 const Payment = ({ isChecked1, isChecked2, close }) => {
   const [error, setError] = useState(null);
   const [buyerEmail, setBuyerEmail] = useState("");
+  const context = useContext(UserContext);
+  const { setSubscribeStatus } = context;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,9 +60,6 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
     };
     userEmail();
   }, []);
-
-
-
 
   const confirm = () => {
     close();
@@ -147,14 +147,14 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
 
     // 3. IAMPORT 토큰 요청
     const tokenResponse = await axios.post(
-      "http://www.apueda.shop/api/iamport/getToken",
+      "http://3.37.1.53:5000/api/iamport/getToken",
       {}, // 데이터는 비어 있어도 됩니다.
       { withCredentials: true } // credentials 포함
     );
     const iamportToken = tokenResponse.data.response.access_token;
 
     const regitem = await axios.post(
-      "http://www.apueda.shop/api/iamport/preparePayment",
+      "http://3.37.1.53:5000/api/iamport/preparePayment",
       { merchant_uid: merchant, amount: 10 },
       {
         headers: {
@@ -169,7 +169,7 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
     IMP.request_pay(paymentData, async (response) => {
       if (response.success) {
         alert("결제해주셔서 감사합니다");
-        localStorage.setItem("subscribeStatus", true);
+        setSubscribeStatus(true);
         confirm();
       } else {
         close();
