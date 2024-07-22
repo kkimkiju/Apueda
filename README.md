@@ -5,12 +5,14 @@
 __내가 원하고 나를 원하는 프로젝트 멤버를 찾기 위한 페이지__
 
 <br>
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=anuraghazra&layout=donut)](https://github.com/anuraghazra/github-readme-stats)
+
 ### 👥 멤버구성
 |<img src="https://avatars.githubusercontent.com/u/161571071?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/74034344?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/161570977?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/49334905?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/129802296?v=4" width="150" height="150"/>|
 |:-:|:-:|:-:|:-:|:-:|
 |김기주<br/>[@kkimkiju](https://github.com/kkimkiju)|강인구<br/>[@dzface](https://github.com/dzface)|김동환<br/>[@kimfjd](https://github.com/kimfjd)|김세호<br/>[@tpgh1554](https://github.com/tpgh1554)|임정후<br/>[@limfarmer](https://github.com/limfarmer)|
 
+
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=anuraghazra&layout=donut)](https://github.com/anuraghazra/github-readme-stats)
 <br><br>
   - 김기주 (kkimkiju) : 마이페이지,프로젝트 관리, 친구 관리(쪽지 기능)
   - 강인구 (dzface) : 메인페이지, 채팅(WebSocket), 토글
