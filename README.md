@@ -4,6 +4,15 @@
 ### 🎯 목적
 __내가 원하고 나를 원하는 프로젝트 멤버를 찾기 위한 페이지__
 
+
+---
+
+
+___협업 때 사용했던 Notion 입니다. 프로젝트 진행 과정과 발표 자료가 담겨져 있습니다.___
+
+  <a href="https://www.notion.so/4-8d3233783e504829bf893df49516f764">
+    <img src="https://img.shields.io/badge/TeamProject-A374DB?style=for-the-badge&logo=notion&logoColor=#ECD53F">
+  </a>
 <br>
 
 ### 👥 멤버구성
@@ -47,11 +56,4 @@ __형상 관리__ - `git` , `notion`
 
 __개발 환경__ - `IntelliJ`, `VSCode`
 
----
 
-
-___협업 때 사용했던 Notion 입니다. 프로젝트 진행 과정과 발표 자료가 담겨져 있습니다.___
-
-  <a href="https://www.notion.so/4-8d3233783e504829bf893df49516f764">
-    <img src="https://img.shields.io/badge/TeamProject-A374DB?style=for-the-badge&logo=notion&logoColor=#ECD53F">
-  </a>
