@@ -216,7 +216,7 @@ const ProjectList = () => {
   const [inputValue, setInputValue] = useState("");
   const [isSearchModal, setIsSearchModal] = useState(false);
   const [isRecruitmentComplete, setIsRecruitmentComplete] = useState(true); // 모집 완료 상태
-  const email = localStorage.getItem("email");
+  const [email, setEmail] = useState("");
   const [isRecruit, setIsRecruit] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -299,22 +299,36 @@ const ProjectList = () => {
     e.currentTarget.style.transition = "transform 0.5s ease";
     e.currentTarget.style.boxShadow = "none";
   };
-  const fetchDeadline = async () => {
-    try {
-      let response = await PaymentApi.deadline(email);
-      if (response && response.data) {
-        setSubstatus(response.data[0].status);
-      } else {
-        console.error("No deadline data in response");
-      }
-    } catch (error) {
-      setSubstatus("null");
-      console.error("Error fetching deadline:", error);
-    }
-  };
+  // 회원 정보 가지고 오기
   useEffect(() => {
-    fetchDeadline();
+    const getMember = async () => {
+      try {
+        const rsp = await AxiosApi.getUserInfo2();
+        console.log(rsp.data, "email2");
+        setEmail(rsp.data.email);
+      } catch (e) {
+        console.error("Error fetching member info:", e);
+      }
+    };
+    getMember();
   }, []);
+
+  // 이메일이 업데이트되면 마감 기한 정보 가져오기
+  useEffect(() => {
+    if (!email) return;
+    console.log(email, "email");
+    const fetchDeadline = async () => {
+      try {
+        const response = await PaymentApi.deadline(email);
+        console.log("!", response.data[0].status);
+        setSubstatus(response.data[0].status);
+      } catch (error) {
+        setSubstatus("null");
+        console.error("Error fetching deadline:", error);
+      }
+    };
+    fetchDeadline();
+  }, [email]);
 
   const handleSearch = (event) => {
     setInputValue(event.target.value);
@@ -370,9 +384,6 @@ const ProjectList = () => {
 
     setFilteredResults(filteredProjectList);
   }, [inputValue, clickArray, projectAllList]);
-
-  // filteredResults 상태 변경될 때마다 로그 출력
-  useEffect(() => {}, [filteredResults]);
 
   const numberOfRecruit = async (roomName) => {
     try {
