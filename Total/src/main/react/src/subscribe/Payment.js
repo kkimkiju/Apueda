@@ -153,7 +153,7 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
     IMP.request_pay(paymentData, async (response) => {
       if (response.success) {
         alert("결제해주셔서 감사합니다");
-        localhost.setItem("subscribeStatus", true);
+        localStorage.setItem("subscribeStatus", true);
         confirm();
       } else {
         close();
