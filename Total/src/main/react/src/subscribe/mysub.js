@@ -136,13 +136,13 @@ const Detailbox = styled.div`
 `;
 const Mysub = () => {
   const [historyList, setHistoryList] = useState([]);
-  const [email, setEmail] = useState("");
+  const [member, setMember] = useState("");
 
   useEffect(() => {
     const userEmail = async () => {
       try {
         const rsp = await AxiosApi.getUserInfo2();
-        setEmail(rsp.data.email);
+        setMember(rsp.data.email);
       } catch (e) {
         console.log(e);
       }
@@ -188,16 +188,16 @@ const Mysub = () => {
   };
 
   useEffect(() => {
-    if (email) {
+    if (member) {
       fetchData();
       fetchDeadline();
     }
-  }, [email, currentPage]);
+  }, [member, currentPage]);
 
   const fetchData = async () => {
     try {
       let response = await AxiosApi.historyList(
-        email,
+        member,
         currentPage - 1,
         pageSize
       );
@@ -212,7 +212,7 @@ const Mysub = () => {
 
   const fetchDeadline = async () => {
     try {
-      let response = await AxiosApi.deadline(email);
+      let response = await AxiosApi.deadline(member);
       if (response && response.data) {
         setDeadLine(response.data[0].validUntil);
         setSubstatus(response.data[0].status);
@@ -290,7 +290,7 @@ const Mysub = () => {
         setHeader={setHeader}
         deadLine={deadLine}
         merchantuid={merchantuid}
-        member={email}
+        member={member}
       />
       <Resubmodal
         open={resubOpen}
