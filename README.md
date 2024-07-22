@@ -1,15 +1,16 @@
-💬 실시간 채팅 시스템
+💬 프로젝트 구인 게시판 프로젝트
 ---
 
 ### 🎯 목적
-__게시글을 작성해 모르는 걸 질문하고 실시간으로 채팅하며 그림 메모가 가능한 웹 프로젝트__
+__내가 원하고 나를 원하는 프로젝트 멤버를 찾기 위한 페이지__
 
 <br>
 
 ### 👥 멤버구성
 |<img src="https://avatars.githubusercontent.com/u/113305463?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/161570968?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/163942942?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/161571071?v=4" width="150" height="150"/>|
 |:-:|:-:|:-:|:-:|
-|박상원<br/>[@qarksangwon](https://github.com/qarksangwon)|김현근<br/>[@hyunkk1](https://github.com/hyunkk1)|백승재<br/>[@BaekSeoungJae](https://github.com/BaekSeoungJae)|김기주<br/>[@kkimkiju](https://github.com/kkimkiju)|
+|김기주<br/>[@qarksangwon](https://github.com/kkimkiju)||강인구<br/>[@dzface](https://github.com/dzface)|김동환<br/>[@kimfjd](https://github.com/kimfjd)|김세호<br/>[@tpgh1554](https://github.com/tpgh1554)
+|임정후<br/>[@limfarmer](https://github.com/limfarmer)
   - 박상원 (qarksangwon) : 채팅방, ID/PW찾기 일부, 메일인증 일부, 정보 수정 일부, 프로필 사진 CRUD 일부
   - 김기주 (kkimkiju) : 게시판 CRUD, 회원 관리 시스템 프로필 사진 firebase 연동
   - 백승재 (BaekSeoungJae) : 회원가입, 로그인, ID, 비밀번호 찾기, 정보 수정, 관리자 
