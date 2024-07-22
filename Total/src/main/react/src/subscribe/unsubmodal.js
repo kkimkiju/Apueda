@@ -139,7 +139,7 @@ const Unsubmodal = (props) => {
     try {
       // 3. IAMPORT 토큰 요청
       const tokenResponse = await axios.post(
-        "http://localhost:5000/api/iamport/getToken",
+        "http://3.37.1.53:5000/api/iamport/getToken",
         {}, // 데이터는 비어 있어도 됩니다.
         { withCredentials: true } // credentials 포함
       );
@@ -147,7 +147,7 @@ const Unsubmodal = (props) => {
 
       // 4. 결제 예약 해지 요청
       const unscheduleResponse = await axios.post(
-        "hhttp://localhost:5000/api/iamport/unschedulePayment",
+        "http://3.37.1.53:5000/api/iamport/unschedulePayment",
         { customer_uid: member, merchant_uid: merchantuid },
         {
           headers: {

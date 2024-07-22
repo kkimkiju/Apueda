@@ -1,10 +1,9 @@
 {
   "files": {
     "main.css": "/static/css/main.496973ef.css",
-    "main.js": "/static/js/main.d5ed5e8e.js",
+    "main.js": "/static/js/main.c3a18005.js",
     "static/js/453.73332596.chunk.js": "/static/js/453.73332596.chunk.js",
     "static/media/alien2.png": "/static/media/alien2.47e93e071e112b761fc9.png",
-    "static/media/advertis.png": "/static/media/advertis.a0aa312013c3f6058ca8.png",
     "static/media/mobile-in-hand.png": "/static/media/mobile-in-hand.7269dac10cb8f435ac7f.png",
     "static/media/credit-card.png": "/static/media/credit-card.fa84a6de0da791849f4e.png",
     "static/media/datingappmockup.png": "/static/media/datingappmockup.6e1898db3564625f05ff.png",
@@ -39,11 +38,11 @@
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
     "main.496973ef.css.map": "/static/css/main.496973ef.css.map",
-    "main.d5ed5e8e.js.map": "/static/js/main.d5ed5e8e.js.map",
+    "main.c3a18005.js.map": "/static/js/main.c3a18005.js.map",
     "453.73332596.chunk.js.map": "/static/js/453.73332596.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.496973ef.css",
-    "static/js/main.d5ed5e8e.js"
+    "static/js/main.c3a18005.js"
   ]
 }
