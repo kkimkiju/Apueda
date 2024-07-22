@@ -1,6 +1,6 @@
 💬 프로젝트 구인 게시판 프로젝트
 <br>
-<img src ="https://ifh.cc/g/2CwSp2.jpg"/>
+<img src ="https://ifh.cc/g/2CwSp2.jpg"  width="1000" height="1000"/>
 ---
 
 ### 🎯 목적
