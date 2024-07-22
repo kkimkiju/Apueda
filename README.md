@@ -32,7 +32,7 @@ __프론트엔드__ - `HTML`, `CSS`, `JavaScript`, `React`
 
 __백엔드__ - `SpringBoot(2.7)` , `Firebase`
 
-__데이터베이스__ - `oracle`
+__데이터베이스__ - `MySql`
 
 __형상 관리__ - `git` , `notion`
 
