@@ -81,22 +81,6 @@ const Ul = styled.ul`
 const SkillList = styled.div`
   cursor: pointer;
 `;
-
-const spin = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-`;
-
-const LoadingSpinner = styled.div`
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
-  border-radius: 50%;
-  width: 15px;
-  height: 15px;
-  animation: ${spin} 1s linear infinite;
-  display: inline-block;
-`;
-
 const Save = styled.div`
   cursor: pointer;
   margin-top: 16px;
@@ -104,7 +88,6 @@ const Save = styled.div`
 
 const SkillModal = ({ closeSkillModal, onSave, modifySkills }) => {
   const [inputValue, setInputValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [skillsArray, setSkillsArray] = useState([]);
   const [clickList, setClickList] = useState([]);
   const modalRef = useRef(null);

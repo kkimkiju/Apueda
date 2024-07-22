@@ -10,14 +10,19 @@ import {
 } from "../../style/ProjectDetailStyle";
 import AxiosApi from "../../api/AxiosApi";
 import { formatDate, formatTimestamp } from "../../utils/formatDate";
-import { Button } from "../../style/WriteStyle";
 import { useNavigate } from "react-router-dom";
 // import { UserContext } from "../../context/UserStore";
 
 const NickName = styled.div`
   padding: 8px;
+  width: 15%;
+  display: flex;
+  align-items: center;
   @media screen and (max-width: 768px) {
     padding: 1px;
+  }
+  @media screen and (max-width: 320px) {
+    font-size: 6px;
   }
 `;
 
@@ -60,6 +65,7 @@ const Input = styled.textarea`
     font-size: 0.8rem;
   }
   @media screen and (max-width: 500px) {
+    margin: 0;
     font-size: 0.55rem;
   }
   @media screen and (max-width: 320px) {
@@ -70,11 +76,41 @@ const Input = styled.textarea`
     outline: none; /* 추가: 기본 포커스 아웃라인 제거 */
   }
 `;
-
+const Button = styled.button`
+  border: 0;
+  color: #ffffff;
+  background-color: #ff5353;
+  border-radius: 26px;
+  display: flex;
+  align-items: center;
+  height: 32px;
+  justify-content: center;
+  width: 40px;
+  &:last-child {
+    /* margin-right: 0; */
+  }
+  @media screen and (max-width: 768px) {
+    height: 22px;
+    font-size: 8px;
+  }
+  @media screen and (max-width: 500px) {
+    height: 12px;
+    width: auto;
+    font-size: 8px;
+  }
+  @media screen and (max-width: 320px) {
+    height: 12px;
+    width: auto;
+    font-size: 6px;
+  }
+`;
 const ConfirmReply = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 500px) {
+    width: 15%;
+  }
 `;
 
 const List = styled.div``;
@@ -90,6 +126,7 @@ const ReplyList = styled.div`
     border: 0.5px solid #b9b9b9;
     border-width: 0 0 0.5px;
     padding: 12px;
+    justify-content: space-around;
     @media screen and (max-width: 500px) {
       font-size: 7px;
       padding: 6px;
@@ -97,19 +134,30 @@ const ReplyList = styled.div`
   }
 `;
 const ReplyContent = styled.div`
-  width: 78%;
+  width: 60%;
   padding: 8px;
 `;
 const PageButton = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
   padding: 5px;
   background-color: ${(props) => (props.active ? "#FFD6D6" : "")};
   border-radius: 36px;
   width: 32px;
+
   @media screen and (max-width: 860px) {
+    width: 26px;
+  }
+  @media screen and (max-width: 500px) {
     width: 16px;
+    height: 12px;
+  }
+  @media screen and (max-width: 320px) {
+    width: 16px;
+    height: 12px;
+    font-size: 8px;
   }
 `;
 const NoReply = styled.div`
@@ -231,12 +279,12 @@ const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
       <InputContainer>
         {userInfo && (
           <UpInert>
-            <Profile>
-              <ProfileImg>
-                <img src={imageUrl} alt="profile" />
-              </ProfileImg>
-              <NickName>{userInfo.nickname}</NickName>
-            </Profile>
+            {/* <Profile>
+            </Profile> */}
+            <ProfileImg>
+              <img src={imageUrl} alt="profile" />
+            </ProfileImg>
+            <NickName>{userInfo.nickname}</NickName>
             <Input
               ref={textareaRef}
               placeholder="클린한 댓글을 입력해주세요(500자)"

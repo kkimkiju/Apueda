@@ -71,12 +71,16 @@ export const InputContainer = styled.div`
 export const UpInert = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   width: 100%;
   height: 100%;
-  padding: 16px;
+  padding: 12px;
   justify-content: space-between;
   @media screen and (max-width: 768px) {
     padding: 8px;
+  }
+  @media screen and (max-width: 500px) {
+    padding: 4px;
   }
 `;
 
@@ -121,6 +125,7 @@ export const ProfileImg = styled.div`
     @media screen and (max-width: 768px) {
       width: 18px;
       height: 18px;
+      font-size: 1px;
     }
   }
 `;

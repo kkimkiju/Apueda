@@ -39,6 +39,7 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   height: 32px;
+  justify-content: center;
   width: 40px;
   &:last-child {
     /* margin-right: 0; */
