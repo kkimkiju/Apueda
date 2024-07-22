@@ -12,7 +12,6 @@ __내가 원하고 나를 원하는 프로젝트 멤버를 찾기 위한 페이�
 |김기주TL<br/>[@kkimkiju](https://github.com/kkimkiju)|강인구<br/>[@dzface](https://github.com/dzface)|김동환<br/>[@kimfjd](https://github.com/kimfjd)|김세호<br/>[@tpgh1554](https://github.com/tpgh1554)|임정후<br/>[@limfarmer](https://github.com/limfarmer)|
 
 
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=kkimkiju/Apueda&layout=donut)](https://github.com/kkimkiju/Apueda)
 <br><br>
   - 김기주TL (kkimkiju) : 마이페이지,프로젝트 관리, 친구 관리(쪽지 기능)
   - 강인구 (dzface) : 메인페이지, 채팅(WebSocket), 토글
