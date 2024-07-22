@@ -1,11 +1,34 @@
-import { Container, ContainerBack } from "../../style/ModalStyle.js";
+import { ContainerBack } from "../../style/ModalStyle.js";
 import AxiosApi from "../../api/AxiosApi.js";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../../style/WriteStyle.js";
 import styled from "styled-components";
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  height: 500px;
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid #ff5353;
+  border-radius: 100px;
+  z-index: 1000;
 
+  @media (max-width: 500px) {
+    width: 300px;
+    height: 300px;
+  }
+`;
 const Notice = styled.div``;
-const Input = styled.input``;
+const Input = styled.input`
+  margin-bottom: 8px;
+`;
 const ProjectNameModal = ({
   onRoomNameSave,
   closeProjectNameModal,
@@ -42,7 +65,7 @@ const ProjectNameModal = ({
   }, [modifyData]);
   return (
     <ContainerBack>
-      <Container ref={modalRef} style={{ width: "500px", height: "500px" }}>
+      <Container ref={modalRef}>
         {modifyData ? (
           <>
             <Notice>

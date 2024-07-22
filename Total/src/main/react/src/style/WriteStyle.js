@@ -36,10 +36,10 @@ export const Button = styled.button`
   color: #ffffff;
   background-color: #ff5353;
   border-radius: 26px;
-
+  display: flex;
+  align-items: center;
   height: 32px;
   width: 40px;
-  overflow: hidden;
   &:last-child {
     /* margin-right: 0; */
   }
@@ -48,7 +48,7 @@ export const Button = styled.button`
     font-size: 8px;
   }
   @media screen and (max-width: 500px) {
-    height: auto;
+    height: 12px;
     width: auto;
     font-size: 8px;
   }
@@ -78,7 +78,7 @@ export const ConfirmButton = styled.button`
   @media screen and (max-width: 500px) {
     width: 50px;
     height: 28px;
-    font-size: 11px;
+    font-size: 8px;
   }
 `;
 

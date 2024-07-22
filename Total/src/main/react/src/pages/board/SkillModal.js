@@ -220,7 +220,6 @@ const SkillModal = ({ closeSkillModal, onSave, modifySkills }) => {
                 style={{
                   width: "auto",
                   height: "24px",
-                  fontSize: "12px",
                   margin: "4px",
                 }}
                 value={modifySkills}
@@ -231,9 +230,14 @@ const SkillModal = ({ closeSkillModal, onSave, modifySkills }) => {
           </ResultContainer>
         </Layout>
         <Save onClick={handleSave}>
-          <Button>저장</Button>
+          <Button
+            style={{
+              height: "24px",
+            }}
+          >
+            저장
+          </Button>
         </Save>
-        {/* <Exit onClick={() => closeModal()} src={exit} /> */}
       </Container>
     </ContainerBack>
   );

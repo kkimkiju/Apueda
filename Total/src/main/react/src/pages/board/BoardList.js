@@ -45,7 +45,6 @@ const Column = styled.div`
     margin: 0;
   }
   @media screen and (max-width: 320px) {
-    padding: 0;
     font-size: 8px;
     & button {
       font-size: 8px;
@@ -128,6 +127,9 @@ export const Button = styled.button`
   height: auto;
   width: auto;
   overflow: hidden;
+  @media screen and (max-width: 500px) {
+    font-size: 8px;
+  }
 `;
 const StyledLink = styled.a`
   text-decoration: none;
