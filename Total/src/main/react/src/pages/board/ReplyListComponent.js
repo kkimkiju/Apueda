@@ -189,6 +189,15 @@ const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
   useEffect(() => {
     getReplyList(projectId, currentPage);
   }, [projectId, repliesChanged, currentPage]);
+  useEffect(() => {
+    const getMember = async () => {
+      try {
+        const rsp = await AxiosApi.getUserInfo2();
+        setImageUrl(rsp.data.profileImgPath);
+      } catch (e) {}
+    };
+    getMember();
+  }, []);
 
   const getReplyList = async (id, page) => {
     try {
@@ -200,6 +209,7 @@ const ReplyListComponent = ({ projectId, boardId, type, userInfo }) => {
             ...reply,
             regDate: formatDate(reply.regDate),
           }));
+          console.log(formattedData);
           setReplies(formattedData);
           setTotalPageSize(response.data.totalPages);
         } else {

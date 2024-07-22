@@ -29,13 +29,13 @@ const Title = styled.div`
   justify-content: flex-start;
   width: 80%;
   padding: 16px;
-  font-size: 2rem;
+
   height: 60px;
   font-weight: bold;
   @media screen and (max-width: 500px) {
     padding: 6px;
     height: 30px;
-    font-size: 0.8rem;
+    /* font-size: 0.8rem; */
   }
 `;
 const ProjectTime = styled.div`
@@ -68,7 +68,7 @@ const Recruit = styled.div`
   align-items: flex-end;
   justify-content: center;
 
-  width: 50%;
+  width: 60%;
   height: 60px;
   padding: 12px;
   @media screen and (max-width: 500px) {
@@ -182,7 +182,6 @@ const ProjectDetail = () => {
   const [projectContent, setProjectContent] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
-  const [replyContent, setReplyContent] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModify, setIsModify] = useState(true);
   const [currentCount, setCurrenCount] = useState();
@@ -236,7 +235,6 @@ const ProjectDetail = () => {
         };
         setProjectContent(formattedData);
         numberOfRecruit(formattedData.projectName);
-        // setBoardList(rsp.data); // 필터링된 데이터를 상태에 저장
       } catch (e) {
         console.log(e.response);
       }
@@ -244,7 +242,7 @@ const ProjectDetail = () => {
     projectDetail(projectId);
   }, [projectId]);
   const textareaRef = useRef(null);
-  // 댓글창 자동으로 늘어나게하기...
+  // 댓글창 자동으로 늘어나게하기
   useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
@@ -262,7 +260,7 @@ const ProjectDetail = () => {
   const deleteProject = async (projectId) => {
     const rspWriter = await AxiosApi.getProjectDetail(projectId);
     if (email !== rspWriter.data.memberId.email) {
-      alert("너..작성자가 아니구나?...");
+      alert("작성자만 삭제가 가능합니다.");
     } else {
       const isDel = window.confirm("정말로 삭제 하시겠습니까?");
       if (isDel) {
@@ -304,7 +302,7 @@ const ProjectDetail = () => {
       try {
         const rsp = await AxiosApi.requestProject(postData);
         if (rsp.status === 200) {
-          alert("신청 성공");
+          alert("신청에 성공 하였습니다.");
         }
       } catch (e) {
         console.log(e);

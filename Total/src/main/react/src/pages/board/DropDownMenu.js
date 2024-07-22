@@ -30,8 +30,10 @@ const SkillList = styled.button`
   width: 100%;
   cursor: pointer;
   background-color: ${(props) => (props.clicked ? "#d3d3d3" : "#fff")};
-  &:hover {
-    background-color: #f1f1f1;
+  @media screen and (min-width: 768px) {
+    &:hover {
+      background-color: #f1f1f1;
+    }
   }
 `;
 
