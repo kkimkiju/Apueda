@@ -32,7 +32,6 @@ const connectWebSocket = (roomId, onMessageReceived, onConnect, onError) => {
       }
     },
     onDisconnect: () => {
-      console.log("Disconnected from WebSocket");
     },
     reconnectDelay: 5000,
     heartbeatIncoming: 4000,

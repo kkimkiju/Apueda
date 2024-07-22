@@ -21,6 +21,7 @@ export default function NaviBar() {
   const [imageUrl, setImageUrl] = useState(null);
   const isLoginUser = localStorage.getItem("accessToken") !== null;
   const [isOpen, setIsOpen] = useState(false);
+  const [logoutModal, setLoggoutModal] = useState(false); // 모달 상태 추가
 
   const context = useContext(UserContext);
   const {
@@ -31,6 +32,11 @@ export default function NaviBar() {
     profileChange,
     setProfileChange,
   } = context;
+  // 모달 관리
+  const handleCloseModal = () => {
+    setLoggoutModal(false);
+    navigate("/apueda/subinfo");
+  };
   // 유저정보 갱신
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -96,7 +102,7 @@ export default function NaviBar() {
     navigate("/apueda");
     setLoginStatus("");
     setSubscribeStatus("");
-    alert("로그아웃 되었습니다.");
+    setLoggoutModal(true);
   };
 
   const subscribeHandler = () => {
@@ -186,6 +192,14 @@ export default function NaviBar() {
           </List>
         </Box>
       </Container>
+      {logoutModal && (
+        <ModalOverlay>
+          <ModalContent>
+            <p>로그아웃 되었습니다.</p>
+            <button onClick={handleCloseModal}>닫기</button>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </Body>
   );
 }
@@ -302,5 +316,42 @@ const MenuItem = styled(motion.li).withConfig({
 
   &:hover ${Overlay} {
     opacity: 1;
+  }
+`;
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  border: .2vw solid black;
+  & p {
+    font-size: 1.5em;
+    margin-bottom: 2vh;
+  }
+  & button {
+    padding: 1vh 5vw;
+    font-size: 1em;
+    background: #ff5253;
+    color: white;
+    border: none;
+    border-radius: 5vw;
+    cursor: pointer;
+    margin: 0 2vw;
+  }
+  @media (max-width: 500px) {
+    font-size: 2.5vw;
+    width: 80vw;
   }
 `;
