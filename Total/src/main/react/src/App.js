@@ -17,7 +17,7 @@ import MemberUpdate from "./login/MemberUpdate";
 import FindId from "./login/FindId";
 import FindPw from "./login/FindPw";
 import Upload from "./api/firebase/ImageUploader";
-import UserStore from "./context/UserStore";
+import UserStore, { UserContext } from "./context/UserStore";
 
 import Header from "./components/Header";
 import NaviBar from "./components/NaviBar";
@@ -26,6 +26,7 @@ import TeamChatPage from "./pages/chat/teamchatpage";
 import ChatManage from "./pages/chat/Chatmanage";
 import ChatMain from "./pages/chat/ChatMain";
 import DatingApp from "./pages/datingapp-page/datingApp";
+import EditInfo from "./mypages/EditInfo";
 import Friend from "./mypages/Friend";
 import BoardMain from "./pages/board/BoardMain";
 import WriteProject from "./pages/board/WriteProject";
@@ -36,8 +37,43 @@ import BoardDetail from "./pages/board/BoardDetail";
 import WriteBoard from "./pages/board/WirteBoard";
 import ChatRoom from "./pages/chat/ChatRoom";
 import Kakaologin from "./login/Kakaologin";
+import Advertis from "./components/advertis";
+import { useContext, useEffect, useState } from "react";
+import AxiosApi from "./api/AxiosApi";
 
 function App() {
+  const [showAdvertis, setShowAdvertis] = useState(false);
+  const [substatus, setSubstatus] = useState("");
+  const member = localStorage.getItem("email");
+
+  const fetchDeadline = async () => {
+    try {
+      let response = await AxiosApi.deadline(member);
+      if (response && response.data) {
+        setSubstatus(response.data[0].status);
+      } else {
+        setSubstatus(null);
+        console.error("No deadline data in response");
+      }
+    } catch (error) {
+      console.error("Error fetching deadline:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDeadline();
+  }, []);
+
+  useEffect(() => {
+    if (substatus !== "구독") {
+      const interval = setInterval(() => {
+        setShowAdvertis(true);
+      }, 600000); // 10분마다 실행
+
+      return () => clearInterval(interval);
+    }
+  }, [substatus]);
+
   return (
     <>
       <GlobalStyle />
@@ -79,18 +115,22 @@ function App() {
             <Route path="/apueda/subinfo" element={<Subinfo />} />
             <Route path="/apueda/login" element={<LoginPage />} />
             <Route path="/apueda/signup" element={<SignUp />} />
-            <Route path="/apueda/findid" element={<FindId/>}/>
-            <Route path="/apueda/findpw" element={<FindPw/>} />
+            <Route path="/apueda/findid" element={<FindId />} />
+            <Route path="/apueda/findpw" element={<FindPw />} />
             <Route
               path="/apueda/mypage/memberupdate"
               element={<MemberUpdate />}
             />
+            <Route path="/apueda/mypage/editinfo" element={<EditInfo />} />
             <Route path="/apueda/mypage/friend" element={<Friend />} />
             <Route path="/apueda/mysub" element={<Mysub />} />
             <Route path="/apueda/kakaologin" element={<Kakaologin />} />
           </Routes>
         </Router>
       </UserStore>
+      {showAdvertis && (
+        <Advertis open={showAdvertis} close={() => setShowAdvertis(false)} />
+      )}
     </>
   );
 }

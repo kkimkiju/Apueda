@@ -126,19 +126,19 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
       customer_uid: buyer_email,
       amount: 10, // 결제 금액
       buyer_id: buyer_email, // 구매자 ID 설정
-      m_redirect_url: "http://localhost:3000/apueda", // 결제 완료 후 이동할 페이지 URL
+      m_redirect_url: "http://www.apueda.shop/apueda", // 결제 완료 후 이동할 페이지 URL
     };
 
     // 3. IAMPORT 토큰 요청
     const tokenResponse = await axios.post(
-      "http://localhost:5000/api/iamport/getToken",
+      "http://www.apueda.shop/api/iamport/getToken",
       {}, // 데이터는 비어 있어도 됩니다.
       { withCredentials: true } // credentials 포함
     );
     const iamportToken = tokenResponse.data.response.access_token;
 
     const regitem = await axios.post(
-      "http://localhost:5000/api/iamport/preparePayment",
+      "http://www.apueda.shop/api/iamport/preparePayment",
       { merchant_uid: merchant, amount: 10 },
       {
         headers: {
