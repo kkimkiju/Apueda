@@ -7,7 +7,7 @@ __내가 원하고 나를 원하는 프로젝트 멤버를 찾기 위한 페이�
 <br>
 
 ### 👥 멤버구성
-|<img src="https://avatars.githubusercontent.com/u/161571071?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/74034344?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/163942942?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/161571071?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/161571071?v=4" width="150" height="150"/>|
+|<img src="https://avatars.githubusercontent.com/u/161571071?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/74034344?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/161570977?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/161571071?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/161571071?v=4" width="150" height="150"/>|
 |:-:|:-:|:-:|:-:|:-:|
 |김기주<br/>[@qarksangwon](https://github.com/kkimkiju)|강인구<br/>[@dzface](https://github.com/dzface)|김동환<br/>[@kimfjd](https://github.com/kimfjd)|김세호<br/>[@tpgh1554](https://github.com/tpgh1554)|임정후<br/>[@limfarmer](https://github.com/limfarmer)|
 
