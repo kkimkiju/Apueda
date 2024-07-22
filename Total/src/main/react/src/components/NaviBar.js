@@ -35,7 +35,7 @@ export default function NaviBar() {
   // 모달 관리
   const handleCloseModal = () => {
     setLoggoutModal(false);
-    navigate("/apueda/subinfo");
+    navigate("/apueda");
   };
   // 유저정보 갱신
   useEffect(() => {
