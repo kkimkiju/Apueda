@@ -136,7 +136,20 @@ const Detailbox = styled.div`
 `;
 const Mysub = () => {
   const [historyList, setHistoryList] = useState([]);
-  const member = localStorage.getItem("email");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const userEmail = async () => {
+      try {
+        const rsp = await AxiosApi.getUserInfo2();
+        setEmail(rsp.data.email);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    userEmail();
+  }, []);
+
   const [deadLine, setDeadLine] = useState("");
   const [substatus, setSubstatus] = useState("");
   const [status, setStatus] = useState("");
@@ -175,16 +188,16 @@ const Mysub = () => {
   };
 
   useEffect(() => {
-    if (member) {
+    if (email) {
       fetchData();
       fetchDeadline();
     }
-  }, [member, currentPage]);
+  }, [email, currentPage]);
 
   const fetchData = async () => {
     try {
       let response = await AxiosApi.historyList(
-        member,
+        email,
         currentPage - 1,
         pageSize
       );
@@ -199,7 +212,7 @@ const Mysub = () => {
 
   const fetchDeadline = async () => {
     try {
-      let response = await AxiosApi.deadline(member);
+      let response = await AxiosApi.deadline(email);
       if (response && response.data) {
         setDeadLine(response.data[0].validUntil);
         setSubstatus(response.data[0].status);
@@ -277,7 +290,7 @@ const Mysub = () => {
         setHeader={setHeader}
         deadLine={deadLine}
         merchantuid={merchantuid}
-        member={member}
+        member={email}
       />
       <Resubmodal
         open={resubOpen}
