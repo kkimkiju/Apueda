@@ -1,5 +1,6 @@
 💬 프로젝트 구인 게시판 프로젝트
-<img src ="https://file.notion.so/f/f/bdf8d538-0573-4e53-8871-08828a72d8e6/c864ecf1-0609-43db-b390-0c520ea0b33c/Untitled.png?id=9630007b-5109-4fc5-95e7-4a4e0b6146aa&table=block&spaceId=bdf8d538-0573-4e53-8871-08828a72d8e6&expirationTimestamp=1721723294758&signature=gzIYpVYjSz9aeBGn-tINSE5y1kbdUONEi7CY4uDfxBc&downloadName=Untitled.png">
+<br>
+<img src ="https://file.notion.so/f/f/bdf8d538-0573-4e53-8871-08828a72d8e6/c864ecf1-0609-43db-b390-0c520ea0b33c/Untitled.png?id=9630007b-5109-4fc5-95e7-4a4e0b6146aa&table=block&spaceId=bdf8d538-0573-4e53-8871-08828a72d8e6&expirationTimestamp=1721723294758&signature=gzIYpVYjSz9aeBGn-tINSE5y1kbdUONEi7CY4uDfxBc&downloadName=Untitled.png"/>
 ---
 
 ### 🎯 목적
