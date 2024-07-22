@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Apuedalogo from "../image/apueda-logo-ff3e34.png";
 import AxiosApi from "../api/PaymentAxios";
+import AxiosApi2 from "../api/AxiosApi";
 import Detaillist from "./detailllist";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -141,7 +142,7 @@ const Mysub = () => {
   useEffect(() => {
     const userEmail = async () => {
       try {
-        const rsp = await AxiosApi.getUserInfo2();
+        const rsp = await AxiosApi2.getUserInfo2();
         setMember(rsp.data.email);
       } catch (e) {
         console.log(e);
