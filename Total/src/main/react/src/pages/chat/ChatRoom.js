@@ -1,21 +1,22 @@
 // ChatRoom.js
-import styled from 'styled-components';
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import AxiosApi from '../../api/AxiosApi';
-import { connectWebSocket, sendMessage } from '../../api/StompClient'; // 수정된 부분
-import { FaPaperPlane, FaAngleLeft } from 'react-icons/fa';
-import defaultImage from '../../image/person-icon2.png';
+import styled from "styled-components";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import AxiosApi from "../../api/AxiosApi";
+import { connectWebSocket, sendMessage } from "../../api/StompClient"; // 수정된 부분
+import { FaPaperPlane, FaAngleLeft } from "react-icons/fa";
+import defaultImage from "../../image/person-icon2.png";
 const ChatRoom = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [myEmail, setMyEmail] = useState(""); 
+  const [myEmail, setMyEmail] = useState("");
   const [myprofileImg, setMyprofileImg] = useState(""); //profileImgPath
   const { roomId } = useParams(); // roomId 정보를 가져옴
   const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
+  const [nickname, setMyNickName] = useState("");
   const [isConnected, setIsConnected] = useState(false);
-  const [render, setRender] =useState(0); //렌더링을 위한 상태 추가
+  const [render, setRender] = useState(0); //렌더링을 위한 상태 추가
   const messagesEndRef = useRef(null);
   const stompClientRef = useRef(null);
 
@@ -25,6 +26,7 @@ const ChatRoom = () => {
       try {
         const response = await AxiosApi.getUserInfo2();
         setMyEmail(response.data.email);
+        setMyNickName(response.data.nickname);
         setMyprofileImg(response.data.profileImgPath); // 이미지 저장
       } catch (error) {
         console.log(error);
@@ -43,7 +45,7 @@ const ChatRoom = () => {
         }));
         setMessages(fetchedMessages);
       } catch (error) {
-        console.error('Error fetching messages', error);
+        console.error("Error fetching messages", error);
       }
     };
     fetchMessages();
@@ -58,12 +60,12 @@ const ChatRoom = () => {
         stompClientRef.current = client;
         setIsConnected(true);
       },
-      (error) => console.error('STOMP error', error)
+      (error) => console.error("STOMP error", error)
     );
 
     return () => {
       if (stompClientRef.current) {
-        console.log('Deactivating WebSocket connection');
+        console.log("Deactivating WebSocket connection");
         stompClientRef.current.deactivate();
       }
     };
@@ -73,26 +75,32 @@ const ChatRoom = () => {
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSendMessage = (e) => { // 메세지 전송할때 마다 렌더링 되도록 상태 관리추가
+  const handleSendMessage = (e) => {
+    // 메세지 전송할때 마다 렌더링 되도록 상태 관리추가
     e.preventDefault();
     if (isConnected && message.trim()) {
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem("accessToken");
       const profileImgPath = myprofileImg;
-      sendMessage({
-              senderId: myEmail,
-              senderNickname: nickname,
-              content: message,
-              roomId: roomId,
-              type: 'TALK',
-              localDateTime: new Date().toISOString(),
-              profileImgPath: profileImgPath
-            }, accessToken);
-      setMessage(''); // 메세지 전송후 input창 초기화
+      sendMessage(
+        {
+          senderId: myEmail,
+          senderNickname: nickname,
+          content: message,
+          roomId: roomId,
+          type: "TALK",
+          localDateTime: new Date().toISOString(),
+          profileImgPath: profileImgPath,
+        },
+        accessToken
+      );
+      setMessage(""); // 메세지 전송후 input창 초기화
     } else {
-      console.log('Cannot send message, STOMP client is not connected or message is empty');
+      console.log(
+        "Cannot send message, STOMP client is not connected or message is empty"
+      );
     }
   };
 
@@ -100,7 +108,11 @@ const ChatRoom = () => {
     <Body>
       <Container>
         <Head>
-        <div>{location.state?.roomType === "프로젝트" ? "프로젝트 채팅방" : "오픈 채팅방"}</div>
+          <div>
+            {location.state?.roomType === "프로젝트"
+              ? "프로젝트 채팅방"
+              : "오픈 채팅방"}
+          </div>
         </Head>
         <Title>
           <BackButton onClick={() => navigate(-1)}>
@@ -109,22 +121,29 @@ const ChatRoom = () => {
               나가기
             </p>
           </BackButton>
-          <div>{location.state?.roomName || '채팅방 이름'}</div>
+          <div>{location.state?.roomName || "채팅방 이름"}</div>
         </Title>
         <ChatBox>
           {messages.map((msg, index) => (
             <MessageItem key={index} isSender={msg.senderId === myEmail}>
               <Message isSender={msg.senderId === myEmail}>
-              <MessageBox isSender={msg.senderId === myEmail}>
-                <MessageContent isSender={msg.senderId === myEmail}>
-                  <p>{msg.content}</p>
-                </MessageContent>
-                  <NicknameItem isSender={msg.senderId === myEmail}>{msg.senderNickname}</NicknameItem>
-              </MessageBox>
-                <ProfileImage src={msg.profileImgPath || defaultImage} alt="Profile" />
+                <MessageBox isSender={msg.senderId === myEmail}>
+                  <MessageContent isSender={msg.senderId === myEmail}>
+                    <p>{msg.content}</p>
+                  </MessageContent>
+                  <NicknameItem isSender={msg.senderId === myEmail}>
+                    {msg.senderNickname}
+                  </NicknameItem>
+                </MessageBox>
+                <ProfileImage
+                  src={msg.profileImgPath || defaultImage}
+                  alt="Profile"
+                />
               </Message>
-              <TimeInfo>{new Date(msg.localDateTime).toLocaleString()}</TimeInfo>
-            </MessageItem> 
+              <TimeInfo>
+                {new Date(msg.localDateTime).toLocaleString()}
+              </TimeInfo>
+            </MessageItem>
           ))}
           <div ref={messagesEndRef} />
         </ChatBox>
@@ -160,7 +179,7 @@ const Container = styled.div`
   border: 0.5vi solid rgb(255, 83, 83);
   border-radius: 3vi;
   margin-top: 2vh;
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     width: 100svw;
     height: 92svh;
     border-radius: 5vi;
@@ -199,11 +218,11 @@ const BackButton = styled.button`
     justify-content: center;
   }
   transform: scale(1);
-    transition: transform 5s ease;
-    > :hover {
-      transform: scale(1.2);
-      transition: 0.5s;
-    }
+  transition: transform 5s ease;
+  > :hover {
+    transform: scale(1.2);
+    transition: 0.5s;
+  }
 `;
 const ChatBox = styled.div`
   display: flex;
@@ -213,16 +232,16 @@ const ChatBox = styled.div`
   padding: 1rem;
   box-sizing: border-box;
   overflow-y: scroll;
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     height: 68svh;
-    padding: 1rem .1rem;
+    padding: 1rem 0.1rem;
   }
 `;
 
 const MessageItem = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: ${(props) => (props.isSender ? 'flex-end' : 'flex-start')};
+  align-items: ${(props) => (props.isSender ? "flex-end" : "flex-start")};
   margin-bottom: 1rem;
   padding: 0.5rem;
 `;
@@ -230,29 +249,30 @@ const Message = styled.div`
   display: flex;
   align-items: flex-end;
   max-width: 70%;
-  flex-direction: ${(props) => (props.isSender ? 'row' : 'row-reverse')};
+  flex-direction: ${(props) => (props.isSender ? "row" : "row-reverse")};
 `;
 const TimeInfo = styled.div`
   white-space: nowrap;
   margin-top: 0.01rem; // 상하 간격 줄이기
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     font-size: 3vw;
   }
 `;
 const MessageBox = styled.div`
-display: flex;
-flex-direction: column;
-align-items: ${(props) => (props.isSender ? 'flex-end' : 'flex-start')};
-`
+  display: flex;
+  flex-direction: column;
+  align-items: ${(props) => (props.isSender ? "flex-end" : "flex-start")};
+`;
 const NicknameItem = styled.p`
- margin: ${(props) => (props.isSender ? '0.5rem 0 0 1rem' : '0.5rem 1vw 0 0')}; // 상하 간격 줄이기
-`
+  margin: ${(props) =>
+    props.isSender ? "0.5rem 0 0 1rem" : "0.5rem 1vw 0 0"}; // 상하 간격 줄이기
+`;
 const ProfileImage = styled.img`
   width: 5vw;
   height: 5vw;
   border-radius: 50%;
   margin: 2vh 1vw 0 1vw;
-  @media (max-width:500px){
+  @media (max-width: 500px) {
     width: 10vw;
     height: 10vw;
   }
@@ -263,18 +283,20 @@ const MessageContent = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   max-width: 20vw;
-  color: ${(props) => (props.isSender ? 'white' : 'black')};
+  color: ${(props) => (props.isSender ? "white" : "black")};
   background: ${(props) =>
     props.isSender
-      ? 'linear-gradient(to right, rgba(128, 0, 255, 0.9) 0%, rgba(64, 36, 255, 0.9) 60%, rgba(0, 80, 255, 0.8) 100%)'
-      : '#E2E2E2'};
-  border-radius: ${(props) => (props.isSender ? '1.5vw 1.5vw 0 1.5vw' : '1.5vw 1.5vw 1.5vw 0 ')};
+      ? "linear-gradient(to right, rgba(128, 0, 255, 0.9) 0%, rgba(64, 36, 255, 0.9) 60%, rgba(0, 80, 255, 0.8) 100%)"
+      : "#E2E2E2"};
+  border-radius: ${(props) =>
+    props.isSender ? "1.5vw 1.5vw 0 1.5vw" : "1.5vw 1.5vw 1.5vw 0 "};
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
   padding: 0.5vw 1vh;
-  @media (max-width: 500px){
-    max-width:50vw;
-    border-radius: ${(props) => (props.isSender ? '4vw 4vw 0 4vw' : '4vw 4vw 4vw 0 ')};
+  @media (max-width: 500px) {
+    max-width: 50vw;
+    border-radius: ${(props) =>
+      props.isSender ? "4vw 4vw 0 4vw" : "4vw 4vw 4vw 0 "};
   }
 `;
 
