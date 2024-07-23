@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import exit from "../image/exit.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import AxiosApi from "../api/AxiosApi";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserStore";
 
 const Container = styled.div`
   width: 100%;
@@ -169,7 +170,6 @@ const Gobutton = styled.button`
   height: 50px;
   background-color: white;
   font-size: 20px;
-  color : black;
   cursor: pointer;
   border: 3px solid #ff5353;
   border-radius: 30px;
@@ -183,7 +183,6 @@ const Gobutton = styled.button`
 const Endbutton = styled.button`
   width: 150px;
   height: 50px;
-  color : black;
   background-color: white;
   font-size: 20px;
   margin-left: 30px;
@@ -283,6 +282,14 @@ const Mypj = () => {
   const [projectList, setProjectList] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
   const [hostStatus, setHostStatus] = useState([]);
+  // 로그인 안 할시에 로그인 창으로 이동
+  const context = useContext(UserContext);
+  const { loginStatus } = context;
+  useEffect(() => {
+    if (!loginStatus) {
+      navigate("/apueda/login");
+    }
+  }, []);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -305,7 +312,7 @@ const Mypj = () => {
     const fetchMyProject = async () => {
       try {
         const rsp = await AxiosApi.myProjectList();
-//        console.log(rsp.data);
+        console.log(rsp.data);
         setProjectList(rsp.data);
         // 초기 호스트 상태 설정
         const initialHostStatus = rsp.data.map((project) =>
@@ -325,7 +332,7 @@ const Mypj = () => {
     const fetchProjectApply = async () => {
       try {
         const rsp = await AxiosApi.myProjectApplyList();
-//        console.log(rsp.data);
+        console.log(rsp.data);
         setProjectReq(rsp.data);
       } catch (error) {
         console.error("에러", error);
@@ -379,7 +386,7 @@ const Mypj = () => {
 
   const exitProject = async (roomid, email) => {
     const isConfirmed = window.confirm(
-      `프로젝트를 삭제하시겠습니까? 
+      `프로젝트를 삭제하시겠습니까?
 (삭제해도 채팅방&게시물은 남게 됩니다.)`
     );
     if (isConfirmed) {
@@ -410,7 +417,7 @@ const Mypj = () => {
         window.location.reload();
       } catch (error) {
         console.error("오류 : ", error);
-//        console.log(applyid);
+        console.log(applyid);
       }
     }
   };
@@ -424,7 +431,7 @@ const Mypj = () => {
         window.location.reload();
       } catch (error) {
         console.error("오류 : ", error);
-//        console.log(applyid);
+        console.log(applyid);
       }
     }
   };
@@ -537,7 +544,7 @@ const Mypj = () => {
                         )
                       }
                     >
-                     삭제
+                      프로젝트 삭제
                     </Endbutton>
                   )}
                 </GoEndBtn>

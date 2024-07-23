@@ -178,7 +178,7 @@ const LoginPage = () => {
       setLoginStatus(true);
     } catch (e) {
       console.log(e);
-      alert("아이디 또는 비밀번호가 일치하지 않습니다.")
+      alert("아이디 또는 비밀번호가 일치하지 않습니다.");
     }
   };
   const subScribeCheck = async () => {
