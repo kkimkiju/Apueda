@@ -301,36 +301,6 @@ public class ChatService {
     }
 
 
-//    public List<ChatManageDto> getManage(String memberId) {
-//        // Member 객체 조회
-//        Member member = memberRepository.findById(memberId).orElseThrow(
-//                () -> new RuntimeException("Member with ID " + memberId + " does not exist")
-//        );
-//
-//        // postType이 true인 ChatRoom 리스트 가져오기
-//        List<ChatRoom> chatRooms = chatRoomRepository.findByPostType(true);
-//
-//        // postType이 true인 ChatRoom ID 리스트 추출
-//        List<String> chatRoomIds = chatRooms.stream()
-//                .map(ChatRoom::getRoomId)
-//                .collect(Collectors.toList());
-//
-//        // 해당 ChatRoom에 참여 중인 ChatManage 리스트 필터링
-//        List<ChatManage> allChatManages = chatManageRepository.findByMember(member);
-//        List<ChatManage> filteredChatManages = allChatManages.stream()
-//                .filter(chatManage -> chatRoomIds.contains(chatManage.getChatRoom().getRoomId()))
-//                .collect(Collectors.toList());
-//
-//        // ChatManageDto 리스트 생성
-//        List<ChatManageDto> chatManageDtos = new ArrayList<>();
-//        for (ChatManage chatManage : filteredChatManages) {
-//            ChatManageDto chatManageDto = new ChatManageDto();
-//            chatManageDto.setChatManages(List.of(chatManage));
-//            chatManageDtos.add(chatManageDto);
-//        }
-//        return chatManageDtos;
-//    }
-
     public List<ChatManageDto> getManage(String memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("Member with ID " + memberId + " does not exist"));
 

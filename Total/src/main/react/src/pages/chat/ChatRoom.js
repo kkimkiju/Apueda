@@ -82,13 +82,14 @@ const ChatRoom = () => {
       const accessToken = localStorage.getItem('accessToken');
       const profileImgPath = myprofileImg;
       sendMessage({
-        senderId: myEmail,
-        content: message,
-        roomId: roomId,
-        type: 'TALK',
-        localDateTime: new Date().toISOString(),
-        profileImgPath: profileImgPath
-      }, accessToken);
+              senderId: myEmail,
+              senderNickname: nickname,
+              content: message,
+              roomId: roomId,
+              type: 'TALK',
+              localDateTime: new Date().toISOString(),
+              profileImgPath: profileImgPath
+            }, accessToken);
       setMessage(''); // 메세지 전송후 input창 초기화
     } else {
       console.log('Cannot send message, STOMP client is not connected or message is empty');

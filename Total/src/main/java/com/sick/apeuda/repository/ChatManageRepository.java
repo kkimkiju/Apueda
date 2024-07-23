@@ -19,7 +19,7 @@ public interface ChatManageRepository extends JpaRepository<ChatManage, Long> {
     List<ChatManage> findByChatRoom(ChatRoom chatRoom);
 
 
-    @Query("SELECT c.chatRoom.roomId FROM ChatManage c WHERE c.member.id = :memberId")
+    @Query("SELECT c.chatRoom.roomId FROM ChatManage c WHERE c.member.id = :memberId AND c.host = true")
     List<String> findByEmail(@Param("memberId") String memberId);
 
     @Query("SELECT c FROM ChatManage c WHERE c.chatRoom.roomId = :roomId")

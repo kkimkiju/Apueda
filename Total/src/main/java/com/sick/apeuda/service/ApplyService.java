@@ -131,6 +131,7 @@ public class ApplyService {
             member.setEmail(apply.getMember().getEmail());
             chatManage.setMember(member);
             chatManage.setHost(false);
+            chatManage.setProjectId(projectId);
             chatManageRepository.save(chatManage);
             applyRepository.save(apply);
             return true;
