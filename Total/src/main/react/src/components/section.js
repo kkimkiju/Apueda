@@ -66,6 +66,7 @@ const Body = styled.div`
   padding-top: 10vh;
   @media (max-width: 500px) {
     height: auto;
+    padding: 5vh 0;
   }
 `;
 
@@ -96,7 +97,13 @@ const ImageBox = styled.div`
   margin: 0 2vw;
   @media(max-width: 500px){
     order: 2;
+    margin: 0 0;
   }
+`;
+const Img = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
 `;
 const Item = styled.div`
   font-size: 2.5vw;
@@ -126,9 +133,4 @@ const Item2 = styled.div`
       font-size: 4vw;
     }
   }
-`;
-const Img = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
 `;
