@@ -135,7 +135,7 @@ const Chbox1 = styled.div`
   margin-top: 30px;
 `;
 const Textbox = styled.div`
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
 `;
 const Terms = styled.div`

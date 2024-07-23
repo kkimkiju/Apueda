@@ -12,7 +12,7 @@ const DetLi = styled.li`
 `;
 const TiContain = styled.div`
   align-items: center;
-  margin: 0px 22% 9px 9%;
+  margin: 0px 20% 9px 9%;
   text-align: center;
   @media (max-width: 500px) {
     margin-right: 5%;
@@ -26,7 +26,7 @@ const TiContain = styled.div`
 const DetTitle = styled.h3`
   width: 230px;
   color: black;
-  margin: 0px 29% 0px 0%;
+  margin: 0px 27% 0px 0%;
   @media (max-width: 500px) {
     margin-right: 17%;
   }

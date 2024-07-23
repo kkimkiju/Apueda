@@ -5,7 +5,6 @@ import AxiosApi from "../api/AxiosApi";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserStore";
 import Addinfomodal from "../login/Addinfomodal";
-import PaymentApi from "../api/PaymentAxios";
 
 const Button = styled.button`
   border: 0;
@@ -19,7 +18,7 @@ const Kakaologin = () => {
   const navigate = useNavigate();
   const [accToken, setAccToken] = useState("");
   const context = useContext(UserContext);
-  const { setLoginStatus, setSubscribeStatus } = context;
+  const { setLoginStatus } = context;
   const [addinfomodal, setAddinfomodal] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,18 +45,18 @@ const Kakaologin = () => {
     };
     try {
       const response = await AxiosApi.signup(user);
-       if (response.data) {
-              const rsp = await AxiosApi.login(email, password);
-              if (rsp.data) {
-                subScribeCheck();
-              }
-              console.log("구독 상태 : ", subscribeStatus);
-              setAccToken(rsp.data.accessToken);
-              localStorage.setItem("accessToken", rsp.data.accessToken);
-              localStorage.setItem("refreshToken", rsp.data.refreshToken);
-              setLoginStatus(true);
-              navigate("/apueda");
-            }
+      console.log("생년월일", identityNumber);
+      console.log("사진", profileImgPath);
+      console.log("Signup 성공:", response);
+
+      const rsp = await AxiosApi.login(email, password);
+      localStorage.setItem("email", userInfo.kakao_account.email); // 삭제 예정
+      setAccToken(rsp.data.accessToken);
+      localStorage.setItem("accessToken", rsp.data.accessToken);
+      localStorage.setItem("refreshToken", rsp.data.refreshToken);
+      console.log(accToken);
+      setLoginStatus(true);
+      navigate("/apueda");
     } catch (error) {
       console.error("Signup Error:", error);
     }
@@ -117,19 +116,24 @@ const Kakaologin = () => {
               console.log(userLookup);
 
               if (userLookup.data === true) {
-                const rsp = await AxiosApi.login(
-                  response.kakao_account.email,
-                  response.id
-                );
-                if (rsp.data) {
-                  subScribeCheck();
+                try {
+                  const rsp = await AxiosApi.login(
+                    response.kakao_account.email,
+                    response.id
+                  );
+                  if (rsp.data) {
+                    setAccToken(rsp.data.accessToken);
+                    localStorage.setItem("accessToken", rsp.data.accessToken);
+                    localStorage.setItem("refreshToken", rsp.data.refreshToken);
+                    console.log(accToken);
+                    navigate("/apueda");
+                    setLoginStatus(true);
+                  }
+                } catch (e) {
+                  console.log(e);
+                  alert("이미 가입된 아이디입니다.");
+                  handleClose();
                 }
-                setAccToken(rsp.data.accessToken);
-                localStorage.setItem("accessToken", rsp.data.accessToken);
-                localStorage.setItem("refreshToken", rsp.data.refreshToken);
-                console.log(accToken);
-                navigate("/apueda");
-                setLoginStatus(true);
               } else {
                 onAddClickSub();
               }
@@ -145,20 +149,19 @@ const Kakaologin = () => {
 
     handleAuthCode();
   }, []);
-
-  const subScribeCheck = async () => {
-    try {
-      const rsp = await PaymentApi.deadline(email);
-      if (rsp.data[0].status) {
-        setSubscribeStatus(true);
-      } else {
-        setSubscribeStatus(false);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+  const handleClose = () => {
+    window.Kakao.API.request({
+      url: "/v1/user/unlink",
+    })
+      .then(function (response) {
+        console.log(response);
+        close(); // Kakao API 요청 후 모달 닫기
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+    navigate("/apueda");
   };
-
   const kakaoLogin = () => {
     window.Kakao.Auth.authorize({
       redirectUri: "http://www.apueda.shop/apueda/kakaologin",

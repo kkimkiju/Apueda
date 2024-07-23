@@ -1,14 +1,12 @@
 import styled from "styled-components";
 import Apuedalogo from "../image/apueda-logo-ff3e34.png";
 import AxiosApi from "../api/PaymentAxios";
-import AxiosApi2 from "../api/AxiosApi";
 import Detaillist from "./detailllist";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Paging from "./paging";
 import Resubmodal from "./resubmodal";
 import Unsubmodal from "./unsubmodal";
-import Advertis from "../components/advertis";
 
 const Subpage = styled.div`
   width: 100%;
@@ -137,13 +135,13 @@ const Detailbox = styled.div`
 `;
 const Mysub = () => {
   const [historyList, setHistoryList] = useState([]);
-  const [member, setMember] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     const userEmail = async () => {
       try {
-        const rsp = await AxiosApi2.getUserInfo2();
-        setMember(rsp.data.email);
+        const rsp = await AxiosApi.getUserInfo2();
+        setEmail(rsp.data.email);
       } catch (e) {
         console.log(e);
       }
@@ -166,14 +164,6 @@ const Mysub = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
 
-  const [subAdOpen, setSubAdOpen] = useState(false);
-  const onAdClickSub = (e) => {
-    setSubAdOpen(true);
-  };
-  const cloAdseSub = () => {
-    setSubAdOpen(false);
-  };
-
   const onClickSub = (e) => {
     setSubOpen(true);
   };
@@ -189,16 +179,16 @@ const Mysub = () => {
   };
 
   useEffect(() => {
-    if (member) {
+    if (email) {
       fetchData();
       fetchDeadline();
     }
-  }, [member, currentPage]);
+  }, [email, currentPage]);
 
   const fetchData = async () => {
     try {
       let response = await AxiosApi.historyList(
-        member,
+        email,
         currentPage - 1,
         pageSize
       );
@@ -213,7 +203,7 @@ const Mysub = () => {
 
   const fetchDeadline = async () => {
     try {
-      let response = await AxiosApi.deadline(member);
+      let response = await AxiosApi.deadline(email);
       if (response && response.data) {
         setDeadLine(response.data[0].validUntil);
         setSubstatus(response.data[0].status);
@@ -265,7 +255,7 @@ const Mysub = () => {
         <Deadline>{deadLine}</Deadline>
         <Subbutt onClick={subnav}>{buttonText}</Subbutt>
       </Subinfobox>
-      <Datails onClick={onAdClickSub}>결제내역</Datails>
+      <Datails>결제내역</Datails>
       <Datailsbox>
         <Detailtitle>
           <Textbox style={{ marginLeft: "10%" }}>결제일</Textbox>
@@ -291,7 +281,7 @@ const Mysub = () => {
         setHeader={setHeader}
         deadLine={deadLine}
         merchantuid={merchantuid}
-        member={member}
+        member={email}
       />
       <Resubmodal
         open={resubOpen}
@@ -301,7 +291,6 @@ const Mysub = () => {
         merchantuid={merchantuid}
         deadLine={deadLine}
       />
-      <Advertis open={subAdOpen} close={cloAdseSub} />
     </Subpage>
   );
 };

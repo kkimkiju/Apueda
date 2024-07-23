@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import PaymentApi from "../api/PaymentAxios";
 import axios from "axios";
-import AxiosApi from "../api/AxiosApi";
 import styled from "styled-components";
 import Kapay from "../image/kakaopaymark-removebg-preview.png";
 import CheckModal from "./checkmodal";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserStore";
 
 const Paybu = styled.button`
   width: 40%;
@@ -15,7 +13,7 @@ const Paybu = styled.button`
   border: 1px solid #dee2e6;
   display: flex;
   position: absolute;
-  font-size: 25px;
+  font-size: 23px;
   left: 2px;
   justify-content: center;
   align-items: center;
@@ -25,7 +23,7 @@ const Paybu = styled.button`
   }
   img {
     height: 70%;
-    margin-right: 50px;
+    margin-right: 30px;
   }
   @media (max-width: 500px) {
     width: 50%;
@@ -43,23 +41,9 @@ const Paybu = styled.button`
   }
 `;
 const Payment = ({ isChecked1, isChecked2, close }) => {
+  const buyer_email = localStorage.getItem("email");
   const [error, setError] = useState(null);
-  const [buyerEmail, setBuyerEmail] = useState("");
-  const context = useContext(UserContext);
-  const { setSubscribeStatus } = context;
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const userEmail = async () => {
-      try {
-        const rsp = await AxiosApi.getUserInfo2();
-        setBuyerEmail(rsp.data.email);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    userEmail();
-  }, []);
 
   const confirm = () => {
     close();
@@ -85,7 +69,7 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
       name: "최초인증결제", // 상품명
       amount: 10, // 결제 금액 (실제 승인은 되지 않음)
       customer_uid: "your-customer-unique-id", // 고객 고유 ID (필수)
-      buyerEmail: "iamport@siot.do", // 구매자 이메일
+      buyer_email: "iamport@siot.do", // 구매자 이메일
       // buyer_name: "아임포트", // 구매자 이름
       // buyer_tel: "02-1234-1234", // 구매자 전화번호
       m_redirect_url: "https://www.my-service.com/payments/complete/mobile", // 모바일에서 결제 완료 후 리디렉션 될 URL
@@ -104,10 +88,10 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
       };
 
       PaymentApi.subscribePaymentsAgain(paymentData)
-        .then((response) => {
+        .then((res) => {
           alert("결제 성공");
           const paymentHistory = {
-            email: response.buyerEmail,
+            email: response.buyer_email,
             paymentDate: new Date(),
             paymentStatus: "success",
             transactionId: response.imp_uid,
@@ -139,9 +123,9 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
       pay_method: "card", // 결제 수단 (카드, 계좌이체, 가상계좌 등)
       merchant_uid: merchant, // 가맹점 주문번호 생성
       name: "아프다 1달 구독", // 상품명
-      customer_uid: buyerEmail,
+      customer_uid: buyer_email,
       amount: 10, // 결제 금액
-      buyer_id: buyerEmail, // 구매자 ID 설정
+      buyer_id: buyer_email, // 구매자 ID 설정
       m_redirect_url: "http://localhost:3000/apueda", // 결제 완료 후 이동할 페이지 URL
     };
 
@@ -168,8 +152,20 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
 
     IMP.request_pay(paymentData, async (response) => {
       if (response.success) {
+        const regitem = await axios.post(
+          "http://localhost:5000/api/iamport/preparePayment",
+          { merchant_uid: merchant, amount: 10 },
+          {
+            headers: {
+              Authorization: iamportToken,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true, // credentials 포함
+          }
+        );
+        console.log("사전검정데이터 등록 성공", regitem.data);
+
         alert("결제해주셔서 감사합니다");
-        setSubscribeStatus(true);
         confirm();
       } else {
         close();

@@ -83,7 +83,6 @@ const Unsubbox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 90%;
 `;
 const Textbox = styled.div`
   font-size: 15px;
@@ -94,7 +93,7 @@ const Uninfo = styled.div`
   width: 80%;
   height: 60%;
   background-color: #ced4da;
-  margin-top: 5%;
+  margin-top: 10%;
 `;
 const Unbutton = styled.button`
   outline: none;
@@ -106,7 +105,7 @@ const Unbutton = styled.button`
   height: 50px;
   border: 2px solid #f92f23;
   background-color: white;
-  margin-top: 20px;
+  margin-top: 40px;
 `;
 
 const Unsubinfoul = styled.ul`
@@ -158,6 +157,7 @@ const Unsubmodal = (props) => {
         }
       );
       console.log("예약해지:", unscheduleResponse.data);
+
       const rsp = await PaymentApi.unsavesub(status);
       if (rsp.data) {
         alert("아프다 구독 해지");
