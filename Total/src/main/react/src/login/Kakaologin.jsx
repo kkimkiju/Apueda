@@ -5,6 +5,7 @@ import AxiosApi from "../api/AxiosApi";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserStore";
 import Addinfomodal from "../login/Addinfomodal";
+import PaymentApi from "../api/PaymentAxios";
 
 const Button = styled.button`
   border: 0;
@@ -18,7 +19,7 @@ const Kakaologin = () => {
   const navigate = useNavigate();
   const [accToken, setAccToken] = useState("");
   const context = useContext(UserContext);
-  const { setLoginStatus } = context;
+  const { setLoginStatus, setSubscribeStatus} = context;
   const [addinfomodal, setAddinfomodal] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,7 +51,9 @@ const Kakaologin = () => {
       console.log("Signup 성공:", response);
 
       const rsp = await AxiosApi.login(email, password);
-      localStorage.setItem("email", userInfo.kakao_account.email); // 삭제 예정
+      if (rsp.data) {
+        subScribeCheck(email);
+      }
       setAccToken(rsp.data.accessToken);
       localStorage.setItem("accessToken", rsp.data.accessToken);
       localStorage.setItem("refreshToken", rsp.data.refreshToken);
@@ -122,6 +125,7 @@ const Kakaologin = () => {
                     response.id
                   );
                   if (rsp.data) {
+                  subScribeCheck(response.kakao_account.email);
                     setAccToken(rsp.data.accessToken);
                     localStorage.setItem("accessToken", rsp.data.accessToken);
                     localStorage.setItem("refreshToken", rsp.data.refreshToken);
@@ -132,7 +136,7 @@ const Kakaologin = () => {
                 } catch (e) {
                   console.log(e);
                   alert("이미 가입된 아이디입니다.");
-                  handleClose();
+//                   handleClose();
                 }
               } else {
                 onAddClickSub();
@@ -149,19 +153,34 @@ const Kakaologin = () => {
 
     handleAuthCode();
   }, []);
-  const handleClose = () => {
-    window.Kakao.API.request({
-      url: "/v1/user/unlink",
-    })
-      .then(function (response) {
-        console.log(response);
-        close(); // Kakao API 요청 후 모달 닫기
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-    navigate("/apueda");
-  };
+//   const handleClose = () => {
+//     window.Kakao.API.request({
+//       url: "/v1/user/unlink",
+//     })
+//       .then(function (response) {
+//         console.log(response);
+//         close(); // Kakao API 요청 후 모달 닫기
+//       })
+//       .catch(function (error) {
+//         console.error(error);
+//       });
+//     navigate("/apueda");
+//   };
+
+  const subScribeCheck = async (email) => {
+      try {
+        const rsp = await PaymentApi.deadline(email);
+        if (rsp.data[0].status) {
+          setSubscribeStatus(true);
+        } else {
+          setSubscribeStatus(false);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+
   const kakaoLogin = () => {
     window.Kakao.Auth.authorize({
       redirectUri: "http://www.apueda.shop/apueda/kakaologin",
