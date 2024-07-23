@@ -81,7 +81,6 @@ const FindPw = () => {
     } else {
       setEmailError("올바른 이메일 형식입니다.");
       setEmailValid(true);
-      console.log(emailValid);
     }
   };
 
@@ -100,8 +99,7 @@ const FindPw = () => {
 
   const handlePasswordSubmit = async (password) => {
     try {
-      const response = await AxiosApi.findPw({ email, password });
-      console.log("비밀번호 변경 응답:", response.data);
+      await AxiosApi.findPw({ email, password });
       closeModal();
     } catch (error) {
       console.error("비밀번호 변경 오류:", error);

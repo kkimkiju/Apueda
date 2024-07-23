@@ -32,7 +32,6 @@ public class TokenProvider {
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7L; // 7일
     private final Key key;
 
-    // 주의점 : @Value 어노테이션은 springframework의 어노테이션이다.
     public TokenProvider(@Value("${springboot.jwt.secret}") String secretKey) {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }

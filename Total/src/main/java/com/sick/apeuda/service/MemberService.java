@@ -21,10 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-
     private final PasswordEncoder passwordEncoder;
-
-
 
     public MemberResDto modifyMember(MemberReqDto memberReqDto) {
         Optional<Member> member = memberRepository.findByEmail(memberReqDto.getEmail());
@@ -34,8 +31,6 @@ public class MemberService {
         }
         else return null;
     }
-
-
 
     // 회원 정보 조회(로그인 한 사용자)
     public MemberDto getMemberInfo(String email) {
@@ -58,7 +53,6 @@ public class MemberService {
         }
     }
 
-
     // 회원 정보 전체 조회
     public List<MemberDto> getMemberList(){
         List<Member> members = memberRepository.findAll();
@@ -68,10 +62,4 @@ public class MemberService {
         }
         return memberDtos;
     }
-
-    public Optional<MemberDto> findByEmail(String email) {
-        Optional<Member> member = memberRepository.findById(email);
-        return member.map(MemberDto::of);
-    }
-
 }

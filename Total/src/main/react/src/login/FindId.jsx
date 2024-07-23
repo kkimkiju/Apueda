@@ -58,7 +58,6 @@ const FindId = () => {
 
     // 유효성 검사
     setIdentifyNumberValid(value.length >= 7);
-    console.log(identifyNumberValid);
   };
 
   const findIdHandler = async () => {
@@ -67,10 +66,8 @@ const FindId = () => {
       identityNumber,
     };
     try {
-      console.log(user);
       const rsp = await AxiosApi.findId(user);
       setEmail(rsp.data);
-      console.log(rsp.data);
       setIsModalOpen(true); // 모달 열기
     } catch (e) {
       console.log(e);
