@@ -136,7 +136,8 @@ const Kakaologin = () => {
                 } catch (e) {
                   console.log(e);
                   alert("이미 가입된 아이디입니다.");
-//                   handleClose();
+                  handleClose();
+                  navigate("/apueda/login");
                 }
               } else {
                 onAddClickSub();
@@ -153,19 +154,18 @@ const Kakaologin = () => {
 
     handleAuthCode();
   }, []);
-//   const handleClose = () => {
-//     window.Kakao.API.request({
-//       url: "/v1/user/unlink",
-//     })
-//       .then(function (response) {
-//         console.log(response);
-//         close(); // Kakao API 요청 후 모달 닫기
-//       })
-//       .catch(function (error) {
-//         console.error(error);
-//       });
-//     navigate("/apueda");
-//   };
+  const handleClose = () => {
+    window.Kakao.API.request({
+      url: "/v1/user/unlink",
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+    navigate("/apueda");
+  };
 
   const subScribeCheck = async (email) => {
       try {
