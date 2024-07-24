@@ -87,7 +87,7 @@ const Kakaologin = () => {
               params: {
                 grant_type: "authorization_code",
                 client_id: "3ba0bffc2b4266d667888058f56bdfbe", // 여기에 앱 REST API 키를 넣으세요
-                redirect_uri: "http://www.apueda.shop/apueda/kakaologin",
+                redirect_uri: "https://www.apueda.shop/apueda/kakaologin",
                 code: code,
               },
               headers: {
