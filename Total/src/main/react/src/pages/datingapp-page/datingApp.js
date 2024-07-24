@@ -122,7 +122,7 @@ function DatingApp() {
     if (myEmail) {
       checkSubscription().then(showUserInfo);
     }
-  }, [myEmail, isSubscribed]);
+  }, [myEmail , render]);
 
   const sendFriendRequests = useCallback(async () => {
     for (const user of likedList) {
@@ -143,13 +143,14 @@ function DatingApp() {
     }
   }, [likedList, unlikedList, myEmail]);
 
-  const handleEndOfCards = useCallback(() => {
+  const handleEndOfCards = useCallback(() => { ////////////////////////////////////////
     setTimeout(() => {
       if (isSubscribed) {
         setModalMessage("카드가 모두 소진되었습니다. 친구신청후 새카드를 받겠습니까?");
         setConfirmAction(() => async () => {
           await sendFriendRequests();
-          setRender(render => render + 1); // 렌더링 강제 상태 변경
+          setCardList([]);
+          setRender((render) => render + 1); // 렌더링 강제 상태 변경
         });
       } else if (!isSubscribed) {
         setModalMessage("카드가 모두 소진되었습니다. 친구신청 후 홈페이지로 이동하시겠습니까?");
@@ -292,7 +293,7 @@ function DatingApp() {
       {showLimitModal && (
         <ModalOverlay>
           <ModalContent>
-            <p>일일 이용횟수를 초과했습니다.</p>
+            <p>일일 이용 횟수를 초과했습니다.</p>
             <p>정기구독 페이지로 이동하시겠습니까?</p>
             <button onClick={handleCloseLimitModalYes}>예</button>
             <button onClick={handleCloseLimitModalNo}>아니요</button>

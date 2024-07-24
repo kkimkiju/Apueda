@@ -39,11 +39,7 @@ public class DatingAppService {
     @Autowired
     private TokenProvider tokenProvider;
     private final Map<String, Timestamp> nonSubscriberUsageMap = new HashMap<>();
-    // 구독 상태 확인
-    private boolean isSubscribed(Member member) {
-        Optional<Subscription> subscription = subscriptionRepository.findByMemberAndStatus(member, "구독");
-        return subscription.isPresent();
-    }
+
     // 구독 여부 확인
     public boolean checkSubscriptionStatus(String accessToken) {
         // 토큰이 유효성 확인
@@ -79,6 +75,11 @@ public class DatingAppService {
         }
     }
 
+    // 구독 상태 확인
+    private boolean isSubscribed(Member member) {
+        Optional<Subscription> subscription = subscriptionRepository.findByMemberAndStatus(member, "구독");
+        return subscription.isPresent();
+    }
 
     // 비구독자 사용 제한 하기
     private void checkNonSubscriberUsage(String currentUserEmail) {
