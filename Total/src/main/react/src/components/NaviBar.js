@@ -107,11 +107,11 @@ export default function NaviBar() {
 
   const subscribeHandler = () => {
     const subStatus = localStorage.getItem("subscribeStatus");
-    if (subStatus === true) {
+    if (subStatus === "true") {
       navigate("/apueda/mysub");
-    } else if (subStatus === false) {
+    } else if (subStatus === "false") {
       navigate("/apueda/subinfo");
-    } else {
+    } else if (subscribeStatus === null) {
       navigate("/apueda/login");
     }
   };
