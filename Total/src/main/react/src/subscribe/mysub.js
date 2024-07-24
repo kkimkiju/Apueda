@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Apuedalogo from "../image/apueda-logo-ff3e34.png";
-import AxiosApi from "../api/PaymentAxios";
+import PaymentApi from "../api/PaymentAxios";
+import AxiosApi from "../api/AxiosApi";
 import Detaillist from "./detailllist";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -187,7 +188,7 @@ const Mysub = () => {
 
   const fetchData = async () => {
     try {
-      let response = await AxiosApi.historyList(
+      let response = await PaymentApi.historyList(
         email,
         currentPage - 1,
         pageSize
@@ -203,7 +204,7 @@ const Mysub = () => {
 
   const fetchDeadline = async () => {
     try {
-      let response = await AxiosApi.deadline(email);
+      let response = await PaymentApi.deadline(email);
       if (response && response.data) {
         setDeadLine(response.data[0].validUntil);
         setSubstatus(response.data[0].status);

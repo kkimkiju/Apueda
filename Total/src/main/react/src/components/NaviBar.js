@@ -106,9 +106,10 @@ export default function NaviBar() {
   };
 
   const subscribeHandler = () => {
-    if (subscribeStatus === true) {
+    const subStatus = localStorage.getItem("subscribeStatus");
+    if (subStatus === true) {
       navigate("/apueda/mysub");
-    } else if (subscribeStatus === false) {
+    } else if (subStatus === false) {
       navigate("/apueda/subinfo");
     } else {
       navigate("/apueda/login");
@@ -335,7 +336,7 @@ const ModalContent = styled.div`
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  border: .2vw solid black;
+  border: 0.2vw solid black;
   & p {
     font-size: 1.5em;
     margin-bottom: 2vh;

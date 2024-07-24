@@ -17,15 +17,12 @@ const UserStore = (props) => {
 
   useEffect(() => {
     localStorage.setItem("loginStatus", loginStatus);
-    console.log(localStorage.getItem("loginStatus"));
   }, [loginStatus]);
   useEffect(() => {
     localStorage.setItem("subscribeStatus", subscribeStatus);
-    console.log(localStorage.getItem("subscribeStatus"));
   }, [subscribeStatus]);
   useEffect(() => {
     localStorage.setItem("profileChange", subscribeStatus);
-    console.log(localStorage.getItem("profileChange"));
   }, [profileChange]);
 
   return (
