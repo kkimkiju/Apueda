@@ -183,7 +183,7 @@ const Kakaologin = () => {
 
   const kakaoLogin = () => {
     window.Kakao.Auth.authorize({
-      redirectUri: "http://www.apueda.shop/apueda/kakaologin",
+      redirectUri: "https://www.apueda.shop/apueda/kakaologin",
     });
   };
 

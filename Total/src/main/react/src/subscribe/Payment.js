@@ -131,14 +131,14 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
 
     // 3. IAMPORT 토큰 요청
     const tokenResponse = await axios.post(
-      "http://3.37.1.53:5000/api/iamport/getToken",
+      "https://www.apueda.shop/api/iamport/getToken",
       {}, // 데이터는 비어 있어도 됩니다.
       { withCredentials: true } // credentials 포함
     );
     const iamportToken = tokenResponse.data.response.access_token;
 
     const regitem = await axios.post(
-      "http://3.37.1.53:5000/api/iamport/preparePayment",
+      "https://www.apueda.shop/api/iamport/preparePayment",
       { merchant_uid: merchant, amount: 10 },
       {
         headers: {
@@ -152,19 +152,6 @@ const Payment = ({ isChecked1, isChecked2, close }) => {
 
     IMP.request_pay(paymentData, async (response) => {
       if (response.success) {
-        const regitem = await axios.post(
-          "http://localhost:5000/api/iamport/preparePayment",
-          { merchant_uid: merchant, amount: 10 },
-          {
-            headers: {
-              Authorization: iamportToken,
-              "Content-Type": "application/json",
-            },
-            withCredentials: true, // credentials 포함
-          }
-        );
-        console.log("사전검정데이터 등록 성공", regitem.data);
-
         alert("결제해주셔서 감사합니다");
         confirm();
       } else {
