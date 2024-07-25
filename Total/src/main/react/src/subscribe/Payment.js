@@ -41,7 +41,20 @@ const Paybu = styled.button`
   }
 `;
 const Payment = ({ isChecked1, isChecked2, close }) => {
-  const buyer_email = localStorage.getItem("email");
+
+  const [buyer_email, setBuyer_email] = useState("");
+
+    useEffect(() => {
+      const userEmail = async () => {
+        try {
+          const rsp = await AxiosApi.getUserInfo2();
+          setBuyer_email(rsp.data.email);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      userEmail();
+    }, []);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 

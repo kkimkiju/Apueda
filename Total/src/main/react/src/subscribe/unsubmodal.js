@@ -93,7 +93,7 @@ const Uninfo = styled.div`
   width: 80%;
   height: 60%;
   background-color: #ced4da;
-  margin-top: 10%;
+  margin-top: 2%;
 `;
 const Unbutton = styled.button`
   outline: none;
