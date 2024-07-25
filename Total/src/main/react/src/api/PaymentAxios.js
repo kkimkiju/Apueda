@@ -67,9 +67,10 @@ const PaymentApi = {
     );
   },
   // 예약해지, 재구독
-  unsavesub: async (status) => {
+  unsavesub: async (status, member) => {
     const unsavesub = {
       status: status,
+      customerUid: member,
     };
     return await AxiosInstance.post("/payments/unsubscriptions", unsavesub);
   },

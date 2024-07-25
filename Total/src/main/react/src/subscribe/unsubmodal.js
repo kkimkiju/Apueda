@@ -158,7 +158,7 @@ const Unsubmodal = (props) => {
       );
       console.log("예약해지:", unscheduleResponse.data);
 
-      const rsp = await PaymentApi.unsavesub(status);
+      const rsp = await PaymentApi.unsavesub(status, member);
       if (rsp.data) {
         alert("아프다 구독 해지");
         confirm();

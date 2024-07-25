@@ -150,7 +150,8 @@ const Bubox = styled.div`
 `;
 
 const Privacy = (props) => {
-  const { open, close, category, setModalOpen, merchantuid, deadLine } = props;
+  const { open, close, category, setModalOpen, merchantuid, deadLine, member } =
+    props;
   const navigate = useNavigate();
 
   const confirm = () => {
@@ -187,7 +188,7 @@ const Privacy = (props) => {
         }
       );
       console.log("재예약:", resub.data);
-      const rsp = await PaymentApi.unsavesub(status);
+      const rsp = await PaymentApi.unsavesub(status, member);
       if (rsp.data) {
         alert("아프다 재구독에 성공하셨어요");
         confirm();
