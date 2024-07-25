@@ -13,7 +13,7 @@ const DropdownButton = styled.button`
 `;
 
 const DropdownContent = styled.div`
-  display: ${(props) => (props.isOpen ? "block" : "none")};
+  display: ${(props) => (props.isopen ? "block" : "none")};
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
@@ -77,7 +77,7 @@ const DropdownMenu = ({ onSkillClick }) => {
       <DropdownButton onClick={toggleDropdown}>
         <Button>스킬필터</Button>
       </DropdownButton>
-      <DropdownContent isOpen={isOpen}>
+      <DropdownContent isopen={isOpen}>
         {skillsArray &&
           skillsArray.map((skills) => (
             <SkillList

@@ -188,7 +188,18 @@ const ProjectDetail = () => {
   const [isRecruit, setIsRecruit] = useState(false);
   const navigate = useNavigate();
   const modalRef = useRef(null);
-  const email = localStorage.getItem("email");
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    const getMember = async () => {
+      try {
+        const rsp = await AxiosApi.getUserInfo2();
+        setEmail(rsp.data.email);
+      } catch (e) {
+        console.error("Error fetching member info:", e);
+      }
+    };
+    getMember();
+  }, []);
   const toggleDropdown = () => {
     setIsDropdownOpen(true);
   };

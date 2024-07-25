@@ -75,7 +75,7 @@ const ResultContainer = styled.div`
 const Ul = styled.ul`
   display: ${(props) => (props.showList ? "inline-block" : "none")};
   list-style: none;
-  overflow: scroll;
+  overflow-y: scroll;
 `;
 
 const SkillList = styled.div`

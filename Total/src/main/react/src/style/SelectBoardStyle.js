@@ -12,18 +12,21 @@ export const HeadContainer = styled.div`
   }
 `;
 
-export const SelectBoardButton = styled.button`
+export const SelectBoardButton = styled.button.attrs((props) => ({
+  buttontype: props.buttontype,
+}))`
   width: 50%;
   height: auto;
   border-radius: ${(props) =>
-    props.buttonType === "a"
+    props.buttontype === "a"
       ? "30px 0 25px 0"
-      : props.isSelected
+      : props.isselected === "true"
       ? "0 30px 0 0"
       : "0 30px 0 25px"};
   border: none;
-  background-color: ${(props) => (props.isSelected ? "#ff5353" : "#ffffff")};
-  color: ${(props) => (props.isSelected ? "#ffffff" : "#000000")};
+  background-color: ${(props) =>
+    props.isselected === "true" ? "#ff5353" : "#ffffff"};
+  color: ${(props) => (props.isselected === "true" ? "#ffffff" : "#000000")};
   &:hover {
     cursor: pointer;
   }

@@ -21,7 +21,6 @@ const BoardLayout = styled.div`
     margin: 0 5vw;
     width: auto;
   }
-
   @media screen and (max-width: 860px) {
     margin: 0 5vw;
     font-size: 10px;
@@ -52,11 +51,11 @@ const Container = styled.div`
 `;
 const BoardMain = () => {
   const [isClick, setIsClick] = useState({ a: true, b: false });
-
-  // 로그인 안 할시에 로그인 창으로 이동
   const navigate = useNavigate();
   const context = useContext(UserContext);
   const { loginStatus } = context;
+
+  // 로그인 안 할시에 로그인 창으로 이동
   useEffect(() => {
     if (!loginStatus) {
       navigate("/apueda/login");
@@ -66,9 +65,7 @@ const BoardMain = () => {
   return (
     <BoardLayout>
       <Container>
-        {/* Use the combined HeadBar component */}
         <HeadBar setIsClick={setIsClick} />
-        {/* Render ProjectList or BoardList based on isClick state */}
         {isClick.a ? <ProjectList /> : <BoardList />}
       </Container>
     </BoardLayout>

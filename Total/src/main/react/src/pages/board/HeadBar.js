@@ -24,8 +24,6 @@ const SearchContainer = styled.div`
   height: 40px;
   background-color: #ff5353;
   font-size: 0.7rem;
-  /* padding-top: 18px;
-  padding-left: 18px; */
 `;
 const WriteBoard = styled.div`
   display: flex;
@@ -57,27 +55,27 @@ const HeadBar = ({ setIsClick }) => {
       a: buttonType === "a",
       b: buttonType === "b",
     };
-    setSelectedButton(newState); // selectedButton 상태 업데이트
+    setSelectedButton(newState);
   };
 
-  // selectedButton이 변경될 때마다 실행되는 useEffect
+  // selectedButton이 변경될 때마다 실행
   useEffect(() => {
-    setIsClick(selectedButton); // setIsClick에 업데이트된 selectedButton 상태 전달
+    setIsClick(selectedButton);
   }, [selectedButton, setIsClick]);
 
   return (
     <>
       <HeadContainer>
         <SelectBoardButton
-          isSelected={selectedButton.a}
-          buttonType="a"
+          isselected={selectedButton.a.toString()}
+          buttontype="a"
           onClick={() => handleClick("a")}
         >
           <span>프로젝트 구인</span>
         </SelectBoardButton>
         <SelectBoardButton
-          isSelected={selectedButton.b}
-          buttonType="b"
+          isselected={selectedButton.b.toString()}
+          buttontype="b"
           onClick={() => handleClick("b")}
         >
           <span>자유 게시판</span>

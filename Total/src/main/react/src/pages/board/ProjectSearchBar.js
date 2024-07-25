@@ -31,7 +31,7 @@ const Container = styled.div`
 const ProjectSearchBar = (isOpen) => {
   return (
     <ContainerBack>
-      <Container></Container>
+      <Container>ㅁㅁ</Container>
     </ContainerBack>
   );
 };
