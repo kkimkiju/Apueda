@@ -291,6 +291,7 @@ const Mysub = () => {
         setModalOpen={setResubmodalOpen}
         merchantuid={merchantuid}
         deadLine={deadLine}
+        member={email}
       />
     </Subpage>
   );

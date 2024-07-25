@@ -49,8 +49,8 @@ const ModalStyle = styled.div`
   }
 
   section {
-    width: 35%;
-    height: 60%;
+    width: 43%;
+    height: 76%;
     margin: 0 auto;
     border-radius: 0.6rem;
     background-color: #fff;
@@ -150,8 +150,7 @@ const Bubox = styled.div`
 `;
 
 const Privacy = (props) => {
-  const { open, close, category, setModalOpen, merchantuid, deadLine, member } =
-    props;
+  const { open, close, category, setModalOpen, merchantuid, deadLine, member } = props;
   const navigate = useNavigate();
 
   const confirm = () => {
@@ -168,7 +167,7 @@ const Privacy = (props) => {
     try {
       // IAMPORT 토큰 요청
       const tokenResponse = await axios.post(
-        "https://www.apueda.shop/api/iamport/getToken",
+        "http://3.37.1.53:5000/api/iamport/getToken",
         {}, // 데이터는 비어 있어도 됩니다.
         { withCredentials: true } // credentials 포함
       );
@@ -177,7 +176,7 @@ const Privacy = (props) => {
       console.log(merchantuid);
       // 재구독
       const resub = await axios.post(
-        "https://www.apueda.shop/api/iamport/reschedulePayment",
+        "http://3.37.1.53:5000/api/iamport/reschedulePayment",
         { merchant_uid: merchantuid, schedule_at: rebook },
         {
           headers: {
@@ -188,7 +187,7 @@ const Privacy = (props) => {
         }
       );
       console.log("재예약:", resub.data);
-      const rsp = await PaymentApi.unsavesub(status, member);
+      const rsp = await PaymentApi.unsavesub(status,member);
       if (rsp.data) {
         alert("아프다 재구독에 성공하셨어요");
         confirm();
