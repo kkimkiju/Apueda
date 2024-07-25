@@ -66,7 +66,7 @@ const PaymentApi = {
       requestBillingKey
     );
   },
-  // 예약해지
+  // 예약해지, 재구독
   unsavesub: async (status) => {
     const unsavesub = {
       status: status,

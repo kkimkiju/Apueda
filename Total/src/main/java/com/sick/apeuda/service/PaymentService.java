@@ -122,15 +122,16 @@ public class PaymentService {
     }
     public boolean unsaveSubscriptions(SubscriptionDto subscriptionDto) {
         try {
-            String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // JWT 토큰에서 사용자 ID를 추출합니다.
-            Member member = memberRepository.findById(memberId)
+            String memberId = subscriptionDto.getCustomerUid();
+
+            Member member = memberRepository.findById(subscriptionDto.getCustomerUid())
                     .orElseThrow(() -> new RuntimeException("Member not found"));
 
             // member_id로 기존 구독 정보 조회
-            Subscription subscription = subscriptionRepository.findByMemberId("kimfjd");
-            System.out.println("subscription 값은 : " + subscription);
+            Subscription subscription = subscriptionRepository.findByMemberId(memberId);
+            System.out.println("subscription 값은 : "+subscription);
             subscription.setStatus(subscriptionDto.getStatus());
-            System.out.println("subscription update : " + subscription);
+            System.out.println("subscription update : "+subscription);
             subscriptionRepository.save(subscription);
             return true;
         } catch (Exception e) {
