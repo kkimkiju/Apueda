@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Kapay from "../image/kakaopaymark-removebg-preview.png";
 import CheckModal from "./checkmodal";
 import { useNavigate } from "react-router-dom";
+import AxiosApi from "../api/AxiosApi";
 
 const Paybu = styled.button`
   width: 40%;
